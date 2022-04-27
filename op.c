@@ -10,7 +10,7 @@
 
 #include "op.h"
 
-static const op_t op_tab[] =
+op_t op_tab[] =
   {
     {"live", 1, {T_DIR}, 1, 10, "alive"},
     {"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load"},
