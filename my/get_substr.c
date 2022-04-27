@@ -16,6 +16,8 @@ char *get_substr(char **str, char end)
     while ((*str)[i] && (*str)[i] != end) {
         i++;
     }
+    if (!*str && end != '\0')
+        return NULL;
     sub = malloc(sizeof(char) * (i + 1));
     my_strncpy(sub, *(str), i);
     *(str) += i;

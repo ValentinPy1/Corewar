@@ -9,7 +9,7 @@ SRC	= ../op.c \
 
 OBJ	=	$(SRC:.c=.o)
 
-SMAIN	=	src/main.c
+SMAIN	=	main.c
 
 OMAIN	=	$(SMAIN:.c=.o)
 

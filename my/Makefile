@@ -14,6 +14,9 @@ SRC	=	str_utils.c \
 		htable_str.c \
 		s_init.c \
 		get_substr.c \
+		my_putstr.c \
+		my_put_nbr.c \
+		my_putchar.c \
 
 OBJ	=	$(SRC:.c=.o)
 

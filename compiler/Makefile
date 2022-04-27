@@ -6,6 +6,9 @@
 ##
 
 SRC	= ../op.c \
+		src/compile_file.c \
+		src/get_op_index.c \
+		src/write_instruct.c \
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -19,7 +22,7 @@ CPPFLAGS	=	-I ../include/
 
 LDFLAGS	=	-L ../my/ -lmy
 
-TESTFILES	=
+TESTFILES	= tests/test_endianness.c
 
 all: $(NAME)
 
