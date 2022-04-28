@@ -8,6 +8,35 @@
 #ifndef E8F4AAB3_FEEC_484E_B2FD_F9DCB1703BD4
     #define E8F4AAB3_FEEC_484E_B2FD_F9DCB1703BD4
     #include <stdlib.h>
+    #include <stdbool.h>
+
+enum function_vm {
+    LIVE,
+    LD,
+    ST,
+    ADD,
+    SUB,
+    AND,
+    OR,
+    XOR,
+    ZJMP,
+    LDI,
+    STI,
+    FORK,
+    LLD,
+    LLDI,
+    LFORK,
+    AFF
+};
+typedef struct process_s {
+    char *reg;
+    int pc;
+    bool carry;
+} process_t;
+
+typedef struct event_s {
+    void (*func)(int *option);
+} event_t;
 
 enum function_vm {
     LIVE,
