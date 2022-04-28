@@ -8,6 +8,35 @@
 #ifndef E8F4AAB3_FEEC_484E_B2FD_F9DCB1703BD4
     #define E8F4AAB3_FEEC_484E_B2FD_F9DCB1703BD4
     #include <stdlib.h>
+    #include <stdbool.h>
+
+enum function_vm {
+    LIVE,
+    LD,
+    ST,
+    ADD,
+    SUB,
+    AND,
+    OR,
+    XOR,
+    ZJMP,
+    LDI,
+    STI,
+    FORK,
+    LLD,
+    LLDI,
+    LFORK,
+    AFF
+};
+typedef struct process_s {
+    char *reg;
+    int pc;
+    bool carry;
+} process_t;
+
+typedef struct event_s {
+    void (*func)(int *option);
+} event_t;
 
 int my_strlen(const char *str);
 void my_strcpy(char *dest, const char *src);
@@ -19,5 +48,8 @@ int getnbr_until_non_digit(char **str);
 void my_strncpy(char *dest, char *str, int n);
 char *get_substr(char **str, char end);
 size_t get_char_index_in_str(const char *str, char target);
+int my_putstr(char const *str);
+void my_put_nbr(int nb);
+void my_putchar(char c);
 
 #endif
