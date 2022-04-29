@@ -6,10 +6,13 @@
 ##
 
 SRC	= ../op.c \
+		src/create_cpu.c \
+		src/function_cpu.c \
+		src/constructor.c \
 
 OBJ	=	$(SRC:.c=.o)
 
-SMAIN	=	main.c
+SMAIN	=	src/main.c
 
 OMAIN	=	$(SMAIN:.c=.o)
 
