@@ -38,28 +38,10 @@ typedef struct event_s {
     void (*func)(int *option);
 } event_t;
 
-enum function_vm {
-    LIVE,
-    LD,
-    ST,
-    ADD,
-    SUB,
-    AND,
-    OR,
-    XOR,
-    ZJMP,
-    LDI,
-    STI,
-    FORK,
-    LLD,
-    LLDI,
-    LFORK,
-    AFF
-};
-
-typedef struct event_s {
-    void (*func)(int *option);
-} event_t;
+typedef struct cpu_s {
+    char *ram;
+    char **reg;
+} cpu_t;
 
 int my_strlen(const char *str);
 void my_strcpy(char *dest, const char *src);
@@ -75,4 +57,8 @@ int my_putstr(char const *str);
 void my_put_nbr(int nb);
 void my_putchar(char c);
 
+//MACHINE|LOAD CPU
+void live(int *option);
+void ld_func(int *option);
+cpu_t *constructor(void);
 #endif
