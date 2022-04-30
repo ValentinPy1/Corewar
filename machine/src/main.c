@@ -17,7 +17,7 @@ int get_data(void)
     int data = 0;
     int *option[3];
     int data_name = 0;
-    process_t *curr_process = malloc(sizeof(process_t));
+    process_t **curr_process = malloc(sizeof(process_t *));
     read(fd, &data, sizeof(char));
     read(fd2, &option[0], sizeof(int));
     event[data].func(option);
