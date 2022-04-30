@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2021
+** corewar
+** File description:
+** main.c
+*/
+
 #include "my.h"
 #include <stdio.h>
 #include <sys/stat.h>
@@ -5,22 +12,10 @@
 #include "op.h"
 #include <unistd.h>
 
-static const event_t event[2] = {
-    &live,
-    &ld_func
-};
-
-int get_data(void)
+static void writer(char *filename, char *str)
 {
-    int fd = open("oui.cor", O_RDONLY);
-    int fd2 = open("42.cor", O_RDONLY);
-    int data = 0;
-    int *option[3];
-    int data_name = 0;
-    process_t **curr_process = malloc(sizeof(process_t *));
-    read(fd, &data, sizeof(char));
-    read(fd2, &option[0], sizeof(int));
-    event[data].func(option);
+    int fd = open(filename, O_CREAT | O_WRONLY, 0666); // | O_APPEND
+    write(fd, &str, sizeof(char));
 }
 
 int main(int ac, char **av)
@@ -28,3 +23,5 @@ int main(int ac, char **av)
     get_data();
     return 0;
 }
+
+
