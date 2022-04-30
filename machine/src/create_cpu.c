@@ -25,6 +25,8 @@ char **load_reg(void)
     char **reg = malloc(sizeof(char *) * REG_NUMBER);
     for(int i = 0; i < REG_NUMBER; i++) {
         reg[i] = malloc(sizeof(char) * REG_SIZE);
+        for (int j = 0; j < REG_SIZE; j++)
+            reg[i][j] = 0;
     }
     return reg;
 }

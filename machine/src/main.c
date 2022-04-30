@@ -5,7 +5,7 @@
 #include "op.h"
 #include <unistd.h>
 
-static const event_t event[1] = {
+static const event_t event[2] = {
     &live,
     &ld_func
 };
