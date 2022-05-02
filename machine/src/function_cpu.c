@@ -6,6 +6,7 @@
 */
 
 #include "my.h"
+#include "machine.h"
 #include "op.h"
 #include <unistd.h>
 
@@ -30,9 +31,9 @@ void live(int *option)
     my_putstr(" is alive..\n");
 }
 
-void ld_func(int *option, cpu_t *cpu)
+void ld_func(int *option, ram_t *ram)
 {
-    cpu->reg[option[1]] = option[0];
+   // ram->reg[option[1]] = option[0];
 // option[1] = reg_num
 // option[0] = adress || nb
 }

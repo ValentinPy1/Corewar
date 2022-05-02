@@ -6,7 +6,7 @@
 */
 
 #include "op.h"
-#include "my.h"
+#include "machine.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -22,7 +22,7 @@ void get_data(void)
 {
     int data = 0;
     int *option;
-    cpu_t *cpu = constructor();
+    ram_t *ram = constructor_ram();
     int fd = open("42.cor", O_RDONLY);
 
     read(fd, &data, sizeof(char));
@@ -31,6 +31,6 @@ void get_data(void)
         printf("%i: Naah invalid index\n", data);
     else {
         option = get_args(data, fd);
-        MNEMONIC[data].func(option);
+        MNEMONIC[data].func(option, ram);
     }
 }

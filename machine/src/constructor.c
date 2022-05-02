@@ -5,14 +5,22 @@
 ** constructor.c
 */
 
-#include "my.h"
 #include "op.h"
+#include "machine.h"
 
-cpu_t *constructor(void)
+ram_t *constructor_ram(void)
 {
-    cpu_t *cpu = malloc(sizeof(cpu_t));
-    cpu->ram = load_battle_zone();
-    cpu->reg = load_reg();
-    cpu->carry = 1;
-    return cpu;
+    ram_t *ram = malloc(sizeof(ram_t));
+    ram->ram = load_battle_zone();
+    return ram;
+}
+
+process_t *constructor_process(void)
+{
+    process_t *process = malloc(sizeof(process_t));
+    process->reg = load_reg();
+    process->pc = 0;
+    process->carry = false;
+    process->live_number = 0;
+    return process;
 }
