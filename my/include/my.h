@@ -10,39 +10,6 @@
     #include <stdlib.h>
     #include <stdbool.h>
 
-enum function_vm {
-    LIVE,
-    LD,
-    ST,
-    ADD,
-    SUB,
-    AND,
-    OR,
-    XOR,
-    ZJMP,
-    LDI,
-    STI,
-    FORK,
-    LLD,
-    LLDI,
-    LFORK,
-    AFF
-};
-typedef struct process_s {
-    char *reg;
-    int pc;
-    bool carry;
-} process_t;
-
-typedef struct event_s {
-    void (*func)(int *option);
-} event_t;
-
-typedef struct cpu_s {
-    char *ram;
-    char **reg;
-} cpu_t;
-
 int my_strlen(const char *str);
 void my_strcpy(char *dest, const char *src);
 char *my_strdup(const char *str);
@@ -57,8 +24,12 @@ int my_putstr(char const *str);
 void my_put_nbr(int nb);
 void my_putchar(char c);
 
-//MACHINE|LOAD CPU
-void live(int *option);
-void ld_func(int *option);
-cpu_t *constructor(void);
+//LOAD CPU
+char *load_battle_zone(void);
+char **load_reg(void);
+
+//PROCESS
+void get_data(void);
+int *get_args(int index, int fd);
+
 #endif

@@ -23,14 +23,16 @@ void get_data(void)
     int data = 0;
     int *option;
     ram_t *ram = constructor_ram();
-    int fd = open("42.cor", O_RDONLY);
+    process_t **process = constructor_process(2);
+    int fd = open("oui.cor", O_RDONLY);
 
     read(fd, &data, sizeof(char));
     data -= 1;
-    if (data > 16 || data < 1)
-        printf("%i: Naah invalid index\n", data);
-    else {
+    printf("data : %d\n", data);
+    // if (data > 16 || data < 1)
+    //     write(1, "Naah invalid index\n", 20);
+    // else {
         option = get_args(data, fd);
-        MNEMONIC[data].func(option, ram);
-    }
+        MNEMONIC[data].func(option, ram, process);
+    // }
 }

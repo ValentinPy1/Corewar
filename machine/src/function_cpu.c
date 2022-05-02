@@ -31,9 +31,11 @@ void live(int *option)
     my_putstr(" is alive..\n");
 }
 
-void ld_func(int *option, ram_t *ram)
+//display array of int
+
+void ld_func(int *option, ram_t *ram, process_t *process)
 {
-   // ram->reg[option[1]] = option[0];
-// option[1] = reg_num
-// option[0] = adress || nb
+    display_int(option);
+    process->reg[option[2]] = option[0];
+    process->reg[option[1]] = ram->ram[process->pc + option[2] % IDX_MOD];
 }
