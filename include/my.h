@@ -24,12 +24,4 @@ int my_putstr(char const *str);
 void my_put_nbr(int nb);
 void my_putchar(char c);
 
-//LOAD CPU
-char *load_battle_zone(void);
-char **load_reg(void);
-
-//PROCESS
-void get_data(void);
-int *get_args(int index, int fd);
-
 #endif

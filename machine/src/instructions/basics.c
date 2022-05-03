@@ -18,8 +18,10 @@ void live(vm_t *vm, process_t *process, ope_t *ope)
 
 void ld_func(vm_t *vm, process_t *process, ope_t *ope)
 {
-    // TODO
+    // TODO update old code with new arguments
     // display_int(option);
     // process->reg[option[2]] = option[0];
     // process->reg[option[1]] = ram->mem[process->pc + option[2] % IDX_MOD];
 }
+
+// TODO all reamaining instructions

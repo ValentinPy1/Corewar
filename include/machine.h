@@ -15,6 +15,7 @@
     #include <fcntl.h>
     #include <sys/stat.h>
     #include <stdio.h>
+    #include "math.h"
 
 typedef struct ope_s {
     char code;
@@ -37,6 +38,7 @@ typedef struct process_s {
     bool carry;
     int last_live;
     int wait;
+    ope_t *current_ope;
 } process_t;
 
 typedef struct vm_s {
@@ -48,14 +50,15 @@ typedef struct vm_s {
     int live_count;
 } vm_t;
 
-typedef struct event_s {
+typedef struct instruct_s {
     void (*func)(vm_t *vm, process_t *process, ope_t *ope);
-} event_t;
+} instruct_t;
 
 //MACHINE MANAGEMENT
 void launch_vm(int ac, char *av[]);
 ram_t *setup_ram(void);
 char *load_battle_zone(void);
+void load_prog(vm_t *vm, char *path, int adress, int flag);
 
 //PROCESS MANAGEMENT
 char **load_reg(void);
@@ -63,10 +66,11 @@ void update_process(vm_t *vm, process_t *proc);
 
 //OPERATIONS MANAGEMENT
 int sum_char(char *size_type);
-ope_t get_ope(vm_t *vm, int adress);
+ope_t *get_ope(vm_t *vm, int adress);
+void destroy_ope(ope_t *ope);
 
 //OPERATIONS
-// void live(int *option);
-// void ld_func(int *option, ram_t *cpu, process_t *process);
+void live(vm_t *vm, process_t *process, ope_t *ope);
+void ld_func(vm_t *vm, process_t *process, ope_t *ope);
 
 #endif

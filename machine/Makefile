@@ -7,11 +7,11 @@
 
 SRC	= ../op.c \
 		src/process.c \
-		src/function_cpu.c \
 		src/virtual_machine.c \
 		src/ram.c \
 		src/manage_ope.c \
 		src/tools.c \
+		src/instructions/basics.c \
 
 OBJ	=	$(SRC:.c=.o)
 
