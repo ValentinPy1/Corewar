@@ -6,10 +6,11 @@
 ##
 
 SRC	= ../op.c \
-		src/create_cpu.c \
+		src/process.c \
 		src/function_cpu.c \
 		src/constructor.c \
-		src/virtual_machine.c \
+		src/virtual_vmine.c \
+		src/ram.c \
 
 OBJ	=	$(SRC:.c=.o)
 

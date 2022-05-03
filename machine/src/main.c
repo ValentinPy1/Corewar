@@ -1,16 +1,11 @@
-/*
+    /*
 ** EPITECH PROJECT, 2021
 ** corewar
 ** File description:
 ** main.c
 */
 
-#include "my.h"
-#include <stdio.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include "op.h"
-#include <unistd.h>
+#include "machine.h"
 
 static void writer(char *filename, char *str)
 {
@@ -20,7 +15,8 @@ static void writer(char *filename, char *str)
 
 int main(int ac, char **av)
 {
-    get_data();
+    if (ac == 4)
+        launch_vm(ac, av);
     return 0;
 }
 

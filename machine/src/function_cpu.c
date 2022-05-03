@@ -37,5 +37,5 @@ void ld_func(int *option, ram_t *ram, process_t *process)
 {
     display_int(option);
     process->reg[option[2]] = option[0];
-    process->reg[option[1]] = ram->ram[process->pc + option[2] % IDX_MOD];
+    process->reg[option[1]] = ram->mem[process->pc + option[2] % IDX_MOD];
 }
