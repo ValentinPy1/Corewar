@@ -8,8 +8,7 @@
 SRC	= ../op.c \
 		src/process.c \
 		src/function_cpu.c \
-		src/constructor.c \
-		src/virtual_vmine.c \
+		src/virtual_machine.c \
 		src/ram.c \
 		src/manage_ope.c \
 		src/tools.c \
@@ -24,7 +23,7 @@ NAME	=	corewar
 
 CPPFLAGS	=	-I ../include/
 
-LDFLAGS	=	-L ../my/ -lmy
+LDFLAGS	=	-L ../my/ -lmy -lm
 
 TESTFILES	=
 

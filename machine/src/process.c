@@ -7,6 +7,11 @@
 
 #include "machine.h"
 
+static const instruct_t MNEMONIC[2] = {
+    {&live},
+    {&ld_func}
+};
+
 char **load_reg(void)
 {
     char **reg = malloc(sizeof(char *) * REG_NUMBER);
@@ -41,7 +46,8 @@ void load_prog(vm_t *vm, char *path, int adress, int flag)
     proc->last_live = 0;
     proc->pc = adress;
     proc->reg = load_reg();
-    proc->wait = get_ope(vm, adress).nbr_cycles;
+    proc->current_ope = get_ope(vm, adress);
+    proc->wait = proc->current_ope->nbr_cycles;
     vm->process = realloc(vm->process, pn + 2);
     vm->process[pn] = proc;
     vm->proc_nbr += 1;
@@ -51,15 +57,15 @@ void load_prog(vm_t *vm, char *path, int adress, int flag)
 void update_process(vm_t *vm, process_t *proc)
 {
     int *option = NULL;
-    ope_t ope;
+    ope_t *ope = proc->current_ope;
 
     if (proc->wait > 0) {
         proc->wait -= 1;
         return;
     }
-    ope = get_ope(vm, proc->pc);
-    // option = get_args(data, fd);
-    // MNEMONIC[data].func(option, ram, process);
-    proc->pc += ope.size;
-    proc->wait = get_ope(vm, proc->pc).nbr_cycles;
+    MNEMONIC[ope->code].func(vm, proc, ope);
+    proc->pc += ope->size;
+    // destroy_ope(proc->current_ope);
+    proc->current_ope = get_ope(vm, proc->pc);
+    proc->wait = proc->current_ope->nbr_cycles;
 }
