@@ -11,6 +11,8 @@ SRC	= ../op.c \
 		src/constructor.c \
 		src/virtual_vmine.c \
 		src/ram.c \
+		src/manage_ope.c \
+		src/tools.c \
 
 OBJ	=	$(SRC:.c=.o)
 

@@ -7,12 +7,12 @@
 
 #include "machine.h"
 
-static const event_t MNEMONIC[2] = {
-    {&live},
-    {&ld_func}
-};
+// static const event_t MNEMONIC[2] = {
+//     {&live},
+//     {&ld_func}
+// };
 
-vm_t *setup_vmine(void)
+vm_t *setup_vm(void)
 {
     vm_t *vm = malloc(sizeof(vm_t));
     vm->ram = setup_ram();
@@ -28,8 +28,10 @@ void launch_vm(int ac, char *av[])
     vm_t *vm = setup_vm();
 
     load_prog(vm, av[1], atoi(av[2]), atoi(av[3]));
+    for (int i = 0; i < vm->proc_nbr; ++i)
+        update_process(vm, vm->process[i]);
+    vm->cycle += 1;
 }
-
 
 // void get_data(char *path)
 // {

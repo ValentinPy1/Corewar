@@ -13,7 +13,7 @@ SMAIN	=	src/main.c
 
 OMAIN	=	$(SMAIN:.c=.o)
 
-NAME	=	my_rpg
+NAME	=	corewar
 
 CPPFLAGS	=	-I ./include/
 
