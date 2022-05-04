@@ -1,4 +1,4 @@
-    /*
+/*
 ** EPITECH PROJECT, 2021
 ** corewar
 ** File description:
@@ -20,5 +20,3 @@ int main(int ac, char **av)
         launch_vm(ac, av);
     return 0;
 }
-
-
