@@ -63,7 +63,7 @@ ope_t *get_ope(vm_t *vm, int adress)
         t_size(ope->type[1]), t_size(ope->type[2]), t_size(ope->type[3])};
         ope->size += 1 + sum_char(ope->size_type);
     } else {
-        // TODO for live zjmp fork lfork
+        // TODO for live zjmp fork lfork a function to assignate specific arg type
         // ope->type = ...
         // ope->size_type = ...
     }

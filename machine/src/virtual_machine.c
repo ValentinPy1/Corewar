@@ -33,4 +33,5 @@ void launch_vm(int ac, char *av[])
         vm->live_count -= NBR_LIVE;
     }
     // TODO destroy each process that have a last live printed more than cycle_to_cie cyles
+    // TODO check for win ad loss condition
 }

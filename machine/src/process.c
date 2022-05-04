@@ -23,24 +23,24 @@ char **load_reg(void)
     return reg;
 }
 
-char *get_prog(char *path)
+int get_prog(ram_t *ram, int adress, char *path)
 {
     int fd = open(path, O_RDONLY);
     char *prog = NULL;
 
-    // TODO
+    // TODO get all content in the file and put it in the ram memory
 
-    return prog;
+    for (int i = 0; prog[i]; ++i)
+        ram->mem[i + adress] = prog[i];
+    return 0;
 }
 
 void load_prog(vm_t *vm, char *path, int adress, int flag)
 {
     process_t *proc = malloc(sizeof(process_t));
-    char *prog = get_prog(path);
     int pn = vm->proc_nbr;
 
-    for (int i = 0; prog[i]; ++i)
-        vm->ram->mem[i + adress] = prog[i];
+    get_prog(vm->ram, adress, path); // TODO error handling fail opening or reading the file
     proc->carry = false;
     proc->flag = flag;
     proc->last_live = 0;
@@ -65,7 +65,7 @@ void update_process(vm_t *vm, process_t *proc)
     }
     MNEMONIC[ope->code].func(vm, proc, ope);
     proc->pc += ope->size;
-    // destroy_ope(proc->current_ope);
+    // destroy_ope(proc->current_ope); // TODO function for destroying operation
     proc->current_ope = get_ope(vm, proc->pc);
     proc->wait = proc->current_ope->nbr_cycles;
 }
