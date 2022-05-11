@@ -8,6 +8,18 @@
 #include <stdlib.h>
 #include "my.h"
 
+char *my_strcat(char *dest, char *src)
+{
+    int i = 0;
+    int j = 0;
+
+    while (dest[i])
+        ++i;
+    while (src[j])
+        dest[i++] = src[j++];
+    return dest;
+}
+
 char *get_substr(char **str, char end)
 {
     int i = 0;
@@ -27,7 +39,7 @@ char *get_substr(char **str, char end)
     return sub;
 }
 
-size_t get_char_index_in_str(const char *str, char target)
+int get_char_index_in_str(const char *str, char target)
 {
     size_t i = 0;
 

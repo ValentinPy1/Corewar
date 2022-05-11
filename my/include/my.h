@@ -19,7 +19,7 @@ int my_strcmp(const char *str1, const char *str2);
 int getnbr_until_non_digit(char **str);
 void my_strncpy(char *dest, char *str, int n);
 char *get_substr(char **str, char end);
-size_t get_char_index_in_str(const char *str, char target);
+int  get_char_index_in_str(const char *str, char target);
 int my_putstr(char const *str);
 void my_put_nbr(int nb);
 void my_putchar(char c);
