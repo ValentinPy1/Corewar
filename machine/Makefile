@@ -12,6 +12,10 @@ SRC	= ../op.c \
 		src/manage_ope.c \
 		src/tools.c \
 		src/instructions/basics.c \
+		src/register_load.c \
+		src/instructions/add.c \
+		src/instructions/and.c \
+
 
 OBJ	=	$(SRC:.c=.o)
 
