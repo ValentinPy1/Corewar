@@ -25,8 +25,13 @@ char *my_strdup(char *str)
 {
     char *new = malloc(sizeof(char) * (my_strlen(str) + 1));
 
-    if (new == NULL)
+    if (str == NULL) {
+        free(new);
         return NULL;
+    }
+    if (new == NULL) {
+        return NULL;
+    }
     my_strcpy(new, str);
     return new;
 }

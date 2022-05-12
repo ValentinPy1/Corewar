@@ -10,6 +10,7 @@
 static void writer(char *filename, char *str)
 {
     int fd = open(filename, O_CREAT | O_WRONLY, 0666); // | O_APPEND
+
     write(fd, &str, sizeof(char));
 }
 

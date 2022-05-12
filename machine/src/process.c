@@ -7,9 +7,14 @@
 
 #include "machine.h"
 
-static const instruct_t MNEMONIC[2] = {
+static const instruct_t MNEMONIC[] = {
     {&live},
-    {&ld_func}
+    {&ld_func},
+    {&st_func},
+    {&add_func},
+    {&sub_func},
+    {&and_func},
+    {&xor_func}
 };
 
 char **load_reg(void)

@@ -9,6 +9,16 @@ SRC	= ../op.c \
 		src/compile_file.c \
 		src/get_op_index.c \
 		src/write_instruct.c \
+		src/write_parameters.c \
+		src/param_handlers.c \
+		src/exec_strutc.c \
+		src/write_header.c \
+		src/label_helper.c \
+		src/remove_final_new_line.c \
+		src/continue_writting_line.c \
+		src/write_exec_at.c \
+		src/label_reference.c \
+		src/process_line.c \
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -17,6 +27,8 @@ SMAIN	=	src/main.c
 OMAIN	=	$(SMAIN:.c=.o)
 
 NAME	=	asm
+
+CFLAGS +=	-Wall -Wextra -Werror
 
 CPPFLAGS	=	-I ../include/
 
@@ -39,7 +51,7 @@ fclean:	clean
 
 re: fclean all
 
-debug: CFLAGS	+=	-g3 -Wall -Wextra
+debug: CFLAGS	+=	-g3
 debug: re
 
 unit_test: CFLAGS	+=	-lcriterion

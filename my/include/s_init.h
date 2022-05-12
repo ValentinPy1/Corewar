@@ -12,7 +12,7 @@
     #include <stdarg.h>
 
 char *get_substr(char **str, char end);
-size_t get_char_index_in_str(const char *str, char target);
+int get_char_index_in_str(const char *str, char target);
 static int set_mem_from_str(char **template, char **data, void *var);
 static int fill_obj_from_template(char **template, void **vars,
 char **data);
