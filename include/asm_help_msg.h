@@ -10,6 +10,6 @@
 
 static const char help_msg[] = "USAGE\n./asm file_name[.s]\nDESCRIPTION\n"
 "file_name file in assembly language to be converted into file_name.cor, "
-"an executable in the Virtual vmine.\n";
+"an executable in the Virtual Machine.\n";
 
 #endif
