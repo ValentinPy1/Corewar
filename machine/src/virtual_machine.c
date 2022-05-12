@@ -15,16 +15,17 @@ vm_t *setup_vm(void)
     vm->proc_nbr = 0;
     vm->cycle = 0;
     vm->cycle_to_die = CYCLE_TO_DIE;
+    // TODO setup dump cycle in my_get_opt
     return vm;
 }
 
 void launch_vm(int ac, char *av[])
 {
     vm_t *vm = setup_vm();
+    if (get_nbr_of_champ(av) < 2)
+        return;
 
-    load_prog(vm, av[1], atoi(av[2]), atoi(av[3]));
-    // TODO reapeat for each file in args with right player flag
-
+    my_get_opt(vm, ac, av);
     for (int i = 0; i < vm->proc_nbr; ++i)
         update_process(vm, vm->process[i]);
     vm->cycle += 1;
@@ -35,3 +36,5 @@ void launch_vm(int ac, char *av[])
     // TODO destroy each process that have a last live printed more than cycle_to_cie cyles
     // TODO check for win ad loss condition
 }
+
+// -n optionnel

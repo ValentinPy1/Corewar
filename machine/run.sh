@@ -1,0 +1,1 @@
+make ; ./corewar -n 1 -a f1 42.cor 42.cor
