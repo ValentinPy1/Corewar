@@ -194,19 +194,64 @@ int get_param_value(param_t param, exec_t *ex)
     return ex->labels[param.value].adress;
 }
 
+char get_type_code_from_size(int size)
+{
+    switch (size) {
+        case T_REG:
+            return 0b01;
+        case T_DIR:
+            return 0b10;
+        default:
+            return 0b11;
+    }
+    return 0;
+}
+
+void write_encoding_byte(buffer_t buffer, exec_t *ex)
+{
+    char byte = 0;
+    char tmp = 0;
+    int i = 0;
+
+    for (; i < buffer.param_nbr; ++i) {
+        tmp = get_type_code_from_size(buffer.params[i].size);
+        byte <<= 2;
+        byte |= tmp;
+    }
+    while (i++ < 4)
+        byte <<= 2;
+    printf("--->byte : %x\n", byte);
+    wexec(&byte, sizeof(char), ex);
+}
+
+int get_param_size_from_type(int type)
+{
+    switch (type) {
+        case T_REG:
+            return REG_SIZE;
+        case T_DIR:
+            return DIR_SIZE;
+        default:
+            return IND_SIZE;
+    }
+}
+
 void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
 {
     int value = 0;
+    // int j = 0;
+    // char tmp = 0;
     printf("------\n");
     printf("instruct: %d\n", buffer.instruct_code);
+
     wexec(&(buffer.instruct_code), sizeof(char), ex);
-    for (int i = 0; i < buffer.param_nbr; ++i) {
-        printf("size: %d\n", buffer.params[i].size);
-        wexec(&(buffer.params[i].size), sizeof(char), ex);
-    }
+    if (!(buffer.instruct_code == 1 || buffer.instruct_code == 9
+    || buffer.instruct_code == 12 || buffer.instruct_code == 15))
+        write_encoding_byte(buffer, ex);
     for (int i = 0; i < buffer.param_nbr; ++i) {
         value = get_param_value(buffer.params[i], ex);
-        printf("value: %d\n", value);
+        printf("value: %d, size %d\n", value, buffer.params[i].size);
+        invert_endianess(&value, buffer.params[i].size);
         wexec(&value, buffer.params[i].size, ex);
     }
 }
