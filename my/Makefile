@@ -17,6 +17,8 @@ SRC	=	str_utils.c \
 		my_putstr.c \
 		my_put_nbr.c \
 		my_putchar.c \
+		my_getnbr.c \
+		my_getnbr_hexa.c \
 
 OBJ	=	$(SRC:.c=.o)
 

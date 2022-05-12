@@ -53,7 +53,6 @@ ope_t *get_ope(vm_t *vm, int adress)
     ope_t *ope = malloc(sizeof(ope_t));
     char args_type;
     char *mem = vm->ram->mem;
-
     ope->size = 1;
     ope->code = mem[adress];
     if (ope->code != 1 && ope->code != 9 &&

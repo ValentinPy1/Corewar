@@ -16,8 +16,7 @@ static void writer(char *filename, char *str)
 
 int main(int ac, char **av)
 {
-    // TODO get_opt
-    if (ac == 4)
-        launch_vm(ac, av);
+    if (launch_vm(ac, av) == 84)
+        return 84;
     return 0;
 }

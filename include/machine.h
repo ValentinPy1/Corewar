@@ -41,6 +41,7 @@ typedef struct arg_info_s {
 typedef struct ram_s {
     char *mem;
     int size;
+    int head;
 } ram_t;
 
 struct process_s {
@@ -51,6 +52,7 @@ struct process_s {
     int last_live;
     int wait;
     ope_t *current_ope;
+    int prog_nbr;
 };
 
 typedef struct vm_s {
@@ -60,17 +62,22 @@ typedef struct vm_s {
     int cycle;
     int cycle_to_die;
     int live_count;
+    int dump_cycle;
 } vm_t;
 
 typedef struct instruct_s {
     void (*func)(vm_t *vm, process_t *process, ope_t *ope);
 } instruct_t;
 
+//SETUP MACHINE
+int get_nbr_of_champ(char **av);
+void my_get_opt(vm_t *vm, int ac, char **av);
+
 //MACHINE MANAGEMENT
-void launch_vm(int ac, char *av[]);
+int launch_vm(int ac, char *av[]);
 ram_t *setup_ram(void);
 char *load_battle_zone(void);
-void load_prog(vm_t *vm, char *path, int adress, int flag);
+void load_prog(vm_t *vm, char *path, int adress, int prog_number);
 
 //REGISTER READ / WRITE
 void load_data_in_reg(char *reg, void *data, size_t data_size);
