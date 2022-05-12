@@ -5,8 +5,8 @@
 ** machine.h
 */
 
-#ifndef __vmINE__
-    #define __vmINE__
+#ifndef __MACHINE__
+    #define __MACHINE__
 
     #include "my.h"
     #include "op.h"
