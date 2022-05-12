@@ -20,7 +20,7 @@ static int is_cor(char *str)
 
 static int get_farest_a()
 {
-
+    return 300;
 }
 
 void lauch_prog(vm_t *vm, char *path, int *a_n , int n_save)
@@ -29,7 +29,7 @@ void lauch_prog(vm_t *vm, char *path, int *a_n , int n_save)
         a_n[1] = n_save;
     }
     if (a_n[0] == 0) {
-        get_farest_a();
+        a_n[0] = get_farest_a();
     }
     load_prog(vm, path, a_n[0], a_n[1]);
 }

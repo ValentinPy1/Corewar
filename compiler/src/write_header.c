@@ -71,6 +71,10 @@ header_t *get_header(FILE *file)
 
 void write_header(header_t *header, exec_t *exec, int fd)
 {
+    int magic = COREWAR_EXEC_MAGIC;
+
     header->prog_size = my_strlen(exec->binary);
+    invert_endianess(&magic, sizeof(int));
+    header->magic = magic;
     write(fd, header, sizeof(header_t));
 }

@@ -87,15 +87,7 @@ int compile_file(char *filename)
 
     if (!exec_file)
         return 84;
-<<<<<<< HEAD
-    fd = open(exec_file, O_RDWR | O_CREAT, 0771);
-    if (fd < 0 || write_executable(fd, filename)) {
-        free(exec_file);
-        if (fd <= 0)
-            close(fd);
-=======
     if (write_executable(filename, exec_file))
->>>>>>> d638ed2a5c4551dd5b212b7608a56ecbde3a8d50
         return 84;
     free(exec_file);
     return 0;
