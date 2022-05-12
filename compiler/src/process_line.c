@@ -250,9 +250,9 @@ void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
         write_encoding_byte(buffer, ex);
     for (int i = 0; i < buffer.param_nbr; ++i) {
         value = get_param_value(buffer.params[i], ex);
-        printf("value: %d, size %d\n", value, buffer.params[i].size);
+        printf("value: %d, size %d\n", value, get_param_size_from_type(buffer.params[i].size) / 2);
         invert_endianess(&value, buffer.params[i].size);
-        wexec(&value, buffer.params[i].size, ex);
+        wexec(&value, get_param_size_from_type(buffer.params[i].size) / 2, ex);
     }
 }
 
