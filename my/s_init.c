@@ -36,13 +36,10 @@ char **data)
             return 84;
         if (**template == '%') {
             ++*template;
-            printf("expecting object, data is [%s]\n", *data);
             out = set_mem_from_str(template, data, vars[var_index++]);
-            printf("got obj, err is %d\n", out);
             continue;
         }
         if (**template != **data) {
-            printf("chars differ: [%c] and [%c]\n", **template, **data);
             return 84;
         }
         ++*template;

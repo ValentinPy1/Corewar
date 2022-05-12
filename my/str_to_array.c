@@ -43,7 +43,6 @@ void set_words(char **word_array, char *str, char separator, int elt_nbr)
 
     while (i < len && array_index < elt_nbr) {
         start = i;
-        printf("starting new word: i = %d\n", start);
         while (str[i] != separator)
             ++i;
         word_array[array_index++] = dup_between(str, start, i);

@@ -23,5 +23,6 @@ size_t get_char_index_in_str(const char *str, char target);
 int my_putstr(char const *str);
 void my_put_nbr(int nb);
 void my_putchar(char c);
-
+int my_getnbr(char const *str);
+int my_getnbr_hexa(const char *str);
 #endif

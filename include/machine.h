@@ -29,10 +29,11 @@ typedef struct ope_s {
 typedef struct ram_s {
     char *mem;
     int size;
+    int head;
 } ram_t;
 
 typedef struct process_s {
-    int flag;
+    int prog_nbr;
     char **reg;
     int pc;
     bool carry;
@@ -48,17 +49,22 @@ typedef struct vm_s {
     int cycle;
     int cycle_to_die;
     int live_count;
+    int dump_cycle;
 } vm_t;
 
 typedef struct instruct_s {
     void (*func)(vm_t *vm, process_t *process, ope_t *ope);
 } instruct_t;
 
+//SETUP MACHINE
+int get_nbr_of_champ(char **av);
+void my_get_opt(vm_t *vm, int ac, char **av);
+
 //MACHINE MANAGEMENT
 void launch_vm(int ac, char *av[]);
 ram_t *setup_ram(void);
 char *load_battle_zone(void);
-void load_prog(vm_t *vm, char *path, int adress, int flag);
+void load_prog(vm_t *vm, char *path, int adress, int prog_number);
 
 //PROCESS MANAGEMENT
 char **load_reg(void);

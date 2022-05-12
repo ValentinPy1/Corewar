@@ -75,7 +75,6 @@ int compile_file(char *filename)
 
     if (!exec_file)
         return 84;
-        printf("opening %s\n", exec_file);
     fd = open(exec_file, O_RDWR | O_CREAT, 0771);
     if (fd < 0 || write_executable(fd, filename)) {
         free(exec_file);
