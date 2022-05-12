@@ -29,7 +29,9 @@ void register_new_label(char *label, exec_t *ex)
     int out = -1;
     printf("register_new_label\n");
     remove_ending_char(label, ':');
-    for (size_t i = 0; i > ex->label_count; ++i) {
+    printf("label is [%s], label count is %zu\n", label, ex->label_count);
+    for (size_t i = 0; i < ex->label_count; ++i) {
+        printf("comparing new label [%s] to existing [%s]\n", label, ex->labels[i].id);
         if (my_strcmp(label, ex->labels[i].id) == 0) {
             out = ex->labels[i].adress != -1;
             ex->labels[i].adress = ex->tmp_head;
@@ -128,7 +130,7 @@ void put_params_in_buffer(exec_t *ex, buffer_t *buffer, char **line)
 
 int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index)
 {
-    buffer->instruct_code = op_index;
+    buffer->instruct_code = op_tab[op_index].code;
     buffer->param_nbr = op_tab[op_index].nbr_args;
     put_params_in_buffer(ex, buffer, line);
     return 0;
@@ -136,9 +138,12 @@ int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index)
 
 int write_buffer_from_line(exec_t *ex, buffer_t *buffer, char **line)
 {
-    char *op = get_substr(line, ' ');
+    char *op;
     int index = 0;
 
+    while (**line == ' ' || **line == '\t')
+        ++(*line);
+    op = get_substr(line, ' ');
     if (op_is_label(my_strdup(op))) {
         printf("---> label [%s]\n", op);
         register_new_label(op, ex);
@@ -208,13 +213,17 @@ void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
 
 void write_exec_binary(exec_t *ex)
 {
+    printf("before converting to binary, here are the labels:\n");
+    for (size_t i = 0; i < ex->label_count; ++i) {
+        printf("[%s][%d]\n", ex->labels[i].id, ex->labels[i].adress);
+    }
     printf("\nconverting buffer to binary...\n");
     for (int i = 0; i < ex->buffer_count; ++i) {
         write_buffer_to_bin(ex, ex->buffer[i]);
     }
 }
 
-void output_binary_to_file(char *filepath, exec_t *ex, __attribute__((unused))header_t *header)
+void output_binary_to_file(char *filepath, exec_t *ex, header_t *header)
 {
     int fd = open(filepath, O_CREAT | O_WRONLY | O_TRUNC, 0777);
     printf("----\nwritting output\n");

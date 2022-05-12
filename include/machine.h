@@ -7,6 +7,10 @@
 
 #ifndef __vmINE__
     #define __vmINE__
+    #define loadarg(arg, i, size) \
+    (load_op_arg(&arg, vm, (arginf_t) {ope, p, i, size}))
+    #define lireg(data_ptr, data_size, reg_index) \
+        load_data_in_reg(p->reg[ope->args[reg_index]], data_ptr, data_size);
 
     #include "my.h"
     #include "op.h"
@@ -17,6 +21,7 @@
     #include <stdio.h>
     #include "math.h"
 
+typedef struct process_s process_t;
 typedef struct ope_s {
     char code;
     char *type;
@@ -26,12 +31,19 @@ typedef struct ope_s {
     int nbr_cycles;
 } ope_t;
 
+typedef struct arg_info_s {
+    ope_t *ope;
+    process_t *process;
+    int argno;
+    int arg_size;
+} arginf_t;
+
 typedef struct ram_s {
     char *mem;
     int size;
 } ram_t;
 
-typedef struct process_s {
+struct process_s {
     int flag;
     char **reg;
     int pc;
@@ -39,7 +51,7 @@ typedef struct process_s {
     int last_live;
     int wait;
     ope_t *current_ope;
-} process_t;
+};
 
 typedef struct vm_s {
     ram_t *ram;
@@ -60,6 +72,10 @@ ram_t *setup_ram(void);
 char *load_battle_zone(void);
 void load_prog(vm_t *vm, char *path, int adress, int flag);
 
+//REGISTER READ / WRITE
+void load_data_in_reg(char *reg, void *data, size_t data_size);
+void load_data_from_reg(char *reg, void *data, size_t data_size);
+
 //PROCESS MANAGEMENT
 char **load_reg(void);
 void update_process(vm_t *vm, process_t *proc);
@@ -72,5 +88,12 @@ void destroy_ope(ope_t *ope);
 //OPERATIONS
 void live(vm_t *vm, process_t *process, ope_t *ope);
 void ld_func(vm_t *vm, process_t *process, ope_t *ope);
+void st_func(vm_t *vm, process_t *process, ope_t *ope);
+
+void add_func(vm_t *vm, process_t *process, ope_t *ope);
+void sub_func(vm_t *vm, process_t *process, ope_t *ope);
+void and_func(vm_t *vm, process_t *p, ope_t *ope);
+void xor_func(vm_t *vm, process_t *p, ope_t *ope);
+void load_op_arg(void *dest, vm_t *vm, arginf_t arginf);
 
 #endif
