@@ -138,6 +138,7 @@ void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
         return;
     ex->tmp_head += get_param_size_from_type(buffer->params[i].size, i,
     buffer->instruct_code);
+    printf("--------------------------head += %d\n", get_param_size_from_type(buffer->params[i]).size);
     buffer->params[i].value = my_getnbr(param);
 }
 
@@ -160,6 +161,7 @@ int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index)
 {
     buffer->instruct_code = op_tab[op_index].code;
     ex->tmp_head += get_head_delta_from_func(buffer->instruct_code);
+    printf("-------------------------------head += %d\n", get_head_delta_from_func(buffer->instruct_code));
     buffer->param_nbr = op_tab[op_index].nbr_args;
     put_params_in_buffer(ex, buffer, line);
     return 0;
