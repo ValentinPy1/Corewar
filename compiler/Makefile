@@ -19,6 +19,7 @@ SRC	= ../op.c \
 		src/write_exec_at.c \
 		src/label_reference.c \
 		src/process_line.c \
+		src/size_adjusters.c \
 
 OBJ	=	$(SRC:.c=.o)
 

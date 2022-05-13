@@ -23,28 +23,28 @@ int count_char_in_str(char *str, char c)
     return count;
 }
 
-int my_getnbr(char *str)
-{
-    int nbr = 0;
-    int i = 0;
-    int sign = 1;
+// int my_getnbr(char *str)
+// {
+//     int nbr = 0;
+//     int i = 0;
+//     int sign = 1;
 
-    if (str[0] == '-') {
-        sign = -1;
-        ++i;
-    }
-    while (str[i]) {
-        if (str[i] == ' ') {
-            ++i;
-            continue;
-        }
-        if (str[i] == '\n')
-            return nbr * sign;
-        nbr = nbr * 10 + str[i] - '0';
-        ++i;
-    }
-    return nbr * sign;
-}
+//     if (str[0] == '-') {
+//         sign = -1;
+//         ++i;
+//     }
+//     while (str[i]) {
+//         if (str[i] == ' ') {
+//             ++i;
+//             continue;
+//         }
+//         if (str[i] == '\n')
+//             return nbr * sign;
+//         nbr = nbr * 10 + str[i] - '0';
+//         ++i;
+//     }
+//     return nbr * sign;
+// }
 
 char *get_label_from_param(char *param)
 {
