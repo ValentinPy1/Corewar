@@ -90,6 +90,7 @@ bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i)
     buffer->params[i].is_label = true;
     label = get_label_from_param(++param);
     buffer_set_as_label(buffer, ex, label, i);
+    printf("param is label\n");
     return true;
 }
 
@@ -219,8 +220,10 @@ int get_sum_param_len(buffer_t buffer)
 
 int get_param_value(param_t param, exec_t *ex)
 {
-    if (!(param.is_label))
+    if (!(param.is_label)) {
+        printf("value is a label\n");
         return param.value;
+    }
     // printf("param is a label, label index = [%d], adress [%d], id [%s]\n", param.value, ex->labels[param.value].adress, ex->labels[param.value].id);
     return ex->labels[param.value].adress;
 }
@@ -321,6 +324,7 @@ void output_binary_to_file(char *filepath, exec_t *ex, header_t *header)
         printf("error fd\n");
         exit(84);
     }
+    printf("sizeof(header) = %zu\n", sizeof(header_t));
     write_header(header, ex, fd);
     write(fd, ex->binary, ex->head);
     close(fd);
