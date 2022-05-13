@@ -56,6 +56,10 @@ header_t *get_header(FILE *file)
 
     if (!header)
         return NULL;
+    for (int i = 0; i < PROG_NAME_LENGTH; ++i)
+        header->prog_name[i] = 0;
+    for (int i = 0; i < COMMENT_LENGTH; ++i)
+        header->comment[i] = 0;
     while (getline(&line, &len, file) != -1) {
         if (line[0] != '#' && line[0] != '\n')
             break;
@@ -65,6 +69,8 @@ header_t *get_header(FILE *file)
         if (line[0] != '#' && line[0] != '\n')
             break;
     }
+    header->magic = 0;
+    header->prog_size = 0;
     get_comment_and_name(header, line);
     return header;
 }

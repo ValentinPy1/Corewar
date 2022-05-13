@@ -38,9 +38,14 @@ void add_label_reference(exec_t *ex, int i, int delta_head);
 
 int process_line(exec_t *ex, char **line);
 char *get_label_from_param(char *param);
-int my_getnbr(char *str);
 int op_is_label(char *op);
 void write_exec_binary(exec_t *ex);
 void output_binary_to_file(char *filepath, exec_t *ex, header_t *header);
+void adjust_zjmp(int *size, int param_id);
+void adjust_ldi(int *size, int param_id);
+void adjust_sti(int *size,  int param_id);
+void adjust_fork(int *size, int param_id);
+void adjust_live(int *size, int param_id);
+int get_param_size_from_type(int type, int param_index, int instruct_code);
 
 #endif

@@ -27,7 +27,7 @@ void remove_ending_char(char *str, char c)
 void register_new_label(char *label, exec_t *ex)
 {
     int out = -1;
-    printf("register_new_label\n");
+    printf("register_new_label: [%s]\n", label);
     remove_ending_char(label, ':');
     printf("label is [%s], label count is %zu\n", label, ex->label_count);
     for (size_t i = 0; i < ex->label_count; ++i) {
@@ -35,7 +35,6 @@ void register_new_label(char *label, exec_t *ex)
         if (my_strcmp(label, ex->labels[i].id) == 0) {
             out = ex->labels[i].adress != -1;
             ex->labels[i].adress = ex->tmp_head;
-            printf("label was already declared. adress set to %d\n", ex->tmp_head);
             break;
         }
     }
@@ -49,7 +48,6 @@ void register_new_label(char *label, exec_t *ex)
     ex->labels[ex->label_count - 1].adress = ex->tmp_head;
     ex->labels[ex->label_count - 1].backward_ref_count = 0;
     ex->labels[ex->label_count - 1].backward_refs = NULL;
-    printf("declared label [%s] at adress [%d]\n", label, ex->tmp_head);
 }
 
 int register_new_label_forward(char *label, exec_t *ex)
@@ -92,8 +90,29 @@ bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i)
     buffer->params[i].is_label = true;
     label = get_label_from_param(++param);
     buffer_set_as_label(buffer, ex, label, i);
+    printf("param is label\n");
     return true;
 }
+
+typedef void (*size_adjuster_t)(int *, int);
+static const size_adjuster_t adjust_size[] = {
+    &adjust_live,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    &adjust_zjmp,
+    &adjust_ldi,
+    &adjust_sti,
+    &adjust_fork,
+    NULL,
+    &adjust_ldi,
+    &adjust_fork,
+    NULL
+};
 
 void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
 {
@@ -115,9 +134,10 @@ void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
         default:
             buffer->params[i].size = T_IND;
     }
-    ex->tmp_head += 1 + buffer->params[i].size;
     if (is_param_label(ex, buffer, param, i))
         return;
+    ex->tmp_head += get_param_size_from_type(buffer->params[i].size, i,
+    buffer->instruct_code);
     buffer->params[i].value = my_getnbr(param);
 }
 
@@ -128,9 +148,18 @@ void put_params_in_buffer(exec_t *ex, buffer_t *buffer, char **line)
     }
 }
 
+int get_head_delta_from_func(int instruct_code)
+{
+    if (!(instruct_code == 1 || instruct_code == 9
+    || instruct_code == 12 || instruct_code == 15))
+        return 1;
+    return 2;
+}
+
 int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index)
 {
     buffer->instruct_code = op_tab[op_index].code;
+    ex->tmp_head += get_head_delta_from_func(buffer->instruct_code);
     buffer->param_nbr = op_tab[op_index].nbr_args;
     put_params_in_buffer(ex, buffer, line);
     return 0;
@@ -144,6 +173,9 @@ int write_buffer_from_line(exec_t *ex, buffer_t *buffer, char **line)
     while (**line == ' ' || **line == '\t')
         ++(*line);
     op = get_substr(line, ' ');
+    if (!op[0])
+        return 0;
+    printf("before op is label, [%s]\n", op);
     if (op_is_label(my_strdup(op))) {
         printf("---> label [%s]\n", op);
         register_new_label(op, ex);
@@ -188,26 +220,87 @@ int get_sum_param_len(buffer_t buffer)
 
 int get_param_value(param_t param, exec_t *ex)
 {
-    if (!(param.is_label))
+    if (!(param.is_label)) {
+        printf("value is a label\n");
         return param.value;
-    printf("param is a label, label index = [%d], adress [%d], id [%s]\n", param.value, ex->labels[param.value].adress, ex->labels[param.value].id);
+    }
+    // printf("param is a label, label index = [%d], adress [%d], id [%s]\n", param.value, ex->labels[param.value].adress, ex->labels[param.value].id);
     return ex->labels[param.value].adress;
 }
+
+char get_type_code_from_size(int size)
+{
+    switch (size) {
+        case T_REG:
+            return 0b01;
+        case T_DIR:
+            return 0b10;
+        default:
+            return 0b11;
+    }
+    return 0;
+}
+
+void write_encoding_byte(buffer_t buffer, exec_t *ex)
+{
+    char byte = 0;
+    char tmp = 0;
+    int i = 0;
+
+    for (; i < buffer.param_nbr; ++i) {
+        tmp = get_type_code_from_size(buffer.params[i].size);
+        byte <<= 2;
+        byte |= tmp;
+    }
+    while (i++ < 4)
+        byte <<= 2;
+    printf("--->byte : %x\n", byte);
+    wexec(&byte, sizeof(char), ex);
+}
+
+void adjust_param_size(int *size, int instruct_code, int param_index)
+{
+    if (adjust_size[instruct_code - 1])
+        adjust_size[instruct_code - 1](size, param_index);
+}
+
+int get_param_size_from_type(int type, int param_index, int instruct_code)
+{
+    int value = 0;
+
+    switch (type) {
+        case T_REG:
+            value = 1;
+            break;
+        case T_DIR:
+            value = DIR_SIZE;
+            break;
+        default:
+            value = IND_SIZE;
+    }
+    adjust_param_size(&value, instruct_code, param_index);
+    return value;
+}
+
 
 void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
 {
     int value = 0;
+    int size = 0;
     printf("------\n");
     printf("instruct: %d\n", buffer.instruct_code);
+
     wexec(&(buffer.instruct_code), sizeof(char), ex);
-    for (int i = 0; i < buffer.param_nbr; ++i) {
-        printf("size: %d\n", buffer.params[i].size);
-        wexec(&(buffer.params[i].size), sizeof(char), ex);
-    }
+    if (!(buffer.instruct_code == 1 || buffer.instruct_code == 9
+    || buffer.instruct_code == 12 || buffer.instruct_code == 15))
+        write_encoding_byte(buffer, ex);
     for (int i = 0; i < buffer.param_nbr; ++i) {
         value = get_param_value(buffer.params[i], ex);
-        printf("value: %d\n", value);
-        wexec(&value, buffer.params[i].size, ex);
+        size = get_param_size_from_type(buffer.params[i].size, i,
+        buffer.instruct_code);
+        printf("value: %d, size %d\n", value, get_param_size_from_type(buffer.params[i].size, i, buffer.instruct_code));
+        invert_endianess(&value, size);
+        wexec(&value, size, ex);
     }
 }
 
@@ -231,6 +324,7 @@ void output_binary_to_file(char *filepath, exec_t *ex, header_t *header)
         printf("error fd\n");
         exit(84);
     }
+    printf("sizeof(header) = %zu\n", sizeof(header_t));
     write_header(header, ex, fd);
     write(fd, ex->binary, ex->head);
     close(fd);
