@@ -46,7 +46,6 @@ int get_prog(ram_t *ram, int adress, char *path)
 // void load_prog(vm_t *vm, char **av)
 void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
-
     process_t *proc = malloc(sizeof(process_t));
     int pn = vm->proc_nbr;
     printf("launch gang\n");
