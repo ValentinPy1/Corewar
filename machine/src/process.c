@@ -17,14 +17,13 @@ static const instruct_t MNEMONIC[] = {
     {&xor_func}
 };
 
-char **load_reg(void)
+int *load_reg(int flag)
 {
-    char **reg = malloc(sizeof(char *) * REG_NUMBER);
+    int *reg = malloc(sizeof(int *) * REG_NUMBER);
     for (int i = 0; i < REG_NUMBER; i++) {
-        reg[i] = malloc(sizeof(char) * REG_SIZE);
-        for (int j = 0; j < REG_SIZE; j++)
-            reg[i][j] = 0;
+        reg[i] = 0;
     }
+    reg[0] = flag;
     return reg;
 }
 
@@ -37,33 +36,34 @@ int get_prog(ram_t *ram, int adress, char *path)
     char *tmp = malloc(sizeof(char) * MEM_SIZE);
     int count = 0;
     // read(fd, &tmp, sizeof(header_t));
-    while (read(fd, &prog, 1)) count++;
-    for (int i = 0; i < count; ++i)
+    while (read(fd, tmp, 1)) count++;
+    fd = open(path, O_RDONLY);
+    read(fd, prog, count);
+    for (int i = 0; i + adress < count; ++i)
         ram->mem[i + adress] = prog[i];
     close(fd);
     return 0;
 }
-// void load_prog(vm_t *vm, char **av)
 void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
     process_t *proc = malloc(sizeof(process_t));
-    int pn = vm->proc_nbr;
-    printf("launch gang\n");
+    int pn = vm->proc_count;
+    printf("pn : %d\n", pn);
     get_prog(vm->ram, adress, path);
-    printf("after \n");
     proc->carry = false;
     proc->prog_nbr = prog_number;
     proc->last_live = 0;
     proc->pc = adress;
-    proc->reg = load_reg();
+    proc->reg = load_reg(prog_number); // get the flag from the input
     proc->current_ope = get_ope(vm, adress);
     proc->wait = proc->current_ope->nbr_cycles;
-    vm->proc_nbr = prog_number;
     vm->process = realloc(vm->process, pn + 2);
+    vm->proc_count += 1;
+    printf("vm : %p\n", vm);
+    printf("vm->process[pn] : %p\n", vm->process[pn]);
+    printf("proc : %p\n", proc);
     vm->process[pn] = proc;
-    vm->proc_nbr += 1; /// ??????????????????????????????????????????????????????????
     vm->process[pn + 1] = NULL;
-
 }
 
 void update_process(vm_t *vm, process_t *proc)
@@ -76,7 +76,7 @@ void update_process(vm_t *vm, process_t *proc)
         return;
     }
     MNEMONIC[ope->code].func(vm, proc, ope);
-    proc->pc += ope->size;
+    proc->pc = (proc->pc + ope->size) % MEM_SIZE;
     // destroy_ope(proc->current_ope); // TODO function for destroying operation
     proc->current_ope = get_ope(vm, proc->pc);
     proc->wait = proc->current_ope->nbr_cycles;

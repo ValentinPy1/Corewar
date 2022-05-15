@@ -7,18 +7,16 @@
 
 #include "machine.h"
 
-char *load_battle_zone(void)
+void load_battle_zone(ram_t *ram)
 {
-    char *battle_zone = malloc(sizeof(char) * MEM_SIZE);
+    ram->mem = malloc(sizeof(char) * MEM_SIZE);
 
     for (int i = 0; i < MEM_SIZE; ++i)
-        battle_zone[i] = 0;
-    return battle_zone;
+        ram->mem[i] = 0;
 }
 
-ram_t *setup_ram(void)
+void setup_ram(vm_t *vm)
 {
-    ram_t *ram = malloc(sizeof(ram_t));
-    ram->mem = load_battle_zone();
-    return ram;
+    vm->ram = malloc(sizeof(ram_t));
+    load_battle_zone(vm->ram);
 }

@@ -9,7 +9,6 @@
 
 int get_dump(char *str, char *nbr)
 {
-    int i = 0;
     int dump = 0;
     if (my_strcmp(str, "-dump") == 0) {
         dump = my_getnbr(nbr);
@@ -22,9 +21,9 @@ int get_dump(char *str, char *nbr)
 vm_t *setup_vm(char **av)
 {
     vm_t *vm = malloc(sizeof(vm_t));
-    vm->ram = setup_ram();
-    vm->process = NULL;
-    vm->proc_nbr = 0;
+    setup_ram(vm);
+    vm->process = malloc(sizeof(process_t));
+    vm->proc_count = 0;
     vm->cycle = 0;
     vm->cycle_to_die = CYCLE_TO_DIE;
     vm->dump_cycle = get_dump(av[1], av[2]);
@@ -37,14 +36,19 @@ int launch_vm(int ac, char *av[])
 
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
+    vm->dump_cycle = 1000;
+    load_prog(vm, , a_n[0], a_n[1]);
     my_get_opt(vm, ac, av);
-    printf("after\n");
-    for (int i = 0; i < vm->proc_nbr; ++i)
-        update_process(vm, vm->process[i]);
-    vm->cycle += 1;
-    if (vm->live_count > NBR_LIVE) {
-        vm->cycle_to_die -= CYCLE_DELTA;
-        vm->live_count -= NBR_LIVE;
+    while (1) { // end condition
+        for (int i = 0; i < vm->proc_count; ++i) {
+            // printf("vm->process[i] : %p\n", vm->process[i]);
+            update_process(vm, vm->process[i]);
+        }
+        vm->cycle += 1;
+        if (vm->live_count > NBR_LIVE) {
+            vm->cycle_to_die -= CYCLE_DELTA;
+            vm->live_count -= NBR_LIVE;
+        }
     }
     return 0;
     // TODO destroy each process that have a last live printed more than cycle_to_cie cyles

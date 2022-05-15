@@ -46,7 +46,7 @@ typedef struct ram_s {
 
 struct process_s {
     int flag;
-    char **reg;
+    int *reg;
     int pc;
     bool carry;
     int last_live;
@@ -58,7 +58,7 @@ struct process_s {
 typedef struct vm_s {
     ram_t *ram;
     process_t **process;
-    int proc_nbr;
+    int proc_count;
     int cycle;
     int cycle_to_die;
     int live_count;
@@ -75,8 +75,9 @@ void my_get_opt(vm_t *vm, int ac, char **av);
 
 //MACHINE MANAGEMENT
 int launch_vm(int ac, char *av[]);
-ram_t *setup_ram(void);
-char *load_battle_zone(void);
+void setup_ram(vm_t *vm);
+// char *load_battle_zone(vm_t *vm);
+void load_battle_zone(ram_t *ram);
 void load_prog(vm_t *vm, char *path, int adress, int prog_number);
 
 //REGISTER READ / WRITE
@@ -84,7 +85,8 @@ void load_data_in_reg(char *reg, void *data, size_t data_size);
 void load_data_from_reg(char *reg, void *data, size_t data_size);
 
 //PROCESS MANAGEMENT
-char **load_reg(void);
+// char **load_reg(void);
+int *load_reg(int flag);
 void update_process(vm_t *vm, process_t *proc);
 
 //OPERATIONS MANAGEMENT

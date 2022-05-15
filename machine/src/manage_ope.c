@@ -52,9 +52,10 @@ ope_t *get_ope(vm_t *vm, int adress)
 {
     ope_t *ope = malloc(sizeof(ope_t));
     char args_type;
+    printf("vm->ram : %p\n", vm->ram);
     char *mem = vm->ram->mem;
     ope->size = 1;
-    ope->code = mem[adress];
+    ope->code = mem[adress % MEM_SIZE]; // ça c'est null
     if (ope->code != 1 && ope->code != 9 &&
     ope->code != 12 && ope->code != 15) {
         ope->type = unpack_type(mem[++adress]);
