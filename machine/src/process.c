@@ -29,19 +29,15 @@ int *load_reg(int flag)
 
 int get_prog(ram_t *ram, int adress, char *path)
 {
-    printf("path %s\n", path);
     int fd = open(path, O_RDONLY);
     if (fd < 0)
         return 84;
     char *prog = malloc(sizeof(char) * MEM_SIZE);
     char *tmp = malloc(sizeof(char) * MEM_SIZE);
     int count = 0;
-    // read(fd, &tmp, sizeof(header_t));
     while (read(fd, tmp, 1)) count++;
     fd = open(path, O_RDONLY);
     read(fd, prog, count);
-    printf("skush\n");
-    printf("prog : %s\n", prog);
     for (int i = 0; i + adress < count; ++i)
         ram->mem[i + adress] = prog[i];
     close(fd);
@@ -51,9 +47,7 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
     process_t *proc = malloc(sizeof(process_t));
     int pn = vm->proc_count;
-    printf("pn : %d\n", pn);
     get_prog(vm->ram, adress, path);
-    printf("lalalal\n");
     proc->carry = false;
     proc->prog_nbr = prog_number;
     proc->last_live = 0;
@@ -64,10 +58,6 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     proc->player_id_alive = -1;
     vm->process = realloc(vm->process, (pn + 2) * sizeof(process_t *));
     vm->proc_count += 1;
-    printf("vm : %p\n", vm);
-    printf("pn : %d\n", pn);
-    printf("vm->process[pn] size: %d\n", sizeof(vm->process[pn]));
-    printf("proc : %p\n", proc);
     vm->process[pn] = proc;
     vm->process[pn + 1] = NULL;
 }
@@ -75,8 +65,11 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 void update_process(vm_t *vm, process_t *proc)
 {
     int *option = NULL;
-    ope_t *ope = proc->current_ope;
+    ope_t *ope;
 
+    if (proc == NULL)
+        return;
+    ope = proc->current_ope;
     if (proc->wait > 0) {
         proc->wait -= 1;
         return;

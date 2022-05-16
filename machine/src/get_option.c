@@ -55,9 +55,6 @@ void my_get_opt(vm_t *vm, int ac, char **av)
     }
 }
 
-// TODO setup dump cycle in vm->dump_cycle
-//TODO load prog with-a -n for each.cor
-
 int get_nbr_of_champ(char **av)
 {
     int nbr = 0;
