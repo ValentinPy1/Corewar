@@ -80,7 +80,7 @@ void update_process(vm_t *vm, process_t *proc)
         proc->wait -= 1;
         return;
     }
-    MNEMONIC[ope->code].func(vm, proc, ope);
+    MNEMONIC[(int) ope->code].func(vm, proc, ope);
     proc->pc = (proc->pc + ope->size) % MEM_SIZE;
     // destroy_ope(proc->current_ope); // TODO function for destroying operation
     proc->current_ope = get_ope(vm, proc->pc);
