@@ -51,9 +51,7 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
     process_t *proc = malloc(sizeof(process_t));
     int pn = vm->proc_count;
-    printf("pn : %d\n", pn);
     get_prog(vm->ram, adress, path);
-    printf("lalalal\n");
     proc->carry = false;
     proc->prog_nbr = prog_number;
     proc->last_live = 0;
@@ -63,10 +61,6 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     proc->wait = proc->current_ope->nbr_cycles;
     vm->process = realloc(vm->process, (pn + 2) * sizeof(process_t *));
     vm->proc_count += 1;
-    printf("vm : %p\n", vm);
-    printf("pn : %d\n", pn);
-    printf("vm->process[pn] size: %d\n", sizeof(vm->process[pn]));
-    printf("proc : %p\n", proc);
     vm->process[pn] = proc;
     vm->process[pn + 1] = NULL;
 }
