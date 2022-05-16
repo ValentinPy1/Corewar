@@ -24,7 +24,6 @@ void adjust_ldi(int *size, int param_id)
 
 void adjust_sti(int *size,  int param_id)
 {
-    printf("in adjust sti\n");
     if (param_id != 1 && param_id != 2)
         return;
     if (*size == T_REG)

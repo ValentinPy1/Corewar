@@ -35,6 +35,7 @@ void register_new_label(char *label, exec_t *ex)
         if (my_strcmp(label, ex->labels[i].id) == 0) {
             out = ex->labels[i].adress != -1;
             ex->labels[i].adress = ex->tmp_head;
+            printf("labels adress = %d\n", ex->tmp_head);
             break;
         }
     }
@@ -48,6 +49,7 @@ void register_new_label(char *label, exec_t *ex)
     ex->labels[ex->label_count - 1].adress = ex->tmp_head;
     ex->labels[ex->label_count - 1].backward_ref_count = 0;
     ex->labels[ex->label_count - 1].backward_refs = NULL;
+    printf("label [%s] adress is [%d]\n", label, ex->labels[ex->label_count - 1].adress);
 }
 
 int register_new_label_forward(char *label, exec_t *ex)
@@ -83,14 +85,15 @@ bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i)
 {
     char *label = NULL;
 
-    if (param[0] != LABEL_CHAR) {
-        buffer->params[i].is_label = false;
+    buffer->params[i].is_label = false;
+    if (param[0] != LABEL_CHAR)
         return false;
-    }
     buffer->params[i].is_label = true;
     label = get_label_from_param(++param);
     buffer_set_as_label(buffer, ex, label, i);
     printf("param is label\n");
+    ex->tmp_head += get_param_size_from_type(buffer->params[i].size, i,
+    buffer->instruct_code);
     return true;
 }
 
@@ -117,7 +120,7 @@ static const size_adjuster_t adjust_size[] = {
 void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
 {
     char *param = get_substr(line, ',');
-
+    printf("getting param [%s]\n", param);
     if (!param)
         return;
     while (*param && *param == ' ')
@@ -138,7 +141,7 @@ void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
         return;
     ex->tmp_head += get_param_size_from_type(buffer->params[i].size, i,
     buffer->instruct_code);
-    printf("--------------------------head += %d\n", get_param_size_from_type(buffer->params[i]).size);
+    printf("--------------------------head += %d\n", get_param_size_from_type(buffer->params[i].size, i, buffer->instruct_code));
     buffer->params[i].value = my_getnbr(param);
 }
 
@@ -151,9 +154,13 @@ void put_params_in_buffer(exec_t *ex, buffer_t *buffer, char **line)
 
 int get_head_delta_from_func(int instruct_code)
 {
-    if (!(instruct_code == 1 || instruct_code == 9
-    || instruct_code == 12 || instruct_code == 15))
+    printf("instruct code is %d, [%s]\n", instruct_code, op_tab[instruct_code - 1].mnemonique);
+    if ((instruct_code == 1 || instruct_code == 9
+    || instruct_code == 12 || instruct_code == 15)) {
+        printf("delta is 1\n");
         return 1;
+    }
+    printf("detla is 2\n");
     return 2;
 }
 
@@ -161,7 +168,7 @@ int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index)
 {
     buffer->instruct_code = op_tab[op_index].code;
     ex->tmp_head += get_head_delta_from_func(buffer->instruct_code);
-    printf("-------------------------------head += %d\n", get_head_delta_from_func(buffer->instruct_code));
+    printf("---------------code is %d---------head(instruct and encoding) += %d\n",buffer->instruct_code, get_head_delta_from_func(buffer->instruct_code));
     buffer->param_nbr = op_tab[op_index].nbr_args;
     put_params_in_buffer(ex, buffer, line);
     return 0;
@@ -223,11 +230,11 @@ int get_sum_param_len(buffer_t buffer)
 int get_param_value(param_t param, exec_t *ex)
 {
     if (!(param.is_label)) {
-        printf("value is a label\n");
         return param.value;
     }
+    printf("value is a label\n");
     // printf("param is a label, label index = [%d], adress [%d], id [%s]\n", param.value, ex->labels[param.value].adress, ex->labels[param.value].id);
-    return ex->labels[param.value].adress;
+    return ex->labels[param.value].adress - ex->head_last_instruct;
 }
 
 char get_type_code_from_size(int size)
@@ -290,8 +297,9 @@ void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
     int value = 0;
     int size = 0;
     printf("------\n");
-    printf("instruct: %d\n", buffer.instruct_code);
+    printf("instruct code is %d, [%s]\n", buffer.instruct_code, op_tab[buffer.instruct_code - 1].mnemonique);
 
+    ex->head_last_instruct = ex->head;
     wexec(&(buffer.instruct_code), sizeof(char), ex);
     if (!(buffer.instruct_code == 1 || buffer.instruct_code == 9
     || buffer.instruct_code == 12 || buffer.instruct_code == 15))
