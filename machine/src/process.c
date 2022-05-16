@@ -61,6 +61,7 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     proc->reg = load_reg(prog_number); // get the flag from the input
     proc->current_ope = get_ope(vm, adress);
     proc->wait = proc->current_ope->nbr_cycles;
+    proc->player_id_alive = -1;
     vm->process = realloc(vm->process, (pn + 2) * sizeof(process_t *));
     vm->proc_count += 1;
     printf("vm : %p\n", vm);

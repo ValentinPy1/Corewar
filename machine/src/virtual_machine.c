@@ -38,7 +38,7 @@ int launch_vm(int ac, char *av[])
         return 84;
     vm->dump_cycle = 1000;
     my_get_opt(vm, ac, av);
-    while (1) { // end condition
+    while (battle_hasnt_ended(vm)) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {
             // printf("vm->process[i] : %p\n", vm->process[i]);
             update_process(vm, vm->process[i]);
