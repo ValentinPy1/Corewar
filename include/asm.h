@@ -36,6 +36,7 @@ void declare_label(char **line, exec_t *ex);
 void wexec_at(void *data, int index, size_t size, exec_t *ex);
 void add_label_reference(exec_t *ex, int i, int delta_head);
 
+bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i);
 int process_line(exec_t *ex, char **line);
 char *get_label_from_param(char *param);
 int op_is_label(char *op);
@@ -47,5 +48,16 @@ void adjust_sti(int *size,  int param_id);
 void adjust_fork(int *size, int param_id);
 void adjust_live(int *size, int param_id);
 int get_param_size_from_type(int type, int param_index, int instruct_code);
+void register_new_label(char *label, exec_t *ex);
+bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i);
+void get_param(exec_t *ex, buffer_t *buffer, char **line, int i);
+int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index);
+void remove_ending_char(char *str, char c);
+int get_label_index(char *op, exec_t *ex);
+void invert_endianess(void *var, size_t size);
+int get_param_value(param_t param, exec_t *ex);
+int get_param_size_from_type(int type, int param_index, int instruct_code);
+void write_header(header_t *header, exec_t *exec, int fd);
+char get_type_code_from_size(int size);
 
 #endif
