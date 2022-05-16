@@ -29,14 +29,12 @@ int *load_reg(int flag)
 
 int get_prog(ram_t *ram, int adress, char *path)
 {
-    printf("path %s\n", path);
     int fd = open(path, O_RDONLY);
     if (fd < 0)
         return 84;
     char *prog = malloc(sizeof(char) * MEM_SIZE);
     char *tmp = malloc(sizeof(char) * MEM_SIZE);
     int count = 0;
-    // read(fd, &tmp, sizeof(header_t));
     while (read(fd, tmp, 1)) count++;
     fd = open(path, O_RDONLY);
     read(fd, prog, count);
