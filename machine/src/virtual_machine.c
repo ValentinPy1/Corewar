@@ -37,7 +37,7 @@ int launch_vm(int ac, char *av[])
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
     vm->dump_cycle = 1000;
-    load_prog(vm, , a_n[0], a_n[1]);
+    load_prog(vm, av[0], 0, 0);
     my_get_opt(vm, ac, av);
     while (1) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {

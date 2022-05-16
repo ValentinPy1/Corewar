@@ -81,8 +81,8 @@ void load_battle_zone(ram_t *ram);
 void load_prog(vm_t *vm, char *path, int adress, int prog_number);
 
 //REGISTER READ / WRITE
-void load_data_in_reg(char *reg, void *data, size_t data_size);
-void load_data_from_reg(char *reg, void *data, size_t data_size);
+void load_data_in_reg(int *reg, void *data, size_t data_size);
+void load_data_from_reg(int *reg, void *data, size_t data_size);
 
 //PROCESS MANAGEMENT
 // char **load_reg(void);
