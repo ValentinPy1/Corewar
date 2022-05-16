@@ -5,11 +5,9 @@
 ** Source code to fill buffer
 */
 #include "asm_struct.h"
+#include "asm.h"
 #include <stdio.h>
 #include "my.h"
-
-bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i);
-int get_param_size_from_type(int type, int param_index, int instruct_code);
 
 void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
 {
