@@ -35,10 +35,10 @@ void add_func(vm_t *vm, process_t *process, ope_t *ope)
             free(r3);
         return;
     }
-    load_data_from_reg(process->reg[ope->args[0]], r1, REG_SIZE);
-    load_data_from_reg(process->reg[ope->args[0]], r2, REG_SIZE);
+    load_data_from_reg(&process->reg[ope->args[0]], r1, REG_SIZE);
+    load_data_from_reg(&process->reg[ope->args[0]], r2, REG_SIZE);
     add_from_registers(r1, r2, r3, process);
-    load_data_in_reg(process->reg[ope->args[2]], r3, REG_SIZE);
+    load_data_in_reg(&process->reg[ope->args[2]], r3, REG_SIZE);
     free(r1);
     free(r2);
     free(r3);
@@ -59,10 +59,10 @@ void sub_func(vm_t *vm, process_t *process, ope_t *ope)
             free(r3);
         return;
     }
-    load_data_from_reg(process->reg[ope->args[0]], r1, REG_SIZE);
-    load_data_from_reg(process->reg[ope->args[0]], r2, REG_SIZE);
+    load_data_from_reg(&process->reg[ope->args[0]], r1, REG_SIZE);
+    load_data_from_reg(&process->reg[ope->args[0]], r2, REG_SIZE);
     add_from_registers(r1, r2, r3, process);
-    load_data_in_reg(process->reg[ope->args[2]], r3, REG_SIZE);
+    load_data_in_reg(&process->reg[ope->args[2]], r3, REG_SIZE);
     free(r1);
     free(r2);
     free(r3);

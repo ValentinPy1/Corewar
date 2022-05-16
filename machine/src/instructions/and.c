@@ -45,7 +45,7 @@ void load_op_arg(void *dest, vm_t *vm, arginf_t arginf)
             load_to_ptr(dest, adress, vm, sizeof(int));
             break;
         case T_REG:
-            load_data_from_reg(arginf.process->reg[ope->args[arginf.argno]],
+            load_data_from_reg(&arginf.process->reg[ope->args[arginf.argno]],
             dest, sizeof(int));
     }
 }
