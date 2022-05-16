@@ -89,3 +89,4 @@ void write_exec_to_file(exec_t *exec, char *filepath, header_t *header)
     write(fd, exec->binary, exec->head);
     close(fd);
 }
+

@@ -8,7 +8,17 @@
 #include <stdio.h>
 #include "my.h"
 
-static void check_param(char *param, buffer_t *buffer, int i) {
+bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i);
+int get_param_size_from_type(int type, int param_index, int instruct_code);
+
+void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
+{
+    char *param = get_substr(line, ',');
+    printf("getting param [%s]\n", param);
+    if (!param)
+        return;
+    while (*param && *param == ' ')
+         ++param;
     switch (param[0]) {
         case 'r':
             ++param;
@@ -21,17 +31,6 @@ static void check_param(char *param, buffer_t *buffer, int i) {
         default:
             buffer->params[i].size = T_IND;
     }
-}
-
-void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
-{
-    char *param = get_substr(line, ',');
-    printf("getting param [%s]\n", param);
-    if (!param)
-        return;
-    while (*param && *param == ' ')
-         ++param;
-    check_param(param, buffer, i);
     if (is_param_label(ex, buffer, param, i))
         return;
     ex->tmp_head += get_param_size_from_type(buffer->params[i].size, i,

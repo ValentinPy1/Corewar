@@ -9,6 +9,11 @@
 #include "my.h"
 #include <stdlib.h>
 
+void remove_ending_char(char *str, char c);
+int get_label_index(char *op, exec_t *ex);
+char *get_label_from_param(char *param);
+int get_param_size_from_type(int type, int param_index, int instruct_code);
+
 static void compare_label(char *label, exec_t *ex, int *out)
 {
     for (size_t i = 0; i < ex->label_count; ++i) {

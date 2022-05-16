@@ -11,6 +11,13 @@
 #include <unistd.h>
 #include <stdio.h>
 
+void invert_endianess(void *var, size_t size);
+int get_param_value(param_t param, exec_t *ex);
+int get_param_size_from_type(int type, int param_index, int instruct_code);
+int get_param_size_from_type(int type, int param_index, int instruct_code);
+void write_header(header_t *header, exec_t *exec, int fd);
+char get_type_code_from_size(int size);
+
 void write_encoding_byte(buffer_t buffer, exec_t *ex)
 {
     char byte = 0;

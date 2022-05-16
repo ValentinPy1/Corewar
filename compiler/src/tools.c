@@ -37,16 +37,3 @@ int get_param_value(param_t param, exec_t *ex)
     // printf("param is a label, label index = [%d], adress [%d], id [%s]\n", param.value, ex->labels[param.value].adress, ex->labels[param.value].id);
     return ex->labels[param.value].adress - ex->head_last_instruct;
 }
-
-char get_type_code_from_size(int size)
-{
-    switch (size) {
-        case T_REG:
-            return 0b01;
-        case T_DIR:
-            return 0b10;
-        default:
-            return 0b11;
-    }
-    return 0;
-}

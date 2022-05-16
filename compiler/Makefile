@@ -5,39 +5,21 @@
 ## makefile
 ##
 
-SRC	= ../op.c 							\
+SRC	= ../op.c \
 		src/compile_file.c \
-		src/compile_file.c 				\
 		src/get_op_index.c \
-		src/get_op_index.c 				\
 		src/write_instruct.c \
-		src/write_instruct.c 			\
 		src/write_parameters.c \
-		src/write_parameters.c 			\
 		src/param_handlers.c \
-		src/param_handlers.c 			\
 		src/exec_strutc.c \
-		src/exec_strutc.c 				\
 		src/write_header.c \
-		src/write_header.c 				\
 		src/label_helper.c \
-		src/label_helper.c 				\
 		src/remove_final_new_line.c \
-		src/remove_final_new_line.c 	\
 		src/continue_writting_line.c \
-		src/continue_writting_line.c 	\
 		src/write_exec_at.c \
-		src/write_exec_at.c 			\
 		src/label_reference.c \
-		src/label_reference.c 			\
 		src/process_line.c \
-		src/process_line.c 				\
 		src/size_adjusters.c \
-		src/size_adjusters.c 			\
-		src/label.c 					\
-		src/write_binary.c 				\
-		src/fill_buffer.c 				\
-		src/tools.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -83,4 +65,3 @@ libs:
 	make -C ../my
 
 .PHONY: $(NAME) all clean fclean re libs
-
