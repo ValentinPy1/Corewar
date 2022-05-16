@@ -9,7 +9,6 @@ SRC	= ../op.c \
 		src/compile_file.c \
 		src/get_op_index.c \
 		src/write_instruct.c \
-		src/write_parameters.c \
 		src/param_handlers.c \
 		src/exec_strutc.c \
 		src/write_header.c \
