@@ -53,9 +53,9 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     proc->last_live = 0;
     proc->pc = adress;
     proc->reg = load_reg(prog_number); // get the flag from the input
-    proc->current_ope = get_ope(vm, adress);
     proc->wait = proc->current_ope->nbr_cycles;
     proc->player_id_alive = -1;
+    proc->current_ope = get_ope(vm, adress, proc);
     vm->process = realloc(vm->process, (pn + 2) * sizeof(process_t *));
     vm->proc_count += 1;
     vm->process[pn] = proc;
@@ -77,6 +77,6 @@ void update_process(vm_t *vm, process_t *proc)
     MNEMONIC[(int) ope->code].func(vm, proc, ope);
     proc->pc = (proc->pc + ope->size) % MEM_SIZE;
     // destroy_ope(proc->current_ope); // TODO function for destroying operation
-    proc->current_ope = get_ope(vm, proc->pc);
+    proc->current_ope = get_ope(vm, proc->pc, proc);
     proc->wait = proc->current_ope->nbr_cycles;
 }

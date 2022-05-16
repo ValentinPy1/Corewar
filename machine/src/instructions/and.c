@@ -19,19 +19,6 @@ void *load_var_from_adress(int adress, char *mem, size_t size)
     return val;
 }
 
-void load_to_ptr(void *ptr, int adress, vm_t *vm, size_t size)
-{
-    for (int i = 0; i < size; ++i)
-        ((char *) ptr)[i] = (vm->ram->mem + adress)[i];
-}
-
-void memcpy_size(void *dest, void *src, size_t size)
-{
-    for (int i = 0; i < size; ++i) {
-        ((char *) dest)[i] = ((char *) src)[i];
-    }
-}
-
 void load_op_arg(void *dest, vm_t *vm, arginf_t arginf)
 {
     ope_t *ope = arginf.ope;
