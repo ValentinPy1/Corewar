@@ -29,6 +29,7 @@ int *load_reg(int flag)
 
 int get_prog(ram_t *ram, int adress, char *path)
 {
+    printf("path %s\n", path);
     int fd = open(path, O_RDONLY);
     if (fd < 0)
         return 84;
@@ -39,6 +40,8 @@ int get_prog(ram_t *ram, int adress, char *path)
     while (read(fd, tmp, 1)) count++;
     fd = open(path, O_RDONLY);
     read(fd, prog, count);
+    printf("skush\n");
+    printf("prog : %s\n", prog);
     for (int i = 0; i + adress < count; ++i)
         ram->mem[i + adress] = prog[i];
     close(fd);
@@ -50,6 +53,7 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     int pn = vm->proc_count;
     printf("pn : %d\n", pn);
     get_prog(vm->ram, adress, path);
+    printf("lalalal\n");
     proc->carry = false;
     proc->prog_nbr = prog_number;
     proc->last_live = 0;
@@ -60,6 +64,7 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     vm->process = realloc(vm->process, pn + 2);
     vm->proc_count += 1;
     printf("vm : %p\n", vm);
+    printf("pn : %d\n", pn);
     printf("vm->process[pn] : %p\n", vm->process[pn]);
     printf("proc : %p\n", proc);
     vm->process[pn] = proc;
