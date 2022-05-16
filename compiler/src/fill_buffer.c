@@ -8,9 +8,6 @@
 #include <stdio.h>
 #include "my.h"
 
-bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i);
-int get_param_size_from_type(int type, int param_index, int instruct_code);
-
 static void check_param(char *param, buffer_t *buffer, int i) {
     switch (param[0]) {
         case 'r':
