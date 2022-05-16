@@ -40,8 +40,6 @@ int get_prog(ram_t *ram, int adress, char *path)
     while (read(fd, tmp, 1)) count++;
     fd = open(path, O_RDONLY);
     read(fd, prog, count);
-    printf("skush\n");
-    printf("prog : %s\n", prog);
     for (int i = 0; i + adress < count; ++i)
         ram->mem[i + adress] = prog[i];
     close(fd);
