@@ -37,10 +37,10 @@ void lauch_prog(vm_t *vm, char *path, int *a_n , int n_save)
 void my_get_opt(vm_t *vm, int ac, char **av)
 {
     int i = 1;
-    int n = 0;
-    int a = 0;
     int *a_n = malloc(sizeof(int) * 2);
     static int n_save = 1;
+    a_n[0] = 0;
+    a_n[1] = 0;
     for (; i < ac; i++) {
         if (av[i][0] == '-' && av[i][1] == 'n')
             a_n[1] = my_getnbr(av[i + 1]);

@@ -61,11 +61,11 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     proc->reg = load_reg(prog_number); // get the flag from the input
     proc->current_ope = get_ope(vm, adress);
     proc->wait = proc->current_ope->nbr_cycles;
-    vm->process = realloc(vm->process, pn + 2);
+    vm->process = realloc(vm->process, (pn + 2) * sizeof(process_t *));
     vm->proc_count += 1;
     printf("vm : %p\n", vm);
     printf("pn : %d\n", pn);
-    printf("vm->process[pn] : %p\n", vm->process[pn]);
+    printf("vm->process[pn] size: %d\n", sizeof(vm->process[pn]));
     printf("proc : %p\n", proc);
     vm->process[pn] = proc;
     vm->process[pn + 1] = NULL;
