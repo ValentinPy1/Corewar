@@ -51,9 +51,7 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
     process_t *proc = malloc(sizeof(process_t));
     int pn = vm->proc_count;
-    printf("pn : %d\n", pn);
     get_prog(vm->ram, adress, path);
-    printf("lalalal\n");
     proc->carry = false;
     proc->prog_nbr = prog_number;
     proc->last_live = 0;
@@ -61,19 +59,17 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     proc->reg = load_reg(prog_number); // get the flag from the input
     proc->current_ope = get_ope(vm, adress);
     proc->wait = proc->current_ope->nbr_cycles;
-    vm->process = realloc(vm->process, pn + 2);
+    vm->process = realloc(vm->process, (pn + 2) * sizeof(process_t));
     vm->proc_count += 1;
-    printf("vm : %p\n", vm);
-    printf("pn : %d\n", pn);
-    printf("vm->process[pn] : %p\n", vm->process[pn]);
-    printf("proc : %p\n", proc);
     vm->process[pn] = proc;
+    printf("vm->process[pn] : %p\n", vm->process[pn]);
     vm->process[pn + 1] = NULL;
 }
 
 void update_process(vm_t *vm, process_t *proc)
 {
     int *option = NULL;
+    printf("proc->current_ope ooooooooooooooo: %p\n", proc->current_ope);
     ope_t *ope = proc->current_ope;
 
     if (proc->wait > 0) {
@@ -83,6 +79,6 @@ void update_process(vm_t *vm, process_t *proc)
     MNEMONIC[(int) ope->code].func(vm, proc, ope);
     proc->pc = (proc->pc + ope->size) % MEM_SIZE;
     // destroy_ope(proc->current_ope); // TODO function for destroying operation
-    proc->current_ope = get_ope(vm, proc->pc);
-    proc->wait = proc->current_ope->nbr_cycles;
+    // proc->current_ope = get_ope(vm, proc->pc);
+    // proc->wait = proc->current_ope->nbr_cycles;
 }
