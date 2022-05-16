@@ -7,15 +7,16 @@
 
 #include "machine.h"
 
-int get_dump(char *str, char *nbr)
+int get_dump(char **av)
 {
     int dump = 0;
-    if (my_strcmp(str, "-dump") == 0) {
-        dump = my_getnbr(nbr);
-    } else {
-        dump = -1;
+    for (int i = 0; av[i] != NULL; i++) {
+        if (my_strcmp(av[i], "-dump") == 0) {
+            dump = my_getnbr(av[i + 1]);
+            return dump;
+        }
     }
-    return dump;
+    return -1;
 }
 
 vm_t *setup_vm(char **av)
@@ -26,7 +27,7 @@ vm_t *setup_vm(char **av)
     vm->proc_count = 0;
     vm->cycle = 0;
     vm->cycle_to_die = CYCLE_TO_DIE;
-    vm->dump_cycle = get_dump(av[1], av[2]);
+    vm->dump_cycle = get_dump(av);
     return vm;
 }
 
@@ -40,7 +41,6 @@ int launch_vm(int ac, char *av[])
     my_get_opt(vm, ac, av);
     while (1) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {
-            // printf("vm->process[i] : %p\n", vm->process[i]);
             update_process(vm, vm->process[i]);
         }
         vm->cycle += 1;
