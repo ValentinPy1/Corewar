@@ -50,6 +50,7 @@ struct process_s {
     int pc;
     bool carry;
     int last_live;
+    int player_id_alive;
     int wait;
     ope_t *current_ope;
     int prog_nbr;
@@ -79,6 +80,7 @@ void setup_ram(vm_t *vm);
 // char *load_battle_zone(vm_t *vm);
 void load_battle_zone(ram_t *ram);
 void load_prog(vm_t *vm, char *path, int adress, int prog_number);
+bool battle_hasnt_ended(vm_t *vm);
 
 //REGISTER READ / WRITE
 void load_data_in_reg(int *reg, void *data, size_t data_size);
