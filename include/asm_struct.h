@@ -53,6 +53,7 @@ struct exec_s {
 
     buffer_t *buffer;
     int buffer_count;
+    int head_last_instruct;
 
 };
 
