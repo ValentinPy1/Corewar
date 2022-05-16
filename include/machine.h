@@ -12,6 +12,7 @@
     #define lireg(data_ptr, data_size, reg_index) \
     load_data_in_reg(p->reg[ope->args[reg_index]], data_ptr, data_size);
     #define ABS(x) (x < 0 ? -x : x)
+    #define MAX_PLAYER_NBR 4
 
     #include "my.h"
     #include "op.h"
@@ -20,6 +21,7 @@
     #include <fcntl.h>
     #include <sys/stat.h>
     #include <stdio.h>
+    #include <stdbool.h>
     #include "math.h"
 
 typedef struct process_s process_t;
@@ -57,6 +59,11 @@ struct process_s {
     int prog_nbr;
 };
 
+typedef struct player_s {
+    int last_live;
+    bool is_alive;
+} player_t;
+
 typedef struct vm_s {
     ram_t *ram;
     process_t **process;
@@ -65,6 +72,7 @@ typedef struct vm_s {
     int cycle_to_die;
     int live_count;
     int dump_cycle;
+    player_t players[MAX_PLAYER_NBR];
 } vm_t;
 
 typedef struct instruct_s {
