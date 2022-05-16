@@ -74,8 +74,11 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 void update_process(vm_t *vm, process_t *proc)
 {
     int *option = NULL;
-    ope_t *ope = proc->current_ope;
+    ope_t *ope;
 
+    if (proc == NULL)
+        return;
+    ope = proc->current_ope;
     if (proc->wait > 0) {
         proc->wait -= 1;
         return;
