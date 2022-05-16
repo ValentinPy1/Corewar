@@ -10,13 +10,6 @@
 #include "my.h"
 #include "asm_struct.h"
 
-// int continue_writting_line(char **line, exec_t *ex)
-// {
-//     if (!((*line)[0]))
-//         return 0;
-//     return convert_line(line, ex);
-// }
-
 void write_label_backwards(char *label, exec_t *ex)
 {
     for (size_t i = 0; i < ex->label_count; ++i) {
