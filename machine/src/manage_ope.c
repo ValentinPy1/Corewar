@@ -81,16 +81,31 @@ static void load_op_type(ope_t *ope, char encoding)
 
     for (int i = 0; i < MAX_ARGS_NUMBER; ++i) {
         type = encoding & (0b00000011);
-        ope->type[i] = T_REG * (type == 0b01) + T_DIR * (type == 0b10)
+        ope->type[MAX_ARGS_NUMBER - i - 1] = T_REG * (type == 0b01) + T_DIR * (type == 0b10)
         + T_IND * (type == 0b11);
-        ope->size_type[i] = 0;
-        ope->size_type[i] = 1 * (type == 0b01) + DIR_SIZE * (type == 0b10)
-        + IND_SIZE * (type == 0b11);
-        if (adjust_size[ope->code - 1])
-            adjust_size[ope->code - 1](&(ope->size_type[i]), i);
+        ope->size_type[MAX_ARGS_NUMBER - i - 1] = 0;
+        ope->size_type[MAX_ARGS_NUMBER - i - 1] = T_REG * (type == 0b01) + T_DIR * (type == 0b10)
+        + T_IND * (type == 0b11);
+        if (adjust_size[ope->code - 1]) {
+            adjust_size[ope->code - 1](&(ope->size_type[MAX_ARGS_NUMBER - i - 1]), i);
+        } else
+            ope->size_type[MAX_ARGS_NUMBER - i - 1] = 1 * (type == 0b01) + DIR_SIZE * (type == 0b10)
+            + IND_SIZE * (type == 0b11);
         encoding >>= 2;
         type = 0;
     }
+}
+
+int get_size_from_op(ope_t *op)
+{
+    int size = 1;
+
+    if (op->code != 1 && op->code != 9 && op->code != 12 && op->code != 15)
+        ++size;
+    for (int i = 0; i < MAX_ARGS_NUMBER; ++i) {
+        size += op->size_type[i];
+    }
+    return size;
 }
 
 ope_t *get_ope(vm_t *vm, int adress, process_t *process)
@@ -102,12 +117,22 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
         return NULL;
     load_to_ptr(&tmp, adress++, vm, sizeof(char));
     ope->code = tmp;
+    if (ope->code <= 0) {
+        free(ope);
+        return NULL;
+    }
     tmp = 0;
     load_to_ptr(&tmp, adress++, vm, sizeof(char));
     load_op_type(ope, (char) tmp);
-    ope->size = 0; //TODO: set size
+    ope->size = get_size_from_op(ope);
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
     get_op_real_args(vm, ope, adress, process);
+    process->wait = op_tab[ope->code - 1].nbr_cycles;
+    char c = 0;
+    for (int i = 0; i < op_tab[ope->code - 1].nbr_args; ++i) {
+        printf("process: %p :: arg n°%d of [%s]: %d\n", process, i, op_tab[ope->code - 1].mnemonique, ope->real_args[i]);
+    }
+    read(0, &c, 1);
     return ope;
 }
 
