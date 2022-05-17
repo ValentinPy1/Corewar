@@ -21,17 +21,18 @@ LDFLAGS	=	-L ./my/ -lmy
 
 TESTFILES	=
 
-all: $(NAME)
-
-$(NAME):	libs $(OBJ) $(OMAIN)
-	gcc -o $(NAME) $(OMAIN) $(OBJ) $(CPPFLAGS) $(LDFLAGS) $(CFLAGS)
+all:
+	make -C ./asm
+	make -C ./machine
 
 clean:
-	$(RM) $(OBJ) $(OMAIN)
+	make clean -C ./asm/
+	make clean -C ./machine/
 	make clean -C ./my/
 
-fclean:	clean
-	$(RM) $(NAME)
+fclean:
+	make fclean -C ./asm/
+	make fclean -C ./machine/
 	make fclean -C ./my/
 
 re: fclean all
