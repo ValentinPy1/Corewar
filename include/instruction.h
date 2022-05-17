@@ -10,6 +10,7 @@
     #include "machine.h"
 
 static const instruct_t MNEMONIC[] = {
+    {NULL},
     {&live_func},
     {&ld_func},
     {&st_func},
@@ -17,7 +18,15 @@ static const instruct_t MNEMONIC[] = {
     {&sub_func},
     {&and_func},
     {&or_func},
-    {&xor_func}
+    {&xor_func},
+    {NULL},
+    {NULL},
+    {NULL},
+    {NULL},
+    {NULL},
+    {NULL},
+    {NULL},
+    {NULL}
 };
 
 #endif /* !INSTRUCTION_H_ */

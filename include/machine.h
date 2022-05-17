@@ -57,6 +57,7 @@ struct process_s {
     int wait;
     ope_t *current_ope;
     int prog_nbr;
+    char *name;
 };
 
 typedef struct player_s {

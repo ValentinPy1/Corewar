@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** corewar
 ** File description:
-** Source code from the subject 
+** Source code from the subject
 */
 #include "op.h"
 
