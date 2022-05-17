@@ -23,7 +23,6 @@ SRC	= ../op.c \
 	src/write_exec_at.c \
 	src/write_header.c \
 	src/write_instruct.c \
-	src/write_parameters.c
 
 OBJ	=	$(SRC:.c=.o)
 

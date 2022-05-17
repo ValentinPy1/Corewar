@@ -28,6 +28,7 @@ exec_t *new_exec(void)
     new->buffer = NULL;
     new->buffer_count = 0;
     new->head_last_instruct = 0;
+    new->tmp_head = 0;
     return new;
 }
 

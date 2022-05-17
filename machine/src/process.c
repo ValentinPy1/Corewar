@@ -7,16 +7,6 @@
 
 #include "machine.h"
 
-static const instruct_t MNEMONIC[] = {
-    {&live},
-    {&ld_func},
-    {&st_func},
-    {&add_func},
-    {&sub_func},
-    {&and_func},
-    {&xor_func}
-};
-
 int *load_reg(int flag)
 {
     int *reg = malloc(sizeof(int *) * REG_NUMBER);

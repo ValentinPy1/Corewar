@@ -33,7 +33,8 @@ int get_param_value(param_t param, exec_t *ex)
     if (!(param.is_label)) {
         return param.value;
     }
-    printf("value is a label\n");
-    // printf("param is a label, label index = [%d], adress [%d], id [%s]\n", param.value, ex->labels[param.value].adress, ex->labels[param.value].id);
+    if (ex->labels[param.value].adress == -1) {
+        exit(84);
+    }
     return ex->labels[param.value].adress - ex->head_last_instruct;
 }

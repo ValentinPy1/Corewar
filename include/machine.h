@@ -80,6 +80,7 @@ typedef struct instruct_s {
     void (*func)(vm_t *vm, process_t *process, ope_t *ope);
 } instruct_t;
 
+
 //SETUP MACHINE
 int get_nbr_of_champ(char **av);
 void my_get_opt(vm_t *vm, int ac, char **av);
@@ -108,13 +109,13 @@ void destroy_ope(ope_t *ope);
 void get_op_real_args(vm_t *vm, ope_t *ope, int adress, process_t *process);
 
 //OPERATIONS
-void live(vm_t *vm, process_t *process, ope_t *ope);
+void live_func(vm_t *vm, process_t *process, ope_t *ope);
 void ld_func(vm_t *vm, process_t *process, ope_t *ope);
 void st_func(vm_t *vm, process_t *process, ope_t *ope);
-
 void add_func(vm_t *vm, process_t *process, ope_t *ope);
 void sub_func(vm_t *vm, process_t *process, ope_t *ope);
 void and_func(vm_t *vm, process_t *p, ope_t *ope);
+void or_func(vm_t *vm, process_t *p, ope_t *ope);
 void xor_func(vm_t *vm, process_t *p, ope_t *ope);
 void load_op_arg(void *dest, vm_t *vm, arginf_t arginf);
 
