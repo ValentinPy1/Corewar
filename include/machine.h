@@ -32,6 +32,7 @@ typedef struct ope_s {
     int *args;
     int size;
     int nbr_cycles;
+    int real_args[MAX_ARGS_NUMBER];
 } ope_t;
 
 typedef struct arg_info_s {
@@ -102,8 +103,9 @@ void update_process(vm_t *vm, process_t *proc);
 
 //OPERATIONS MANAGEMENT
 int sum_char(char *size_type);
-ope_t *get_ope(vm_t *vm, int adress);
+ope_t *get_ope(vm_t *vm, int adress, process_t *process);
 void destroy_ope(ope_t *ope);
+void get_op_real_args(vm_t *vm, ope_t *ope, int adress, process_t *process);
 
 //OPERATIONS
 void live(vm_t *vm, process_t *process, ope_t *ope);
