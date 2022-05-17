@@ -21,16 +21,6 @@ char t_size(char type)
     }
 }
 
-char *unpack_type(char packed)
-{
-    char *type = malloc(sizeof(char) * MAX_ARGS_NUMBER);
-    type[0] = packed / 64;
-    type[1] = packed / 16 % 4;
-    type[2] = packed / 4 % 4;
-    type[3] = packed % 4;
-    return type;
-}
-
 int *get_args(char *mem, int *adress, int code, char *size_type)
 {
     int args_nbr = op_tab[code - 1].nbr_args;
@@ -52,29 +42,26 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
 {
     ope_t *ope = malloc(sizeof(ope_t));
     char args_type;
-    printf("vm->ram : %p\n", vm->ram);
     char *mem = vm->ram->mem;
+    char *size_type = malloc(MAX_ARGS_NUMBER * sizeof(char));
+
     ope->size = 1;
-    ope->code = mem[adress % MEM_SIZE]; // ça c'est null
-    if (ope->code != 1 && ope->code != 9 &&
-    ope->code != 12 && ope->code != 15) {
-        ope->type = unpack_type(mem[++adress]);
-        ope->size_type = (char[MAX_ARGS_NUMBER]) {t_size(ope->type[0]),
-        t_size(ope->type[1]), t_size(ope->type[2]), t_size(ope->type[3])};
-        ope->size += 1 + sum_char(ope->size_type);
-        get_op_real_args(vm, ope, adress, process);
-    } else {
-        // TODO for live zjmp fork lfork a function to assignate specific arg type
-        // ope->type = ...
-        // ope->size_type = ...
-    }
+    ope->code = mem[adress]; // ça c'est null
+    get_args_type(ope, &adress, mem);
+    for (int i = 0; i < MAX_ARGS_NUMBER; ++i)
+        size_type[i] = t_size(ope->type[i]);
+    ope->size += sum_char(size_type);
     ++adress;
-    ope->args = get_args(mem, &adress, ope->code, ope->size_type);
+    ope->args = get_args(mem, &adress, ope->code, size_type);
+    free(size_type);
+    get_op_real_args(vm, ope, adress, process);
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
     return ope;
 }
 
 void destroy_ope(ope_t *ope)
 {
-    // TODO
+    free(ope->type);
+    free(ope->args);
+    free(ope);
 }

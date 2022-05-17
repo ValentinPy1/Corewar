@@ -25,10 +25,10 @@
     #include "math.h"
 
 typedef struct process_s process_t;
+
 typedef struct ope_s {
     char code;
     char *type;
-    char *size_type;
     int *args;
     int size;
     int nbr_cycles;
@@ -107,6 +107,9 @@ int sum_char(char *size_type);
 ope_t *get_ope(vm_t *vm, int adress, process_t *process);
 void destroy_ope(ope_t *ope);
 void get_op_real_args(vm_t *vm, ope_t *ope, int adress, process_t *process);
+char *specific_type(char op_code);
+void destroy_ope(ope_t *ope);
+void get_args_type(ope_t *ope, int *adress, char *mem);
 
 //OPERATIONS
 void live_func(vm_t *vm, process_t *process, ope_t *ope);

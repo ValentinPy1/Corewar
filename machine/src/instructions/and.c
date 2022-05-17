@@ -24,7 +24,7 @@ void load_op_arg(void *dest, vm_t *vm, arginf_t arginf)
     ope_t *ope = arginf.ope;
     int adress = arginf.process->pc + ope->args[0] % IDX_MOD;
 
-    switch (ope->size_type[arginf.argno]) {
+    switch (ope->type[arginf.argno]) {
         case T_DIR:
             memcpy_size(dest, &(ope->args[arginf.argno]), arginf.arg_size);
             break;
