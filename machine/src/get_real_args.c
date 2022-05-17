@@ -6,6 +6,19 @@
 */
 
 #include "machine.h"
+#include "asm.h"
+
+void invert_endianess(void *var, size_t size)
+{
+    char *var_c = (char *) var;
+    char tmp = 0;
+
+    for (size_t i = 0; i < size / 2; ++i) {
+        tmp = var_c[i];
+        var_c[i] = var_c[size - i - 1];
+        var_c[size - i - 1] = tmp;
+    }
+}
 
 void memcpy_size(void *dest, void *src, size_t size)
 {
@@ -46,5 +59,7 @@ void get_op_real_args(vm_t *vm, ope_t *ope, int adress, process_t *process)
 
     for (int i = 0; i < arg_nbr; ++i) {
         ope->real_args[i] = load_arg(vm, adress, i, ope, process);
+        invert_endianess(&(ope->real_args[i]), sizeof(int));
+        adress += ope->size_type[i];
     }
 }
