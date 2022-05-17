@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2021
 ** corewar
 ** File description:
-** add.c
+** sub.c
 */
 
 #include <stdlib.h>
 #include "machine.h"
 
-static void add_from_registers(int *r1, int *r2, int *r3, process_t *process)
+static void sub_from_registers(int *r1, int *r2, int *r3, process_t *process)
 {
-    *r3 = *r1 + *r2;
+    *r3 = *r1 - *r2;
     process->carry = (*((int *) r3) == 0);
 }
 
-void add_func(vm_t *vm, process_t *process, ope_t *ope)
+void sub_func(vm_t *vm, process_t *process, ope_t *ope)
 {
     int *r1 = malloc(REG_SIZE);
     int *r2 = malloc(REG_SIZE);

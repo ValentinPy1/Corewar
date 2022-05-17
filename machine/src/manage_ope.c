@@ -48,7 +48,7 @@ int *get_args(char *mem, int *adress, int code, char *size_type)
     return args;
 }
 
-ope_t *get_ope(vm_t *vm, int adress)
+ope_t *get_ope(vm_t *vm, int adress, process_t *process)
 {
     ope_t *ope = malloc(sizeof(ope_t));
     char args_type;
@@ -62,6 +62,7 @@ ope_t *get_ope(vm_t *vm, int adress)
         ope->size_type = (char[MAX_ARGS_NUMBER]) {t_size(ope->type[0]),
         t_size(ope->type[1]), t_size(ope->type[2]), t_size(ope->type[3])};
         ope->size += 1 + sum_char(ope->size_type);
+        get_op_real_args(vm, ope, adress, process);
     } else {
         // TODO for live zjmp fork lfork a function to assignate specific arg type
         // ope->type = ...

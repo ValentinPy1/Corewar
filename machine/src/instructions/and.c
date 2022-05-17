@@ -19,19 +19,6 @@ void *load_var_from_adress(int adress, char *mem, size_t size)
     return val;
 }
 
-void load_to_ptr(void *ptr, int adress, vm_t *vm, size_t size)
-{
-    for (int i = 0; i < size; ++i)
-        ((char *) ptr)[i] = (vm->ram->mem + adress)[i];
-}
-
-void memcpy_size(void *dest, void *src, size_t size)
-{
-    for (int i = 0; i < size; ++i) {
-        ((char *) dest)[i] = ((char *) src)[i];
-    }
-}
-
 void load_op_arg(void *dest, vm_t *vm, arginf_t arginf)
 {
     ope_t *ope = arginf.ope;
@@ -59,17 +46,5 @@ void and_func(vm_t *vm, process_t *p, ope_t *ope)
     loadarg(arg1, 0, sizeof(int));
     loadarg(arg2, 1, sizeof(int));
     result = arg1 & arg2;
-    lireg(&result, sizeof(int), 2);
-}
-
-void xor_func(vm_t *vm, process_t *p, ope_t *ope)
-{
-    int arg1 = 0;
-    int arg2 = 0;
-    int result = 0;
-
-    loadarg(arg1, 0, sizeof(int));
-    loadarg(arg2, 1, sizeof(int));
-    result = arg1 ^ arg2;
     lireg(&result, sizeof(int), 2);
 }

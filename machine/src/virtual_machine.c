@@ -28,6 +28,10 @@ vm_t *setup_vm(char **av)
     vm->cycle = 0;
     vm->cycle_to_die = CYCLE_TO_DIE;
     vm->dump_cycle = get_dump(av);
+    for (int i = 0; i < MAX_PLAYER_NBR; i++) { //////////////////////////////////////WTF
+        vm->players[i].last_live = 0;
+        vm->players[i].is_alive = true;
+    }
     return vm;
 }
 

@@ -12,6 +12,7 @@
     #define lireg(data_ptr, data_size, reg_index) \
     load_data_in_reg(p->reg[ope->args[reg_index]], data_ptr, data_size);
     #define ABS(x) (x < 0 ? -x : x)
+    #define MAX_PLAYER_NBR 4
 
     #include "my.h"
     #include "op.h"
@@ -20,6 +21,7 @@
     #include <fcntl.h>
     #include <sys/stat.h>
     #include <stdio.h>
+    #include <stdbool.h>
     #include "math.h"
 
 typedef struct process_s process_t;
@@ -30,6 +32,7 @@ typedef struct ope_s {
     int *args;
     int size;
     int nbr_cycles;
+    int real_args[MAX_ARGS_NUMBER];
 } ope_t;
 
 typedef struct arg_info_s {
@@ -57,6 +60,11 @@ struct process_s {
     int prog_nbr;
 };
 
+typedef struct player_s {
+    int last_live;
+    bool is_alive;
+} player_t;
+
 typedef struct vm_s {
     ram_t *ram;
     process_t **process;
@@ -65,11 +73,13 @@ typedef struct vm_s {
     int cycle_to_die;
     int live_count;
     int dump_cycle;
+    player_t players[MAX_PLAYER_NBR];
 } vm_t;
 
 typedef struct instruct_s {
     void (*func)(vm_t *vm, process_t *process, ope_t *ope);
 } instruct_t;
+
 
 //SETUP MACHINE
 int get_nbr_of_champ(char **av);
@@ -94,17 +104,18 @@ void update_process(vm_t *vm, process_t *proc);
 
 //OPERATIONS MANAGEMENT
 int sum_char(char *size_type);
-ope_t *get_ope(vm_t *vm, int adress);
+ope_t *get_ope(vm_t *vm, int adress, process_t *process);
 void destroy_ope(ope_t *ope);
+void get_op_real_args(vm_t *vm, ope_t *ope, int adress, process_t *process);
 
 //OPERATIONS
-void live(vm_t *vm, process_t *process, ope_t *ope);
+void live_func(vm_t *vm, process_t *process, ope_t *ope);
 void ld_func(vm_t *vm, process_t *process, ope_t *ope);
 void st_func(vm_t *vm, process_t *process, ope_t *ope);
-
 void add_func(vm_t *vm, process_t *process, ope_t *ope);
 void sub_func(vm_t *vm, process_t *process, ope_t *ope);
 void and_func(vm_t *vm, process_t *p, ope_t *ope);
+void or_func(vm_t *vm, process_t *p, ope_t *ope);
 void xor_func(vm_t *vm, process_t *p, ope_t *ope);
 void load_op_arg(void *dest, vm_t *vm, arginf_t arginf);
 

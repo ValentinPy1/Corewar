@@ -41,7 +41,6 @@ void register_new_label(char *label, exec_t *ex)
     ex->labels[ex->label_count - 1].adress = ex->tmp_head;
     ex->labels[ex->label_count - 1].backward_ref_count = 0;
     ex->labels[ex->label_count - 1].backward_refs = NULL;
-    printf("label [%s] adress is [%d]\n", label, ex->labels[ex->label_count - 1].adress);
 }
 
 

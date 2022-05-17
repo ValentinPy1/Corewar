@@ -37,6 +37,7 @@ typedef struct buffer_s buffer_t;
 struct buffer_s {
     int instruct_code;
     int param_nbr;
+    int found_n_param;
     param_t params[MAX_ARGS_NUMBER];
 };
 

@@ -16,6 +16,8 @@ SRC	= ../op.c \
 		src/register_load.c \
 		src/instructions/add.c \
 		src/instructions/and.c \
+		src/end_cdt.c \
+		src/get_real_args.c \
 
 
 OBJ	=	$(SRC:.c=.o)

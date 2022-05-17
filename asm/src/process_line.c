@@ -66,6 +66,7 @@ int write_buffer_from_line(exec_t *ex, buffer_t *buffer, char **line)
 int process_line(exec_t *ex, char **line)
 {
     static int alloc = 1;
+
     if (alloc) {
         ++(ex->buffer_count);
         ex->buffer = realloc(ex->buffer, sizeof(buffer_t) * (ex->buffer_count));
