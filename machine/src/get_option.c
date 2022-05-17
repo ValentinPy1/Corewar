@@ -18,12 +18,13 @@ static int is_cor(char *str)
     return 0;
 }
 
-static int get_farest_a(void)
+static int get_farest_a(vm_t *vm)
 {
     int x = 0;
-    for (; x < MEM_SIZE; x++)
-        if (x % 64 == 0)
-            return x;
+    int i = 0;
+    for (x = MEM_SIZE; i < x; i++)
+        if (vm->ram->mem[i] == 0)
+            return x - i;
     return 300;
 }
 
@@ -33,7 +34,7 @@ void lauch_prog(vm_t *vm, char *path, int *a_n , int n_save)
         a_n[1] = n_save;
     }
     if (a_n[0] == 0) {
-        a_n[0] = get_farest_a();
+        a_n[0] = get_farest_a(vm);
     }
     load_prog(vm, path, a_n[0], a_n[1]);
 }

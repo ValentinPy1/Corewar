@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "machine.h"
 #include "asm.h"
+
 void ld_func(vm_t *vm, process_t *process, ope_t *ope)
 {
     int res = 0;

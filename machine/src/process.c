@@ -34,11 +34,13 @@ int get_prog(ram_t *ram, int adress, char *path)
     close(fd);
     return 0;
 }
+
 void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
     process_t *proc = malloc(sizeof(process_t));
     int pn = vm->proc_count;
     get_prog(vm->ram, adress, path);
+    proc->name = path;
     proc->carry = false;
     proc->prog_nbr = prog_number;
     proc->last_live = 0;
