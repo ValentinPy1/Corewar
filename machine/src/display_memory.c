@@ -17,8 +17,9 @@ void my_put_nbr_base(int nbr, char *base)
         my_putchar('-');
         n = -nbr;
     }
-    if (n == 0)
+    if (n == 0) {
         my_putchar('0');
+    }
     while (n != 0) {
         i = n % len;
         my_putchar(base[i]);

@@ -76,6 +76,8 @@ void update_process(vm_t *vm, process_t *proc)
         proc->wait -= 1;
         return;
     }
+    // puts("\n\n MEMORY\n\n");
+    // dipslay_memory(vm);
     if ((int) ope->code > 0 && (int) ope->code < sizeof(MNEMONIC)
     / sizeof(MNEMONIC[0])
     && MNEMONIC[(int) ope->code].func)

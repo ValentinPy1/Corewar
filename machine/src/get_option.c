@@ -18,28 +18,36 @@ static int is_cor(char *str)
     return 0;
 }
 
-static int get_farest_a(vm_t *vm)
+static int get_farest_a(vm_t *vm, char *path)
 {
-    // int x = 0;
-    // int i = 0;
-    // for (x = MEM_SIZE; i < x; i++)
-    //     if (vm->ram->mem[i] == 0)
-    //         return (x - i) % MEM_SIZE;
-    return 300;
+    int x = 0;
+    int i = 0;
+    int count = 0;
+    static int previous = 0;
+    int fd = open(path, O_RDONLY);
+    char *tmp = malloc(sizeof(char) * MEM_SIZE);
+    while (read(fd, tmp, 1)) count++;
+    if (previous == 0) {
+        previous = 1;
+        return 0;
+    }
+    for (i = MEM_SIZE -1; vm->ram->mem[i] != 0; i--);
+        return count;
+    return(MEM_SIZE - count - i);
 }
 
-void lauch_prog(vm_t *vm, char *path, int *a_n , int n_save)
+void lauch_prog(vm_t *vm, char *path, int *a_n, int n_save)
 {
     if (a_n[1] == 0) {
         a_n[1] = n_save;
     }
     if (a_n[0] == 0) {
-        a_n[0] = get_farest_a(vm);
+        a_n[0] = get_farest_a(vm, path);
     }
     load_prog(vm, path, a_n[0], a_n[1]);
 }
 
-void my_get_opt(vm_t *vm, int ac, char **av)
+void my_get_option(vm_t *vm, int ac, char **av)
 {
     int i = 1;
     int *a_n = malloc(sizeof(int) * 2);
