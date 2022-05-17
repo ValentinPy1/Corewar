@@ -111,14 +111,14 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
         return NULL;
     }
     tmp = 0;
-    load_to_ptr(&tmp, adress++, vm, sizeof(char));
+    if (ope->code != 1 && ope->code != 9 && ope->code != 12 && ope->code != 15)
+        load_to_ptr(&tmp, adress++, vm, sizeof(char));
+    else
+        tmp = 0b01000000;
     load_op_type(ope, (char) tmp);
     ope->size = get_size_from_op(ope);
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
     get_op_real_args(vm, ope, adress, process);
-    for (int i = 0; i < MAX_ARGS_NUMBER; i++) {
-        printf("ope->real_args[%d] : %d\n", i, ope->real_args[i]);
-    }
     process->wait = op_tab[ope->code - 1].nbr_cycles;
     return ope;
 }

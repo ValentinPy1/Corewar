@@ -83,5 +83,6 @@ void update_process(vm_t *vm, process_t *proc)
     proc->pc = (proc->pc + ope->size) % MEM_SIZE;
     destroy_ope(proc->current_ope);
     proc->current_ope = get_ope(vm, proc->pc, proc);
-    proc->wait = proc->current_ope->nbr_cycles;
+    // proc->wait = proc->current_ope->nbr_cycles;
+    proc->wait = 12;
 }
