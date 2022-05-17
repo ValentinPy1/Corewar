@@ -33,17 +33,22 @@ int get_prog(ram_t *ram, int adress, char *path)
     fd = open(path, O_RDONLY);
     read(fd, tmp, sizeof(header_t));
     read(fd, prog, count);
-    for (int i = 0; i + adress < count; ++i) {
-        ram->mem[i + adress] = prog[i];
+    for (int i = 0; i < count; ++i) {
+        ram->mem[(i + adress) % MEM_SIZE] = prog[i];
     }
     close(fd);
+    for (int i = 0; i < count; ++i) {
+        printf("[%x]", *((char *) ram->mem + adress + i));
+    }
+    printf("\n");
     return 0;
 }
 
 void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
+    printf("adress : %d\n", adress);
     process_t *proc = malloc(sizeof(process_t));
-
+    adress += sizeof(header_t);
     get_prog(vm->ram, adress, path);
     proc->name = path;
     proc->carry = false;
@@ -51,7 +56,7 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     proc->last_live = 0;
     proc->pc = adress;
     proc->reg = load_reg(prog_number); // get the flag from the input
-    // proc->wait = proc->current_ope->nbr_cycles;
+    proc->wait = 0;// = proc->current_ope->nbr_cycles;
     proc->player_id_alive = -1;
     proc->current_ope = get_ope(vm, adress, proc);
     vm->process = realloc(vm->process, ++(vm->proc_count)

@@ -42,13 +42,11 @@ int launch_vm(int ac, char *av[])
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
     my_get_opt(vm, ac, av);
-    printf("vm has %d processes\n", vm->proc_count);
     while (battle_hasnt_ended(vm)) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {
-            printf("accessing process n°%d. cycle to wait = %d\n", i, vm->process[i]->wait);
+            // printf("accessing process n°%d. cycle to wait = %d\n", i, vm->process[i]->wait);
             if (vm->process[i] == NULL)
                 continue;
-            printf("vm process[%d] = %p\n", i, vm->process[i]);
             update_process(vm, vm->process[i]);
         }
         vm->cycle += 1;

@@ -112,7 +112,6 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
 {
     ope_t *ope = malloc(sizeof(ope_t));
     int tmp = 0;
-
     if (!ope)
         return NULL;
     load_to_ptr(&tmp, adress++, vm, sizeof(char));
@@ -127,12 +126,10 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
     ope->size = get_size_from_op(ope);
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
     get_op_real_args(vm, ope, adress, process);
-    process->wait = op_tab[ope->code - 1].nbr_cycles;
-    char c = 0;
-    for (int i = 0; i < op_tab[ope->code - 1].nbr_args; ++i) {
-        printf("process: %p :: arg n°%d of [%s]: %d\n", process, i, op_tab[ope->code - 1].mnemonique, ope->real_args[i]);
+    for (int i = 0; i < MAX_ARGS_NUMBER; i++) {
+        printf("ope->real_args[%d] : %d\n", i, ope->real_args[i]);
     }
-    read(0, &c, 1);
+    process->wait = op_tab[ope->code - 1].nbr_cycles;
     return ope;
 }
 

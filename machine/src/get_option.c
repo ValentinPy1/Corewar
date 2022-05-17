@@ -20,11 +20,11 @@ static int is_cor(char *str)
 
 static int get_farest_a(vm_t *vm)
 {
-    int x = 0;
-    int i = 0;
-    for (x = MEM_SIZE; i < x; i++)
-        if (vm->ram->mem[i] == 0)
-            return x - i;
+    // int x = 0;
+    // int i = 0;
+    // for (x = MEM_SIZE; i < x; i++)
+    //     if (vm->ram->mem[i] == 0)
+    //         return (x - i) % MEM_SIZE;
     return 300;
 }
 
