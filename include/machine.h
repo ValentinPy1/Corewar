@@ -84,7 +84,7 @@ typedef struct instruct_s {
 
 //SETUP MACHINE
 int get_nbr_of_champ(char **av);
-void my_get_opt(vm_t *vm, int ac, char **av);
+void my_get_option(vm_t *vm, int ac, char **av);
 void dipslay_memory(vm_t *vm);
 
 //MACHINE MANAGEMENT

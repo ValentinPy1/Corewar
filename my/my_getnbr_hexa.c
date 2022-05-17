@@ -16,16 +16,22 @@ static int get_char_index_in_str(const char *str, char c)
     return i;
 }
 
-int my_getnbr_hexa(const char *str)
+//give a string of hexadecimal and return a int
+
+int my_getnbr_hexa(char *str)
 {
     int i = 0;
-    int nbr = 0;
-    const char *basis = "0123456789abcdef";
+    int n = 0;
+    int len = my_strlen(str);
 
-    str += 2;
     while (str[i] != '\0') {
-        nbr = nbr * 16 + get_char_index_in_str(basis, str[i]);
+        if (str[i] >= '0' && str[i] <= '9')
+            n = n * 16 + str[i] - '0';
+        else if (str[i] >= 'a' && str[i] <= 'f')
+            n = n * 16 + str[i] - 'a' + 10;
+        else if (str[i] >= 'A' && str[i] <= 'F')
+            n = n * 16 + str[i] - 'A' + 10;
         i++;
     }
-    return nbr;
+    return n;
 }
