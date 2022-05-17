@@ -18,8 +18,12 @@ static int is_cor(char *str)
     return 0;
 }
 
-static int get_farest_a()
+static int get_farest_a(void)
 {
+    int x = 0;
+    for (; x < MEM_SIZE; x++)
+        if (x % 64 == 0)
+            return x;
     return 300;
 }
 

@@ -6,6 +6,7 @@
 */
 
 #include "machine.h"
+#include "instruction.h"
 
 int *load_reg(int flag)
 {
