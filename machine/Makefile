@@ -15,6 +15,7 @@ SRC	= ../op.c \
 		src/register_load.c \
 		src/end_cdt.c \
 		src/get_real_args.c \
+		src/display_memory.c \
 		src/instructions/add.c	\
 		src/instructions/and.c	\
 		src/instructions/ld.c	\
@@ -23,7 +24,9 @@ SRC	= ../op.c \
 		src/instructions/st.c	\
 		src/instructions/sub.c	\
 		src/instructions/xor.c	\
-		src/instructions/zjmp.c
+		src/instructions/zjmp.c \
+		../asm/src/size_adjusters.c \
+		../asm/src/get_op_index.c \
 
 OBJ	=	$(SRC:.c=.o)
 

@@ -27,7 +27,6 @@ static bool is_number(char *str)
         return true;
     for (; str[i]; ++i) {
         if (str[i] != ' ' && str[i] != '\t') {
-            printf("invalid char [%c]\n", str[i]);
             return false;
         }
     }
@@ -37,11 +36,10 @@ static bool is_number(char *str)
 void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
 {
     char *param = get_substr(line, ',');
-    printf("getting param [%s]\n", param);
     if (!param)
         return;
     while (*param && *param == ' ')
-         ++param;
+        ++param;
     switch (param[0]) {
         case 'r':
             ++param;
@@ -60,7 +58,6 @@ void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
         exit(84);
     ex->tmp_head += get_param_size_from_type(buffer->params[i].size, i,
     buffer->instruct_code);
-    printf("--------------------------head += %d\n", get_param_size_from_type(buffer->params[i].size, i, buffer->instruct_code));
     buffer->params[i].value = my_getnbr(param);
 }
 
@@ -76,13 +73,10 @@ void put_params_in_buffer(exec_t *ex, buffer_t *buffer, char **line)
 
 int get_head_delta_from_func(int instruct_code)
 {
-    printf("instruct code is %d, [%s]\n", instruct_code, op_tab[instruct_code - 1].mnemonique);
     if ((instruct_code == 1 || instruct_code == 9
     || instruct_code == 12 || instruct_code == 15)) {
-        printf("delta is 1\n");
         return 1;
     }
-    printf("detla is 2\n");
     return 2;
 }
 
@@ -90,7 +84,6 @@ int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index)
 {
     buffer->instruct_code = op_tab[op_index].code;
     ex->tmp_head += get_head_delta_from_func(buffer->instruct_code);
-    printf("---------------code is %d---------head(instruct and encoding) += %d\n",buffer->instruct_code, get_head_delta_from_func(buffer->instruct_code));
     buffer->param_nbr = op_tab[op_index].nbr_args;
     buffer->found_n_param = 0;
     put_params_in_buffer(ex, buffer, line);

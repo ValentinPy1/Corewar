@@ -34,14 +34,14 @@ char *specific_type(char op_code)
     type[0] = op_tab[op_code - 1].type[0];
 }
 
-void get_args_type(ope_t *ope, int *adress, char *mem)
-{
-    if (ope->code == 1 || ope->code == 9 ||
-    ope->code == 12 || ope->code == 15) {
-        ope->type = specific_type(ope->code);
-    } else {
-        *adress += 1;
-        ope->type = unpack_type(mem[*adress]);
-        ope->size += 1;
-    }
-}
+// void get_args_type(ope_t *ope, int *adress, char *mem)
+// {
+//     if (ope->code == 1 || ope->code == 9 ||
+//     ope->code == 12 || ope->code == 15) {
+//         ope->type = specific_type(ope->code);
+//     } else {
+//         *adress += 1;
+//         ope->type = unpack_type(mem[*adress]);
+//         ope->size += 1;
+//     }
+// }

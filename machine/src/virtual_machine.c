@@ -7,15 +7,16 @@
 
 #include "machine.h"
 
-int get_dump(char *str, char *nbr)
+int get_dump(char **av)
 {
     int dump = 0;
-    if (my_strcmp(str, "-dump") == 0) {
-        dump = my_getnbr(nbr);
-    } else {
-        dump = -1;
+    for (int i = 0; av[i] != NULL; i++) {
+        if (my_strcmp(av[i], "-dump") == 0) {
+            dump = my_getnbr(av[i + 1]);
+            return dump;
+        }
     }
-    return dump;
+    return -1;
 }
 
 vm_t *setup_vm(char **av)
@@ -26,8 +27,9 @@ vm_t *setup_vm(char **av)
     vm->proc_count = 0;
     vm->cycle = 0;
     vm->cycle_to_die = CYCLE_TO_DIE;
-    vm->dump_cycle = get_dump(av[1], av[2]);
-    for (int i = 0; i < MAX_PLAYER_NBR; i++) {
+    vm->dump_cycle = get_dump(av);
+    vm->live_count = 0;
+    for (int i = 0; i < MAX_PLAYER_NBR; i++) { //////////////////////////////////////WTF
         vm->players[i].last_live = 0;
         vm->players[i].is_alive = true;
     }
@@ -37,14 +39,16 @@ vm_t *setup_vm(char **av)
 int launch_vm(int ac, char *av[])
 {
     vm_t *vm = setup_vm(av);
-
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
-    vm->dump_cycle = 1000;
     my_get_opt(vm, ac, av);
+    printf("vm has %d processes\n", vm->proc_count);
     while (battle_hasnt_ended(vm)) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {
-            // printf("vm->process[i] : %p\n", vm->process[i]);
+            printf("accessing process n°%d. cycle to wait = %d\n", i, vm->process[i]->wait);
+            if (vm->process[i] == NULL)
+                continue;
+            printf("vm process[%d] = %p\n", i, vm->process[i]);
             update_process(vm, vm->process[i]);
         }
         vm->cycle += 1;

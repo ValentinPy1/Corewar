@@ -51,7 +51,6 @@ int get_label_index(char *op, exec_t *ex)
 
 int op_is_label(char *op)
 {
-    printf("in op_is_label\n");
     if (op[my_strlen(op) - 1] != LABEL_CHAR) {
         free(op);
         return 0;

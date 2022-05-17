@@ -28,8 +28,9 @@ typedef struct process_s process_t;
 
 typedef struct ope_s {
     char code;
-    char *type;
-    int *args;
+    char type[MAX_ARGS_NUMBER];
+    int size_type[MAX_ARGS_NUMBER];
+    int args[MAX_ARGS_NUMBER];
     int size;
     int nbr_cycles;
     int real_args[MAX_ARGS_NUMBER];
@@ -45,7 +46,6 @@ typedef struct arg_info_s {
 typedef struct ram_s {
     char *mem;
     int size;
-    int head;
 } ram_t;
 
 struct process_s {
@@ -84,6 +84,7 @@ typedef struct instruct_s {
 //SETUP MACHINE
 int get_nbr_of_champ(char **av);
 void my_get_opt(vm_t *vm, int ac, char **av);
+void dipslay_memory(vm_t *vm);
 
 //MACHINE MANAGEMENT
 int launch_vm(int ac, char *av[]);
@@ -96,6 +97,7 @@ bool battle_hasnt_ended(vm_t *vm);
 //REGISTER READ / WRITE
 void load_data_in_reg(int *reg, void *data, size_t data_size);
 void load_data_from_reg(int *reg, void *data, size_t data_size);
+void load_to_ptr(void *ptr, int adress, vm_t *vm, size_t size);
 
 //PROCESS MANAGEMENT
 // char **load_reg(void);
