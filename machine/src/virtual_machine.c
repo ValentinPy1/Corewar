@@ -38,10 +38,8 @@ vm_t *setup_vm(char **av)
 int launch_vm(int ac, char *av[])
 {
     vm_t *vm = setup_vm(av);
-
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
-    vm->dump_cycle = 1000;
     my_get_opt(vm, ac, av);
     while (battle_hasnt_ended(vm)) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {
