@@ -13,11 +13,17 @@ SRC	= ../op.c \
 		src/tools.c \
 		src/get_option.c \
 		src/register_load.c \
-		src/instructions/add.c \
-		src/instructions/and.c \
 		src/end_cdt.c \
 		src/get_real_args.c \
-
+		src/instructions/add.c	\
+		src/instructions/and.c	\
+		src/instructions/ld.c	\
+		src/instructions/live.c	\
+		src/instructions/or.c	\
+		src/instructions/st.c	\
+		src/instructions/sub.c	\
+		src/instructions/xor.c	\
+		src/instructions/zjmp.c
 
 OBJ	=	$(SRC:.c=.o)
 

@@ -5,7 +5,10 @@
 ** create_cpu.c
 */
 
+<<<<<<< HEAD
 #include "machine.h"
+=======
+>>>>>>> 971f57671cb5e42ee5afdba0ba8fa3c643e75313
 #include "instruction.h"
 
 int *load_reg(int flag)
