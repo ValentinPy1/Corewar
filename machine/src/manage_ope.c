@@ -6,6 +6,8 @@
 */
 
 #include "machine.h"
+#include "asm.h"
+#include "adjust_size.h"
 
 char t_size(char type)
 {
@@ -48,28 +50,64 @@ int *get_args(char *mem, int *adress, int code, char *size_type)
     return args;
 }
 
+// ope_t *get_ope(vm_t *vm, int adress, process_t *process)
+// {
+//     ope_t *ope = malloc(sizeof(ope_t));
+//     char args_type;
+//     char *mem = vm->ram->mem;
+//     ope->size = 1;
+//     ope->code = mem[adress % MEM_SIZE]; // ça c'est null
+//     if (ope->code != 1 && ope->code != 9 &&
+//     ope->code != 12 && ope->code != 15) {
+//         ope->type = unpack_type(mem[++adress]);
+//         ope->size_type = (char[MAX_ARGS_NUMBER]) {t_size(ope->type[0]),
+//         t_size(ope->type[1]), t_size(ope->type[2]), t_size(ope->type[3])};
+//         ope->size += 1 + sum_char(ope->size_type);
+//         get_op_real_args(vm, ope, adress, process);
+//     } else {
+//         // TODO for live zjmp fork lfork a function to assignate specific arg type
+//         // ope->type = ...
+//         // ope->size_type = ...
+//     }
+//     ++adress;
+//     ope->args = get_args(mem, &adress, ope->code, ope->size_type);
+//     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
+//     return ope;
+// }
+
+static void load_op_type(ope_t *ope, char encoding)
+{
+    char type = 0;
+
+    for (int i = 0; i < MAX_ARGS_NUMBER; ++i) {
+        type = encoding & (0b00000011);
+        ope->type[i] = T_REG * (type == 0b01) + T_DIR * (type == 0b10)
+        + T_IND * (type == 0b11);
+        ope->size_type[i] = 0;
+        ope->size_type[i] = 1 * (type == 0b01) + DIR_SIZE * (type == 0b10)
+        + IND_SIZE * (type == 0b11);
+        if (adjust_size[ope->code - 1])
+            adjust_size[ope->code - 1](&(ope->size_type[i]), i);
+        encoding >>= 2;
+        type = 0;
+    }
+}
+
 ope_t *get_ope(vm_t *vm, int adress, process_t *process)
 {
     ope_t *ope = malloc(sizeof(ope_t));
-    char args_type;
-    char *mem = vm->ram->mem;
-    ope->size = 1;
-    ope->code = mem[adress % MEM_SIZE]; // ça c'est null
-    if (ope->code != 1 && ope->code != 9 &&
-    ope->code != 12 && ope->code != 15) {
-        ope->type = unpack_type(mem[++adress]);
-        ope->size_type = (char[MAX_ARGS_NUMBER]) {t_size(ope->type[0]),
-        t_size(ope->type[1]), t_size(ope->type[2]), t_size(ope->type[3])};
-        ope->size += 1 + sum_char(ope->size_type);
-        get_op_real_args(vm, ope, adress, process);
-    } else {
-        // TODO for live zjmp fork lfork a function to assignate specific arg type
-        // ope->type = ...
-        // ope->size_type = ...
-    }
-    ++adress;
-    ope->args = get_args(mem, &adress, ope->code, ope->size_type);
+    int tmp = 0;
+
+    if (!ope)
+        return NULL;
+    load_to_ptr(&tmp, adress++, vm, sizeof(char));
+    ope->code = tmp;
+    tmp = 0;
+    load_to_ptr(&tmp, adress++, vm, sizeof(char));
+    load_op_type(ope, (char) tmp);
+    ope->size = 0;
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
+    get_op_real_args(vm, ope, adress, process);
     return ope;
 }
 
