@@ -23,16 +23,6 @@ char t_size(char type)
     }
 }
 
-char *unpack_type(char packed)
-{
-    char *type = malloc(sizeof(char) * MAX_ARGS_NUMBER);
-    type[0] = packed / 64;
-    type[1] = packed / 16 % 4;
-    type[2] = packed / 4 % 4;
-    type[3] = packed % 4;
-    return type;
-}
-
 int *get_args(char *mem, int *adress, int code, char *size_type)
 {
     int args_nbr = op_tab[code - 1].nbr_args;
@@ -135,5 +125,5 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
 
 void destroy_ope(ope_t *ope)
 {
-    // TODO
+    free(ope);
 }
