@@ -19,7 +19,7 @@ static const instruct_t MNEMONIC[] = {
     {&and_func},
     {&or_func},
     {&xor_func},
-    {NULL},
+    {&zjmp_func},
     {NULL},
     {NULL},
     {NULL},

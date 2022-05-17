@@ -124,5 +124,6 @@ void and_func(vm_t *vm, process_t *p, ope_t *ope);
 void or_func(vm_t *vm, process_t *p, ope_t *ope);
 void xor_func(vm_t *vm, process_t *p, ope_t *ope);
 void load_op_arg(void *dest, vm_t *vm, arginf_t arginf);
+void zjmp_func(vm_t *vm, process_t *process, ope_t *ope);
 
 #endif
