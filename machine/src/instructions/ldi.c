@@ -23,13 +23,3 @@ void ldi_func(vm_t *vm, process_t *process, ope_t *ope)
     invert_endianess(&value, REG_SIZE);
     process->reg[ope->real_args[2]] = value;
 }
-
-/*----------------------------------------------------------------
-int instruct_code
-int cycle_to_complete
-int param_nbr[MAX_ARG_NBR]
-int param_type[MAX_ARG_NBR]
-int args_vanilla[MAX_ARG_NBR]
-int args_real[MAX_ARG_NBR]
-
-*/
