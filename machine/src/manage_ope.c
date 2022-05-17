@@ -105,7 +105,7 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
     tmp = 0;
     load_to_ptr(&tmp, adress++, vm, sizeof(char));
     load_op_type(ope, (char) tmp);
-    ope->size = 0;
+    ope->size = 0; //TODO: set size
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
     get_op_real_args(vm, ope, adress, process);
     return ope;

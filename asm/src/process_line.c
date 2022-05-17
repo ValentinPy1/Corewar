@@ -13,26 +13,7 @@
 #include "asm.h"
 #include "asm_struct.h"
 #include "my.h"
-
-typedef void (*size_adjuster_t)(int *, int);
-static const size_adjuster_t adjust_size[] = {
-    &adjust_live,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    &adjust_zjmp,
-    &adjust_ldi,
-    &adjust_sti,
-    &adjust_fork,
-    NULL,
-    &adjust_ldi,
-    &adjust_fork,
-    NULL
-};
+#include "adjust_size.h"
 
 int write_buffer_from_line(exec_t *ex, buffer_t *buffer, char **line)
 {
