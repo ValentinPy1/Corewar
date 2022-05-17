@@ -34,8 +34,8 @@ void get_comment_and_name(header_t *header, char *line)
         return;
     switch (line[1]) {
         case 'c':
-            my_strcpy(header->comment, line +
-            get_char_index_in_str(line, '"') + 1);
+            my_strcpy(header->comment, line
+            + get_char_index_in_str(line, '"') + 1);
             remove_final_double_quotes(header->comment);
             break;
         case 'n':

@@ -27,9 +27,9 @@
 typedef struct process_s process_t;
 typedef struct ope_s {
     char code;
-    char *type;
-    char *size_type;
-    int *args;
+    char type[MAX_ARGS_NUMBER];
+    int size_type[MAX_ARGS_NUMBER];
+    int args[MAX_ARGS_NUMBER];
     int size;
     int nbr_cycles;
     int real_args[MAX_ARGS_NUMBER];
@@ -96,6 +96,7 @@ bool battle_hasnt_ended(vm_t *vm);
 //REGISTER READ / WRITE
 void load_data_in_reg(int *reg, void *data, size_t data_size);
 void load_data_from_reg(int *reg, void *data, size_t data_size);
+void load_to_ptr(void *ptr, int adress, vm_t *vm, size_t size);
 
 //PROCESS MANAGEMENT
 // char **load_reg(void);
