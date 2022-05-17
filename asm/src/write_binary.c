@@ -25,7 +25,6 @@ void write_encoding_byte(buffer_t buffer, exec_t *ex)
     }
     while (i++ < 4)
         byte <<= 2;
-    printf("--->byte : %x\n", byte);
     wexec(&byte, sizeof(char), ex);
 }
 
@@ -33,8 +32,6 @@ void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
 {
     int value = 0;
     int size = 0;
-    printf("------\n");
-    printf("instruct code is %d, [%s]\n", buffer.instruct_code, op_tab[buffer.instruct_code - 1].mnemonique);
 
     ex->head_last_instruct = ex->head;
     wexec(&(buffer.instruct_code), sizeof(char), ex);
@@ -45,7 +42,6 @@ void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
         value = get_param_value(buffer.params[i], ex);
         size = get_param_size_from_type(buffer.params[i].size, i,
         buffer.instruct_code);
-        printf("value: %d, size %d\n", value, get_param_size_from_type(buffer.params[i].size, i, buffer.instruct_code));
         invert_endianess(&value, size);
         wexec(&value, size, ex);
     }
@@ -53,11 +49,8 @@ void write_buffer_to_bin(exec_t *ex, buffer_t buffer)
 
 void write_exec_binary(exec_t *ex)
 {
-    printf("before converting to binary, here are the labels:\n");
     for (size_t i = 0; i < ex->label_count; ++i) {
-        printf("[%s][%d]\n", ex->labels[i].id, ex->labels[i].adress);
     }
-    printf("\nconverting buffer to binary...\n");
     for (int i = 0; i < ex->buffer_count; ++i) {
         write_buffer_to_bin(ex, ex->buffer[i]);
     }
@@ -66,12 +59,9 @@ void write_exec_binary(exec_t *ex)
 void output_binary_to_file(char *filepath, exec_t *ex, header_t *header)
 {
     int fd = open(filepath, O_CREAT | O_WRONLY | O_TRUNC, 0777);
-    printf("----\nwritting output\n");
     if (fd < 0) {
-        printf("error fd\n");
         exit(84);
     }
-    printf("sizeof(header) = %zu\n", sizeof(header_t));
     write_header(header, ex, fd);
     write(fd, ex->binary, ex->head);
     close(fd);

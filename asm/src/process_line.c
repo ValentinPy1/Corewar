@@ -44,22 +44,17 @@ int write_buffer_from_line(exec_t *ex, buffer_t *buffer, char **line)
     op = get_substr(line, ' ');
     if (!op[0])
         return 0;
-    printf("before op is label, [%s]\n", op);
     if (op_is_label(my_strdup(op))) {
-        printf("---> label [%s]\n", op);
         register_new_label(op, ex);
         return write_buffer_from_line(ex, buffer, line);
     }
-    printf("--->regular [%s]\n", *line);
     if (!(*line)[0])
         return 0;
     index = get_op_index(op);
     if (index == -1) {
-        printf("error index\n");
         exit(84);
     }
     fill_buffer(ex, buffer, line, index);
-    printf("buffer: code %d, param_nbr %d\n", buffer->instruct_code, buffer->param_nbr);
     return 1;
 }
 
@@ -71,8 +66,6 @@ int process_line(exec_t *ex, char **line)
         ++(ex->buffer_count);
         ex->buffer = realloc(ex->buffer, sizeof(buffer_t) * (ex->buffer_count));
     }
-    printf("\nwritting line: [%s]\n", *line);
-    printf("buffer count: %d\n", ex->buffer_count);
     alloc = write_buffer_from_line(ex, &(ex->buffer[ex->buffer_count - 1]),
     line);
     return alloc;

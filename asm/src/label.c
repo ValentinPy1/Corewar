@@ -13,11 +13,9 @@
 static void compare_label(char *label, exec_t *ex, int *out)
 {
     for (size_t i = 0; i < ex->label_count; ++i) {
-        printf("comparing new label [%s] to existing [%s]\n", label, ex->labels[i].id);
         if (my_strcmp(label, ex->labels[i].id) == 0) {
             *out = ex->labels[i].adress != -1;
             ex->labels[i].adress = ex->tmp_head;
-            printf("labels adress = %d\n", ex->tmp_head);
             break;
         }
     }
@@ -26,10 +24,8 @@ static void compare_label(char *label, exec_t *ex, int *out)
 void register_new_label(char *label, exec_t *ex)
 {
     int out = -1;
-    printf("register_new_label: [%s]\n", label);
     remove_ending_char(label, ':');
-    printf("label is [%s], label count is %zu\n", label, ex->label_count);
-    
+
     compare_label(label, ex, &out);
     if (out == 1)
         exit(84);
@@ -47,11 +43,8 @@ void register_new_label(char *label, exec_t *ex)
 int register_new_label_forward(char *label, exec_t *ex)
 {
     size_t i = 0;
-    printf("registering label forward\n");
     for (; i < ex->label_count; i++) {
-        printf("comparing this label [%s] to existing [%s]\n", label, ex->labels[i].id);
         if (my_strcmp(ex->labels[i].id, label) == 0) {
-            printf("found that this label [%s] existed at index [%zu]\n", label, i);
             break;
         }
     }
@@ -83,7 +76,6 @@ bool is_param_label(exec_t *ex, buffer_t *buffer, char *param, int i)
     buffer->params[i].is_label = true;
     label = get_label_from_param(++param);
     buffer_set_as_label(buffer, ex, label, i);
-    printf("param is label\n");
     ex->tmp_head += get_param_size_from_type(buffer->params[i].size, i,
     buffer->instruct_code);
     return true;

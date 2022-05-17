@@ -5,10 +5,7 @@
 ** create_cpu.c
 */
 
-<<<<<<< HEAD
 #include "machine.h"
-=======
->>>>>>> 971f57671cb5e42ee5afdba0ba8fa3c643e75313
 #include "instruction.h"
 
 int *load_reg(int flag)
@@ -53,8 +50,6 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     vm->process = realloc(vm->process, (pn + 2) * sizeof(process_t *));
     vm->proc_count += 1;
     vm->process[pn] = proc;
-    printf("vm->process[pn] : %p\n", vm->process[pn]);
-    vm->process[pn + 1] = NULL;
 }
 
 void update_process(vm_t *vm, process_t *proc)
