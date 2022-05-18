@@ -22,6 +22,10 @@ static void copy_process_at(int adress, process_t *process, vm_t *vm)
         (vm->ram->mem)[(adress + i) % MEM_SIZE]
         = (vm->ram->mem)[(process->initial_pc + i) % MEM_SIZE];
     }
+    new->reg = malloc(sizeof(int) * REG_NUMBER);
+    for (int i = 0; i < REG_NUMBER; ++i) {
+        new->reg[i] = process->reg[i];
+    }
     vm->process = realloc(vm->process, ++(vm->proc_count)
     * sizeof(process_t *));
     vm->process[vm->proc_count - 1] = new;
