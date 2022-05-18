@@ -9,6 +9,11 @@
     #define __vmINE__
     #define loadarg(arg, i, size) \
     (load_op_arg(&arg, vm, (arginf_t) {ope, p, i, size}))
+<<<<<<< HEAD
+    #define lireg(data_ptr, data_size, reg_index) \
+    load_data_in_reg(p->reg[ope->args[reg_index]], data_ptr, data_size)
+=======
+>>>>>>> a7d245f9f23c9dafa12ad1e00e310afcf452f56f
     #define ABS(x) (x < 0 ? -x : x)
     #define MAX_PLAYER_NBR 4
 
