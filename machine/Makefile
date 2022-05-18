@@ -19,6 +19,7 @@ SRC	= ../op.c \
 		src/instructions/add.c	\
 		src/instructions/and.c	\
 		src/instructions/ld.c	\
+		src/instructions/lld.c	\
 		src/instructions/live.c	\
 		src/instructions/or.c	\
 		src/instructions/st.c	\
