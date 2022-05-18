@@ -89,13 +89,20 @@ void update_process(vm_t *vm, process_t *proc)
         proc->wait -= 1;
         return;
     }
-    printf("ope memo : %s\n", op_tab[ope->code - 1].mnemonique);
+    printf("proc %d: %s at pc %d\n", proc->prog_nbr, op_tab[vm->ram->mem[proc->pc] - 1].mnemonique, proc->pc);
     if (MNEMONIC[ope->code].func) {
+        printf("doing this instruction!!\n");
         MNEMONIC[(int) ope->code].func(vm, proc, ope);
+        proc->pc = (proc->pc + ope->size) % MEM_SIZE;
+        destroy_ope(proc->current_ope);
+        proc->current_ope = get_ope(vm, proc->pc, proc);
+        if (proc->current_ope)
+            proc->wait = proc->current_ope->nbr_cycles;
+        return;
     }
-    proc->pc = (proc->pc + ope->size) % MEM_SIZE;
+    proc->pc += 1;
+    proc->pc %= MEM_SIZE;
     destroy_ope(proc->current_ope);
     proc->current_ope = get_ope(vm, proc->pc, proc);
-    if (proc->current_ope)
-        proc->wait = proc->current_ope->nbr_cycles;
+
 }
