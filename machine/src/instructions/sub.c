@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include "machine.h"
+#include "asm.h"
 
 static void sub_from_registers(int *r1, int *r2, int *r3, process_t *process)
 {
