@@ -42,6 +42,7 @@ int launch_vm(int ac, char *av[])
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
     my_get_option(vm, ac, av);
+    dipslay_memory(vm);
     while (battle_hasnt_ended(vm)) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {
             // // printf("accessing process n°%d. cycle to wait = %d\n", i, vm->process[i]->wait);
