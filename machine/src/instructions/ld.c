@@ -16,6 +16,10 @@ void ld_func(vm_t *vm, process_t *process, ope_t *ope)
 
     load_to_ptr(&res, adress, vm, ope->size_type[0]);
     process->reg[ope->real_args[1]] = res;
+    if (process->carry == 1)
+        process->carry = 0;
+    else
+        process->carry = 1;
 }
 
 void lld_func(vm_t *vm, process_t *process, ope_t *ope)
