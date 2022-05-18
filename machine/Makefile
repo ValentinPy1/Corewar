@@ -19,6 +19,7 @@ SRC	= ../op.c \
 		src/instructions/add.c	\
 		src/instructions/and.c	\
 		src/instructions/ld.c	\
+		src/instructions/lld.c	\
 		src/instructions/live.c	\
 		src/instructions/or.c	\
 		src/instructions/st.c	\
@@ -28,6 +29,7 @@ SRC	= ../op.c \
 		../asm/src/size_adjusters.c \
 		../asm/src/get_op_index.c \
 		src/instructions/sti.c \
+		src/instructions/fork.c \
 
 OBJ	=	$(SRC:.c=.o)
 

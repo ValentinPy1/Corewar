@@ -18,16 +18,18 @@ int *load_reg(int flag)
     return reg;
 }
 
-int get_prog(ram_t *ram, int adress, char *path)
+static int get_prog(ram_t *ram, int adress, char *path, process_t *process)
 {
     int fd = open(path, O_RDONLY);
+    header_t header;
 
     if (fd < 0)
         return 84;
     char *prog = malloc(sizeof(char) * MEM_SIZE);
     char *tmp = malloc(sizeof(char) * MEM_SIZE);
     int count = 0;
-    read(fd, tmp, sizeof(header_t));
+    read(fd, &header, sizeof(header_t));
+    process->prog_size = header.prog_size;
     while (read(fd, tmp, 1)) count++;
     close(fd);
     fd = open(path, O_RDONLY);
@@ -49,12 +51,13 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     // printf("adress : %d\n", adress);
     process_t *proc = malloc(sizeof(process_t));
     adress += sizeof(header_t);
-    get_prog(vm->ram, adress, path);
+    get_prog(vm->ram, adress, path, proc);
     proc->name = path;
     proc->carry = false;
     proc->prog_nbr = prog_number;
     proc->last_live = 0;
     proc->pc = adress;
+    proc->initial_pc = adress;
     proc->reg = load_reg(prog_number); // get the flag from the input
     proc->wait = 0;// = proc->current_ope->nbr_cycles;
     proc->player_id_alive = -1;

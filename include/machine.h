@@ -59,6 +59,8 @@ struct process_s {
     ope_t *current_ope;
     int prog_nbr;
     char *name;
+    int initial_pc;
+    int prog_size;
 };
 
 typedef struct player_s {
@@ -128,5 +130,6 @@ void or_func(vm_t *vm, process_t *p, ope_t *ope);
 void xor_func(vm_t *vm, process_t *p, ope_t *ope);
 void zjmp_func(vm_t *vm, process_t *process, ope_t *ope);
 void sti_func(vm_t *vm, process_t *p, ope_t *ope);
+void fork_func(vm_t *vm, process_t *p, ope_t *ope);
 
 #endif
