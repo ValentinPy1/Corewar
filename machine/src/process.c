@@ -70,6 +70,8 @@ void update_process(vm_t *vm, process_t *proc)
     ope_t *ope;
 
     // printf("%d pc : %d\n", proc->flag, proc->pc);
+    // printf("\n\n");
+    // dipslay_memory(vm);
     if (proc == NULL)
         return;
     ope = proc->current_ope;
