@@ -54,7 +54,6 @@ void get_param(exec_t *ex, buffer_t *buffer, char **line, int i);
 int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index);
 void remove_ending_char(char *str, char c);
 int get_label_index(char *op, exec_t *ex);
-void invert_endianess(void *var, size_t size);
 int get_param_value(param_t param, exec_t *ex);
 int get_param_size_from_type(int type, int param_index, int instruct_code);
 void write_header(header_t *header, exec_t *exec, int fd);
