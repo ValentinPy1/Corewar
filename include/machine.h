@@ -132,4 +132,6 @@ void zjmp_func(vm_t *vm, process_t *process, ope_t *ope);
 void sti_func(vm_t *vm, process_t *p, ope_t *ope);
 void fork_func(vm_t *vm, process_t *p, ope_t *ope);
 
+
+static void copy_process_at(int adress, process_t *process, vm_t *vm);
 #endif
