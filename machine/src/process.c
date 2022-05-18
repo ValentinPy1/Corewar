@@ -68,7 +68,8 @@ void update_process(vm_t *vm, process_t *proc)
 {
     int *option = NULL;
     ope_t *ope;
-
+    // printf("\n\n");
+    // dipslay_memory(vm);
     if (proc == NULL)
         return;
     ope = proc->current_ope;
@@ -79,7 +80,7 @@ void update_process(vm_t *vm, process_t *proc)
     // puts("\n\n MEMORY\n\n");
     // dipslay_memory(vm);
     if ((int) ope->code > 0 && (int) ope->code < sizeof(MNEMONIC)
-    / sizeof(MNEMONIC[0])
+    / sizeof(instruct_t)
     && MNEMONIC[(int) ope->code].func)
         MNEMONIC[(int) ope->code].func(vm, proc, ope);
     proc->pc = (proc->pc + ope->size) % MEM_SIZE;

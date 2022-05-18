@@ -111,6 +111,7 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
         return NULL;
     }
     tmp = 0;
+    printf("\nop->tab[op->code - 1] = %s\n", op_tab[ope->code - 1].mnemonique);
     if (ope->code != 1 && ope->code != 9 && ope->code != 12 && ope->code != 15)
         load_to_ptr(&tmp, adress++, vm, sizeof(char));
     else
