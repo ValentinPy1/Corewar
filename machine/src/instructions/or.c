@@ -17,5 +17,5 @@ void or_func(vm_t *vm, process_t *p, ope_t *ope)
 
     result = arg1 | arg2;
     invert_endianess(&result, REG_SIZE);
-    p->reg[ope->real_args[2]] = result;
+    p->reg[ope->real_args[2] - 1] = result;
 }
