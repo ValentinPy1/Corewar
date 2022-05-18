@@ -38,15 +38,15 @@ int get_prog(ram_t *ram, int adress, char *path)
     }
     close(fd);
     for (int i = 0; i < count; ++i) {
-        printf("[%x]", *((char *) ram->mem + adress + i));
+        // printf("[%x]", *((char *) ram->mem + adress + i));
     }
-    printf("\n");
+    // printf("\n");
     return 0;
 }
 
 void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
-    printf("adress : %d\n", adress);
+    // printf("adress : %d\n", adress);
     process_t *proc = malloc(sizeof(process_t));
     adress += sizeof(header_t);
     get_prog(vm->ram, adress, path);
@@ -69,6 +69,7 @@ void update_process(vm_t *vm, process_t *proc)
     int *option = NULL;
     ope_t *ope;
 
+    // printf("%d pc : %d\n", proc->flag, proc->pc);
     if (proc == NULL)
         return;
     ope = proc->current_ope;
@@ -83,7 +84,7 @@ void update_process(vm_t *vm, process_t *proc)
         proc->wait -= 1;
         return;
     }
-    printf("ope code : %s\n", op_tab[ope->code - 1].mnemonique);
+    printf("ope memo : %s\n", op_tab[ope->code - 1].mnemonique);
     if (MNEMONIC[ope->code].func) {
         MNEMONIC[(int) ope->code].func(vm, proc, ope);
     }
