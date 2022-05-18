@@ -26,6 +26,8 @@ SRC	= ../op.c \
 		src/instructions/sub.c	\
 		src/instructions/xor.c	\
 		src/instructions/zjmp.c \
+		src/instructions/ldi.c	\
+		src/instructions/lldi.c	\
 		../asm/src/size_adjusters.c \
 		../asm/src/get_op_index.c \
 		src/instructions/sti.c \

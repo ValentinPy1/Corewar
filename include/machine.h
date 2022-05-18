@@ -131,5 +131,7 @@ void xor_func(vm_t *vm, process_t *p, ope_t *ope);
 void zjmp_func(vm_t *vm, process_t *process, ope_t *ope);
 void sti_func(vm_t *vm, process_t *p, ope_t *ope);
 void fork_func(vm_t *vm, process_t *p, ope_t *ope);
+void ldi_func(vm_t *vm, process_t *process, ope_t *ope);
+void lld_func(vm_t *vm, process_t *process, ope_t *ope);
 
 #endif
