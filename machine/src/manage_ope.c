@@ -106,7 +106,7 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
         return NULL;
     load_to_ptr(&tmp, adress++, vm, sizeof(char));
     ope->code = tmp;
-    if (ope->code <= 0) {
+    if (ope->code <= 0 || ope->code > 16) {
         free(ope);
         return NULL;
     }

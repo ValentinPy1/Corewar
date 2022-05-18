@@ -72,19 +72,21 @@ void update_process(vm_t *vm, process_t *proc)
     if (proc == NULL)
         return;
     ope = proc->current_ope;
+    if (!ope) {
+        proc->pc += 1;
+        proc->pc %= MEM_SIZE;
+        destroy_ope(proc->current_ope);
+        proc->current_ope = get_ope(vm, proc->pc, proc);
+        return;
+    }
     if (proc->wait > 0) {
         proc->wait -= 1;
         return;
     }
-    if (!ope) {
-        proc->pc += 1;
-        proc->pc %= MEM_SIZE;
-        return;
-    }
-    if (!(ope->code >  0 && ope->code < 17))
-        return;
-    if (MNEMONIC[ope->code].func)
+    printf("ope code : %s\n", op_tab[ope->code - 1].mnemonique);
+    if (MNEMONIC[ope->code].func) {
         MNEMONIC[(int) ope->code].func(vm, proc, ope);
+    }
     proc->pc = (proc->pc + ope->size) % MEM_SIZE;
     destroy_ope(proc->current_ope);
     proc->current_ope = get_ope(vm, proc->pc, proc);
