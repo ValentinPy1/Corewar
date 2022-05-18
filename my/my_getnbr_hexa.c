@@ -5,6 +5,8 @@
 ** my_getnbr_hexa.c
 */
 
+int my_strlen(const char *str);
+
 static int get_char_index_in_str(const char *str, char c)
 {
     int i = 0;

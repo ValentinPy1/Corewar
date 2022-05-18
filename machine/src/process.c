@@ -77,15 +77,18 @@ void update_process(vm_t *vm, process_t *proc)
         proc->wait -= 1;
         return;
     }
-    // puts("\n\n MEMORY\n\n");
-    // dipslay_memory(vm);
-    if ((int) ope->code > 0 && (int) ope->code < sizeof(MNEMONIC)
-    / sizeof(instruct_t)
-    && MNEMONIC[(int) ope->code].func)
+    if (!ope) {
+        proc->pc += 1;
+        proc->pc %= MEM_SIZE;
+        return;
+    }
+    if (!(ope->code > 0 && ope->code < 17))
+        return;
+    if (MNEMONIC[ope->code].func)
         MNEMONIC[(int) ope->code].func(vm, proc, ope);
     proc->pc = (proc->pc + ope->size) % MEM_SIZE;
     destroy_ope(proc->current_ope);
     proc->current_ope = get_ope(vm, proc->pc, proc);
-    // proc->wait = proc->current_ope->nbr_cycles;
-    proc->wait = 12;
+    if (proc->current_ope)
+        proc->wait = proc->current_ope->nbr_cycles;
 }
