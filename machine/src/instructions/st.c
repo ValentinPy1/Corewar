@@ -11,11 +11,7 @@
 void st_func(vm_t *vm, process_t *p, ope_t *ope)
 {
     int reg_index = ope->real_args[0];
-    // void *data = (ope->size_type[1] == T_REG)
-    // ? &process->reg[ope->real_args[1]]
-    // : vm->ram->mem + ope->real_args[1] % IDX_MOD;
-
-    // load_data_from_reg(&process->reg[reg_index], data, REG_SIZE);
+   
     if (ope->type[1] == T_REG)
         lireg(&(p->reg[reg_index]), REG_SIZE, ope->real_args[1]);
     else
