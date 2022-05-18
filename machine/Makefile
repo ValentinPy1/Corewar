@@ -27,6 +27,7 @@ SRC	= ../op.c \
 		src/instructions/zjmp.c \
 		../asm/src/size_adjusters.c \
 		../asm/src/get_op_index.c \
+		src/instructions/sti.c \
 
 OBJ	=	$(SRC:.c=.o)
 

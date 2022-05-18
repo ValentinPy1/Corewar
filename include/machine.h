@@ -10,7 +10,7 @@
     #define loadarg(arg, i, size) \
     (load_op_arg(&arg, vm, (arginf_t) {ope, p, i, size}))
     #define lireg(data_ptr, data_size, reg_index) \
-    load_data_in_reg(p->reg[ope->args[reg_index]], data_ptr, data_size);
+    load_data_in_reg(&(p->reg[ope->args[reg_index]]), data_ptr, data_size)
     #define ABS(x) (x < 0 ? -x : x)
     #define MAX_PLAYER_NBR 4
 
@@ -99,6 +99,7 @@ bool battle_hasnt_ended(vm_t *vm);
 void load_data_in_reg(int *reg, void *data, size_t data_size);
 void load_data_from_reg(int *reg, void *data, size_t data_size);
 void load_to_ptr(void *ptr, int adress, vm_t *vm, size_t size);
+void load_data_to_mem(int adress, void *data, int data_size, vm_t *vm);
 
 //PROCESS MANAGEMENT
 // char **load_reg(void);
@@ -113,6 +114,7 @@ void get_op_real_args(vm_t *vm, ope_t *ope, int adress, process_t *process);
 char *specific_type(char op_code);
 void destroy_ope(ope_t *ope);
 void get_args_type(ope_t *ope, int *adress, char *mem);
+void load_op_arg(void *dest, vm_t *vm, arginf_t arginf);
 
 //OPERATIONS
 void live_func(vm_t *vm, process_t *process, ope_t *ope);
@@ -123,7 +125,7 @@ void sub_func(vm_t *vm, process_t *process, ope_t *ope);
 void and_func(vm_t *vm, process_t *p, ope_t *ope);
 void or_func(vm_t *vm, process_t *p, ope_t *ope);
 void xor_func(vm_t *vm, process_t *p, ope_t *ope);
-void load_op_arg(void *dest, vm_t *vm, arginf_t arginf);
 void zjmp_func(vm_t *vm, process_t *process, ope_t *ope);
+void sti_func(vm_t *vm, process_t *p, ope_t *ope);
 
 #endif

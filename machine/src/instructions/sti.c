@@ -5,3 +5,13 @@
 ** sti.c
 */
 
+#include "machine.h"
+
+void sti_func(vm_t *vm, process_t *p, ope_t *ope)
+{
+    int reg_index = ope->real_args[0];
+    int adress = p->pc + (ope->real_args[1] + ope->real_args[2])
+    % IDX_MOD;
+
+    load_data_to_mem(adress, &(p->reg[reg_index]), REG_SIZE, vm);
+}
