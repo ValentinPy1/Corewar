@@ -21,5 +21,5 @@ void ldi_func(vm_t *vm, process_t *process, ope_t *ope)
     adress = process->pc + tmp % IDX_MOD;
     load_to_ptr(&value, adress, vm, REG_SIZE);
     invert_endianess(&value, REG_SIZE);
-    process->reg[ope->real_args[2]] = value;
+    process->reg[ope->real_args[2] - 1] = value;
 }

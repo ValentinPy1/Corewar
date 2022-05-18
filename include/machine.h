@@ -10,7 +10,7 @@
     #define loadarg(arg, i, size) \
     (load_op_arg(&arg, vm, (arginf_t) {ope, p, i, size}))
     #define lireg(data_ptr, data_size, reg_index) \
-    load_data_in_reg(p->reg[ope->args[reg_index]], data_ptr, data_size)
+    load_data_in_reg(p->reg[ope->args[reg_index] - 1], data_ptr, data_size)
     #define ABS(x) (x < 0 ? -x : x)
     #define MAX_PLAYER_NBR 4
 
@@ -134,4 +134,6 @@ void fork_func(vm_t *vm, process_t *p, ope_t *ope);
 void ldi_func(vm_t *vm, process_t *process, ope_t *ope);
 void lld_func(vm_t *vm, process_t *process, ope_t *ope);
 
+
+// static void copy_process_at(int adress, process_t *process, vm_t *vm);
 #endif

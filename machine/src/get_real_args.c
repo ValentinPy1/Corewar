@@ -50,8 +50,7 @@ void get_op_real_args(vm_t *vm, ope_t *ope, int adress, process_t *process)
     for (int i = 0; i < arg_nbr; ++i) {
         // printf("about to load arg: (adress is %d)\n", adress);
         for (int j = 0; j < ope->size_type[i]; ++j)
-            // printf("[%x] ", (vm->ram->mem + (adress % MEM_SIZE))[j]);
-        ope->real_args[i] = load_arg(vm, adress, i, ope, process);
+            ope->real_args[i] = load_arg(vm, adress, i, ope, process);
         adress += ope->size_type[i];
     }
 }

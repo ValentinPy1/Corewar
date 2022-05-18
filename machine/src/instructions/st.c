@@ -12,8 +12,8 @@ void st_func(vm_t *vm, process_t *p, ope_t *ope)
 {
     int reg_index = ope->real_args[0];
     if (ope->type[1] == T_REG)
-        p->reg[ope->real_args[1]] = p->reg[reg_index];
+        p->reg[ope->real_args[1] - 1] = p->reg[reg_index - 1];
     else
-        load_data_to_mem(p->reg[reg_index], &(ope->real_args[1]),
+        load_data_to_mem(p->reg[reg_index - 1], &(ope->real_args[1]),
         ope->size_type[1], vm);
 }
