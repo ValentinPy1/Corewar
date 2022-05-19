@@ -118,6 +118,11 @@ char *specific_type(char op_code);
 void destroy_ope(ope_t *ope);
 void get_args_type(ope_t *ope, int *adress, char *mem);
 void load_op_arg(void *dest, vm_t *vm, arginf_t arginf);
+void load_live(vm_t *vm, process_t *process, ope_t *ope, int adress);
+void load_zjmp(vm_t *vm, process_t *process, ope_t *ope, int adress);
+void load_ldi(vm_t *vm, process_t *process, ope_t *ope, int adress);
+void load_sti(vm_t *vm, process_t *process, ope_t *ope, int adress);
+void load_fork(vm_t *vm, process_t *process, ope_t *ope, int adress);
 
 //OPERATIONS
 void live_func(vm_t *vm, process_t *process, ope_t *ope);
