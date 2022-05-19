@@ -108,6 +108,7 @@ void load_data_to_mem(int adress, void *data, int data_size, vm_t *vm);
 int *load_reg(int flag);
 void update_process(vm_t *vm, process_t *proc);
 void memcpy_size(void *dest, void *src, size_t size);
+int kill_processes(vm_t *vm);
 
 //OPERATIONS MANAGEMENT
 int sum_char(char *size_type);
