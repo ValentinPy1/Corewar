@@ -126,5 +126,6 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
 
 void destroy_ope(ope_t *ope)
 {
-    free(ope);
+    if (ope)
+        free(ope);
 }
