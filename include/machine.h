@@ -13,6 +13,7 @@
     load_data_in_reg(p->reg[ope->args[reg_index] - 1], data_ptr, data_size)
     #define ABS(x) (x < 0 ? -x : x)
     #define MAX_PLAYER_NBR 4
+    #define BYTE(delta) (vm->ram->mem)[(delta + adress) % MEM_SIZE]
 
     #include "my.h"
     #include "op.h"
@@ -124,6 +125,7 @@ void load_zjmp(vm_t *vm, process_t *process, ope_t *ope, int adress);
 void load_ldi(vm_t *vm, process_t *process, ope_t *ope, int adress);
 void load_sti(vm_t *vm, process_t *process, ope_t *ope, int adress);
 void load_fork(vm_t *vm, process_t *process, ope_t *ope, int adress);
+int get_index_value(vm_t *vm, int adress);
 
 //OPERATIONS
 void live_func(vm_t *vm, process_t *process, ope_t *ope);

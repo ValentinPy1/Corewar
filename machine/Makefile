@@ -33,6 +33,7 @@ SRC	= ../op.c \
 		src/instructions/sti.c \
 		src/instructions/fork.c \
 		src/special_loaders.c \
+		src/get_index_value.c \
 
 OBJ	=	$(SRC:.c=.o)
 
