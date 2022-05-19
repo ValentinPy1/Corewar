@@ -28,6 +28,8 @@ void load_live(vm_t *vm, process_t *process, ope_t *ope, int adress)
         *((char *) vm->ram->mem + (adress + i)) % MEM_SIZE;
     }
     ope->size_type[0] = REG_SIZE;
+    for (int i = 1; i < MAX_ARGS_NUMBER; ++i)
+        ope->size_type[i] = 0;
 }
 
 void load_zjmp(vm_t *vm, process_t *process, ope_t *ope, int adress)
@@ -49,6 +51,7 @@ void load_ldi(vm_t *vm, process_t *process, ope_t *ope, int adress)
     ope->size_type[0] = IND_SIZE;
     ope->size_type[1] = IND_SIZE;
     ope->size_type[2] = 1;
+    ope->size_type[3] = 0;
     invert_endianess(&(ope->real_args[0]), IND_SIZE);
     invert_endianess(&(ope->real_args[1]), IND_SIZE);
     invert_endianess(&(ope->real_args[2]), sizeof(char));
