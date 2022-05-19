@@ -91,7 +91,7 @@ void update_process(vm_t *vm, process_t *proc)
         proc->wait -= 1;
         return;
     }
-    // printf("ope %d (%s) from proc %d at adress %d of size (%d)\n", vm->ram->mem[proc->pc], op_tab[vm->ram->mem[proc->pc] - 1].mnemonique, proc->prog_nbr, proc->pc, proc->current_ope->size);
+    printf("ope %d (%s) from proc %d at adress %d of size (%d)\n", vm->ram->mem[proc->pc], op_tab[vm->ram->mem[proc->pc] - 1].mnemonique, proc->prog_nbr, proc->pc, proc->current_ope->size);
     if (MNEMONIC[ope->code].func) {
         MNEMONIC[(int) ope->code].func(vm, proc, ope);
         proc->pc = (proc->pc + ope->size) % MEM_SIZE;
@@ -99,7 +99,7 @@ void update_process(vm_t *vm, process_t *proc)
         proc->current_ope = get_ope(vm, proc->pc, proc);
         if (proc->current_ope)
             proc->wait = proc->current_ope->nbr_cycles;
-        // printf("next ope %d (%s) from proc %d at adress %d\n", vm->ram->mem[proc->pc], op_tab[vm->ram->mem[proc->pc] - 1].mnemonique, proc->prog_nbr, proc->pc);
+        printf("next ope %d (%s) from proc %d at adress %d\n\n", vm->ram->mem[proc->pc], op_tab[vm->ram->mem[proc->pc] - 1].mnemonique, proc->prog_nbr, proc->pc);
         return;
     }
     proc->pc += 1;

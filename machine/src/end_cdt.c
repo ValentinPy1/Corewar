@@ -80,7 +80,7 @@ bool battle_hasnt_ended(vm_t *vm)
     int nbr_player_alive = 0;
 
     for (int i = 0; i < MAX_PLAYER_NBR; ++i)
-        if (vm->cycle - vm->players[i].last_live > CYCLE_TO_DIE)
+        if (ABS(vm->players[i].last_live - vm->cycle) > vm->cycle_to_die)
             vm->players[i].is_alive = false;
         else
             ++nbr_player_alive;

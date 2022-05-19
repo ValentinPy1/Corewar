@@ -11,14 +11,7 @@
 
 void ld_func(vm_t *vm, process_t *process, ope_t *ope)
 {
-    int res = 0;
-    int adress = process->pc + ope->real_args[0] % IDX_MOD;
-
-    load_to_ptr(&res, adress, vm, ope->size_type[0]);
-    process->reg[ope->real_args[1]] = res;
-    if (process->carry == 1)
-        process->carry = 0;
-    else
-        process->carry = 1;
-    // process->reg[ope->real_args[1] - 1] = res;
+    process->reg[ope->real_args[1]] = ope->real_args[0];
+    process->carry = !ope->real_args[0];
+    invert_endianess(&(process->reg[ope->real_args[1]]), REG_SIZE);
 }

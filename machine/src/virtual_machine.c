@@ -50,7 +50,7 @@ int launch_vm(int ac, char *av[])
             update_process(vm, vm->process[i]);
         }
         vm->cycle += 1;
-        if (vm->live_count > NBR_LIVE) {
+        if (vm->live_count >= NBR_LIVE) {
             vm->cycle_to_die -= CYCLE_DELTA;
             vm->live_count -= NBR_LIVE;
         }
