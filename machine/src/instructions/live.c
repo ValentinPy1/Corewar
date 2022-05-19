@@ -17,5 +17,5 @@ void live_func(vm_t *vm, process_t *process, ope_t *ope)
     my_putstr(") is alive..\n");
     process->player_id_alive = ope->real_args[1];
     process->last_live = vm->cycle;
-    vm->players[ope->real_args[1]].last_live = vm->cycle;
+    vm->players[ope->real_args[0]].last_live = vm->cycle;
 }

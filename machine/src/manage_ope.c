@@ -110,7 +110,6 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
         free(ope);
         return NULL;
     }
-    // printf("ope is [%s]\n", op_tab[ope->code - 1].mnemonique);
     tmp = 0;
     // printf("\nop->tab[op->code - 1] = %s\n", op_tab[ope->code - 1].mnemonique);
     if (ope->code != 1 && ope->code != 9 && ope->code != 12 && ope->code != 15)
@@ -118,9 +117,9 @@ ope_t *get_ope(vm_t *vm, int adress, process_t *process)
     else
         tmp = 0b01000000;
     load_op_type(ope, (char) tmp);
-    ope->size = get_size_from_op(ope);
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
     get_op_real_args(vm, ope, adress, process);
+    ope->size = get_size_from_op(ope);
     process->wait = op_tab[ope->code - 1].nbr_cycles;
     return ope;
 }
