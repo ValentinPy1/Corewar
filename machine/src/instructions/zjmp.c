@@ -10,7 +10,6 @@
 
 void zjmp_func(vm_t *vm, process_t *process, ope_t *ope)
 {
-    printf("HELLLLLLLLLLLLLLLLLLLLLLLOOOOO\n");
     if (process->carry == 1)
         process->pc = (process->pc + ope->real_args[0]) % MEM_SIZE;
 }

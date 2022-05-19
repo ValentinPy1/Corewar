@@ -54,6 +54,7 @@ int launch_vm(int ac, char *av[])
             vm->cycle_to_die -= CYCLE_DELTA;
             vm->live_count -= NBR_LIVE;
         }
+        // kill_processes(vm);
     }
     return 0;
     // TODO destroy each process that have a last live printed more than cycle_to_cie cyles

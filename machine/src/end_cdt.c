@@ -60,12 +60,27 @@
 //     return false;
 // }
 
+void kill_process(vm_t *vm, process_t *process)
+{
+    if (vm->cycle - process->last_live < vm->cycle_to_die)
+        return;
+    free(process);
+}
+
+int kill_processes(vm_t *vm)
+{
+    for (int i = 0; i < vm->proc_count; ++i) {
+        if (vm->process[i])
+            kill_process(vm, vm->process[i]);
+    }
+}
+
 bool battle_hasnt_ended(vm_t *vm)
 {
     int nbr_player_alive = 0;
 
     for (int i = 0; i < MAX_PLAYER_NBR; ++i)
-        if (ABS(vm->players[i].last_live - vm->cycle) > CYCLE_TO_DIE)
+        if (vm->cycle - vm->players[i].last_live > CYCLE_TO_DIE)
             vm->players[i].is_alive = false;
         else
             ++nbr_player_alive;
