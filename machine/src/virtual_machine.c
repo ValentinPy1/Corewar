@@ -42,7 +42,6 @@ int launch_vm(int ac, char *av[])
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
     my_get_option(vm, ac, av);
-    display_memory(vm);
     while (battle_hasnt_ended(vm)) { // end condition
         for (int i = 0; i < vm->proc_count; ++i) {
             if (vm->process[i] == NULL)
@@ -54,6 +53,7 @@ int launch_vm(int ac, char *av[])
             vm->cycle_to_die -= CYCLE_DELTA;
             vm->live_count -= NBR_LIVE;
         }
+        dump_display_memory(vm);
     }
     return 0;
     // TODO destroy each process that have a last live printed more than cycle_to_cie cyles

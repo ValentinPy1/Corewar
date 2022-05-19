@@ -35,4 +35,17 @@ void display_memory(vm_t *vm)
         my_put_nbr_base(vm->ram->mem[i], "0123456789abcdef");
         my_putstr(" ");
     }
+    my_putstr("\n");
+}
+
+
+void dump_display_memory(vm_t *vm)
+{
+    static int i = 0;
+
+    if (i == vm->dump_cycle) {
+        display_memory(vm);
+        i = 0;
+    }
+    i++;
 }

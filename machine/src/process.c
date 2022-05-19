@@ -42,7 +42,7 @@ static int get_prog(ram_t *ram, int adress, char *path, process_t *process)
     for (int i = 0; i < count; ++i) {
         int a = 0;
         a = *((char *) ram->mem + adress + i);
-        printf("[%x]", a);
+        // printf("[%x]", a);
     }
     // printf("\n");
     return 0;
@@ -74,7 +74,7 @@ void update_process(vm_t *vm, process_t *proc)
     int *option = NULL;
     ope_t *ope;
 
-    // printf("%d pc : %d\n", proc->flag, proc->pc);
+    // printf("pc flag : %d pc : %d\n", proc->flag, proc->pc);
     // printf("\n\n");
     // dipslay_memory(vm);
     if (proc == NULL)
@@ -100,9 +100,7 @@ void update_process(vm_t *vm, process_t *proc)
             proc->wait = proc->current_ope->nbr_cycles;
         return;
     }
-    // proc->pc += 1;
     proc->pc %= MEM_SIZE;
     destroy_ope(proc->current_ope);
     proc->current_ope = get_ope(vm, proc->pc, proc);
-
 }
