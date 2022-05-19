@@ -60,29 +60,33 @@
 //     return false;
 // }
 
-void kill_process(vm_t *vm, process_t *process)
+bool kill_process(vm_t *vm, process_t *process)
 {
+    // printf("%d\n", vm->cycle - process->last_live);
     if (vm->cycle - process->last_live < vm->cycle_to_die)
-        return;
+        return true;
     free(process);
+    return false;
 }
 
-int kill_processes(vm_t *vm)
+bool kill_processes(vm_t *vm)
 {
+    bool is_proc_alive = false;
     for (int i = 0; i < vm->proc_count; ++i) {
         if (vm->process[i])
-            kill_process(vm, vm->process[i]);
+            is_proc_alive |= kill_process(vm, vm->process[i]);
     }
+    return is_proc_alive;
 }
 
-bool battle_hasnt_ended(vm_t *vm)
-{
-    int nbr_player_alive = 0;
+// bool battle_hasnt_ended(vm_t *vm)
+// {
+//     int nbr_player_alive = 0;
 
-    for (int i = 0; i < MAX_PLAYER_NBR; ++i)
-        if (ABS(vm->players[i].last_live - vm->cycle) > vm->cycle_to_die)
-            vm->players[i].is_alive = false;
-        else
-            ++nbr_player_alive;
-    return nbr_player_alive > 1;
-}
+//     for (int i = 0; i < MAX_PLAYER_NBR; ++i)
+//         if (ABS(vm->players[i].last_live - vm->cycle) > vm->cycle_to_die)
+//             vm->players[i].is_alive = false;
+//         else
+//             ++nbr_player_alive;
+//     return nbr_player_alive > 1;
+// }

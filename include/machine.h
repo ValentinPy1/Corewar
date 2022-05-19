@@ -109,7 +109,7 @@ void load_data_to_mem(int adress, void *data, int data_size, vm_t *vm);
 int *load_reg(int flag);
 void update_process(vm_t *vm, process_t *proc);
 void memcpy_size(void *dest, void *src, size_t size);
-int kill_processes(vm_t *vm);
+bool kill_processes(vm_t *vm);
 
 //OPERATIONS MANAGEMENT
 int sum_char(char *size_type);
@@ -141,7 +141,6 @@ void sti_func(vm_t *vm, process_t *p, ope_t *ope);
 void fork_func(vm_t *vm, process_t *p, ope_t *ope);
 void ldi_func(vm_t *vm, process_t *process, ope_t *ope);
 void lld_func(vm_t *vm, process_t *process, ope_t *ope);
-
 
 // static void copy_process_at(int adress, process_t *process, vm_t *vm);
 #endif

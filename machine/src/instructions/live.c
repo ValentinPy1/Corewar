@@ -18,4 +18,5 @@ void live_func(vm_t *vm, process_t *process, ope_t *ope)
     process->player_id_alive = ope->real_args[0];
     process->last_live = vm->cycle;
     vm->players[ope->real_args[0]].last_live = vm->cycle;
+    vm->live_count += 1;
 }

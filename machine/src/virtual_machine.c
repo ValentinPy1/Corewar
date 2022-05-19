@@ -43,20 +43,16 @@ int launch_vm(int ac, char *av[])
         return 84;
     my_get_option(vm, ac, av);
     display_memory(vm);
-    while (battle_hasnt_ended(vm)) { // end condition
+    while (kill_processes(vm)) {
         for (int i = 0; i < vm->proc_count; ++i) {
-            if (vm->process[i] == NULL)
-                continue;
-            update_process(vm, vm->process[i]);
+            if (vm->process[i])
+                update_process(vm, vm->process[i]);
         }
         vm->cycle += 1;
         if (vm->live_count >= NBR_LIVE) {
             vm->cycle_to_die -= CYCLE_DELTA;
             vm->live_count -= NBR_LIVE;
         }
-        // kill_processes(vm);
     }
     return 0;
-    // TODO destroy each process that have a last live printed more than cycle_to_cie cyles
-    // TODO check for win ad loss condition
 }
