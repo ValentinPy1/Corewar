@@ -58,5 +58,6 @@ int get_param_value(param_t param, exec_t *ex);
 int get_param_size_from_type(int type, int param_index, int instruct_code);
 void write_header(header_t *header, exec_t *exec, int fd);
 char get_type_code_from_size(int size);
-
+int error_handling_args_type(buffer_t *buffer);
+int type_test_live(buffer_t *buffer);
 #endif
