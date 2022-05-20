@@ -141,6 +141,8 @@ void sti_func(vm_t *vm, process_t *p, ope_t *ope);
 void fork_func(vm_t *vm, process_t *p, ope_t *ope);
 void ldi_func(vm_t *vm, process_t *process, ope_t *ope);
 void lld_func(vm_t *vm, process_t *process, ope_t *ope);
+void aff_func(vm_t *vm, process_t *p, ope_t *ope);
+void lldi_func(vm_t *vm, process_t *process, ope_t *ope);
+void lfork_fun(vm_t *vm, process_t *process, ope_t *ope);
 
-// static void copy_process_at(int adress, process_t *process, vm_t *vm);
 #endif
