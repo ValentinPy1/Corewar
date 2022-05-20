@@ -15,12 +15,26 @@
 #include "my.h"
 #include "asm_struct.h"
 
+static int file_doesnt_exist(const char *filename)
+{
+    int fd = open(filename, O_RDONLY);
+
+    if (fd < 0) {
+        close(fd);
+        return 1;
+    }
+    close(fd);
+    return 0;
+}
+
 static char *get_exec_name(char *filename)
 {
     int len = my_strlen(filename);
     char *exec_name;
     int i = 0;
 
+    if (file_doesnt_exist(filename))
+        exit(84);
     len += (len > 2 && filename[len - 2] == '.' && filename[len - 1] == 's') ?
     2 : 4;
     exec_name = malloc(sizeof(char) * (len + 1));
