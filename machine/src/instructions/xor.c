@@ -10,12 +10,12 @@
 
 void xor_func(vm_t *vm, process_t *p, ope_t *ope)
 {
-    int arg1 = 0;
-    int arg2 = 0;
     int result = 0;
 
-    loadarg(arg1, 0, sizeof(int));
-    loadarg(arg2, 1, sizeof(int));
-    result = arg1 ^ arg2;
+    if (ope->real_args[0] <= 0 || ope->real_args[0] > REG_NUMBER
+    || ope->real_args[1] <= 0 || ope->real_args[1] > REG_NUMBER
+    || ope->real_args[2] <= 0 || ope->real_args[2] > REG_NUMBER)
+        return;
+    result = ope->real_args[0] ^ ope->real_args[1];
     p->reg[ope->real_args[2] - 1] = result;
 }

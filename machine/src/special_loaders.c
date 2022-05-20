@@ -10,6 +10,9 @@
 
 void load_live(vm_t *vm, process_t *process, ope_t *ope, int adress)
 {
+    adress %= MEM_SIZE;
+    if (adress < 0)
+        adress = MEM_SIZE - adress;
     ope->real_args[0] = 0;
     for (int i = 0; i < sizeof(int); ++i) {
         ((char *) &(ope->real_args[0]))[i] =
@@ -57,10 +60,16 @@ void load_sti(vm_t *vm, process_t *process, ope_t *ope, int adress)
     memcpy_size(&(ope->real_args[2]),
     (vm->ram->mem + adress % MEM_SIZE), ope->size_type[1]);
     invert_endianess(&(ope->real_args[2]), ope->size_type[2]);
+    for (int i = 3; i < MAX_ARGS_NUMBER; ++i) {
+        ope->size_type[i] = 0;
+    }
 }
 
 void load_fork(vm_t *vm, process_t *process, ope_t *ope, int adress)
 {
     ope->real_args[0] = get_index_value(vm, adress);
     ope->size_type[0] = IND_SIZE;
+    for (int i = 1; i < MAX_ARGS_NUMBER; ++i) {
+        ope->size_type[i] = 0;
+    }
 }

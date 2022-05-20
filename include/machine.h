@@ -14,6 +14,20 @@
     #define ABS(x) (x < 0 ? -x : x)
     #define MAX_PLAYER_NBR 4
     #define BYTE(delta) (vm->ram->mem)[(delta + adress) % MEM_SIZE]
+    #define set_val(dest, cast, vm, adress_i) \
+    do { \
+        cast tmp_internal = 0; \
+        int internal_add_mod = adress % MEM_SIZE; \
+        dest = 0; \
+        \
+        if (internal_add_mod < 0) \
+            internal_add_mod = MEM_SIZE - internal_add_mod; \
+        for (size_t i_in = 0; i_in < sizeof(cast); ++i_in) \
+            ((char *) &tmp_internal)[i_in] = \
+            (vm->ram->mem)[(i_in + internal_add_mod) % MEM_SIZE]; \
+        dest = tmp_internal; \
+    } while (0);
+
 
     #include "my.h"
     #include "op.h"
@@ -126,7 +140,8 @@ void load_ldi(vm_t *vm, process_t *process, ope_t *ope, int adress);
 void load_sti(vm_t *vm, process_t *process, ope_t *ope, int adress);
 void load_fork(vm_t *vm, process_t *process, ope_t *ope, int adress);
 int get_index_value(vm_t *vm, int adress);
-void copy_process_at(int adress, process_t *process, vm_t *vm);
+void copy_process_at(int new_pc, process_t *process, vm_t *vm, int adress);
+int get_adress_with_space(vm_t *vm, int size);
 
 //OPERATIONS
 void live_func(vm_t *vm, process_t *process, ope_t *ope);

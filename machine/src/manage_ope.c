@@ -84,6 +84,10 @@ static void load_op_type(ope_t *ope, char encoding)
         encoding >>= 2;
         type = 0;
     }
+    for (int i = op_tab[ope->code - 1].nbr_args; i < MAX_ARGS_NUMBER;
+    ++i) {
+        ope->size_type[i] = 0;
+    }
 }
 
 int get_size_from_op(ope_t *op)
@@ -101,21 +105,31 @@ int get_size_from_op(ope_t *op)
 ope_t *get_ope(vm_t *vm, int adress, process_t *process)
 {
     ope_t *ope = malloc(sizeof(ope_t));
-    int tmp = 0;
+    char tmp = 0;
+    int mod_adress = 0;
+
     if (!ope)
         return NULL;
-    load_to_ptr(&tmp, adress++, vm, sizeof(char));
+    mod_adress = (adress++) % MEM_SIZE;
+        if (mod_adress < 0)
+            mod_adress = MEM_SIZE - mod_adress;
+    tmp = vm->ram->mem[(mod_adress) % MEM_SIZE];
     ope->code = tmp;
     if (ope->code <= 0 || ope->code > 16) {
-        free(ope);
+        if (ope)
+            free(ope);
         return NULL;
     }
     tmp = 0;
-    // printf("\nop->tab[op->code - 1] = %s\n", op_tab[ope->code - 1].mnemonique);
-    if (ope->code != 1 && ope->code != 9 && ope->code != 12 && ope->code != 15)
-        load_to_ptr(&tmp, adress++, vm, sizeof(char));
-    else
+    if (ope->code != 1 && ope->code != 9 && ope->code != 12 && ope->code != 15) {
+        // load_to_ptr(&tmp, adress++, vm, sizeof(char));
+        mod_adress = (adress++) % MEM_SIZE;
+        if (mod_adress < 0)
+            mod_adress = MEM_SIZE - mod_adress;
+        tmp = vm->ram->mem[(mod_adress) % MEM_SIZE];
+    } else {
         tmp = 0b01000000;
+    }
     load_op_type(ope, (char) tmp);
     ope->nbr_cycles = op_tab[ope->code - 1].nbr_cycles;
     get_op_real_args(vm, ope, adress, process);

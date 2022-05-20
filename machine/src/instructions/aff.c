@@ -12,5 +12,8 @@ void aff_func(vm_t *vm, process_t *p, ope_t *ope)
 {
     char c = (ope->real_args[0]) % 256;
 
-    write(1, &c, 1);
+    if (c == 42)
+        write(1, "*", 1);
+    else
+        write(1, &c, 1);
 }

@@ -62,7 +62,6 @@
 
 bool kill_process(vm_t *vm, process_t *process)
 {
-    // printf("%d\n", vm->cycle - process->last_live);
     if (vm->cycle - process->last_live < vm->cycle_to_die)
         return true;
     free(process);

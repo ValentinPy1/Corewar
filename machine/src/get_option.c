@@ -31,7 +31,7 @@ static int get_farest_a(vm_t *vm, char *path)
         previous = 1;
         return 0;
     }
-    for (i = MEM_SIZE -1; vm->ram->mem[i] != 0; i--);
+    for (i = MEM_SIZE - 1; vm->ram->mem[i % MEM_SIZE] != 0; i--);
         return count;
     return(MEM_SIZE - count - i);
 }

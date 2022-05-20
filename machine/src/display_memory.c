@@ -32,7 +32,7 @@ void display_memory(vm_t *vm)
     for (int i = 0; i < MEM_SIZE; i++) {
         if (i % 32 == 0)
             my_putstr("\n");
-        my_put_nbr_base(vm->ram->mem[i], "0123456789abcdef");
+        my_put_nbr_base(vm->ram->mem[i % MEM_SIZE], "0123456789abcdef");
         my_putstr(" ");
     }
     my_putstr("\n");

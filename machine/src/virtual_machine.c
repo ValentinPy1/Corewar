@@ -42,6 +42,7 @@ int launch_vm(int ac, char *av[])
     if (get_nbr_of_champ(av) < 2 || vm->dump_cycle == -1)
         return 84;
     my_get_option(vm, ac, av);
+    display_memory(vm);
     while (kill_processes(vm)) {
         for (int i = 0; i < vm->proc_count; ++i) {
             if (vm->process[i])

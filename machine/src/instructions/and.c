@@ -32,19 +32,14 @@ void load_op_arg(void *dest, vm_t *vm, arginf_t arginf)
             load_to_ptr(dest, adress, vm, sizeof(int));
             break;
         case T_REG:
-            load_data_from_reg(&arginf.process->reg[ope->args[arginf.argno] - 1],
-            dest, sizeof(int));
+            *((int *) dest) = arginf.process->reg[ope->args[arginf.argno] - 1];
     }
 }
 
 void and_func(vm_t *vm, process_t *p, ope_t *ope)
 {
-    int arg1 = 0;
-    int arg2 = 0;
     int result = 0;
 
-    loadarg(arg1, 0, sizeof(int));
-    loadarg(arg2, 1, sizeof(int));
-    result = arg1 & arg2;
+    result = ope->real_args[0] & ope->real_args[1];
     p->reg[ope->args[2] - 1] = result;
 }

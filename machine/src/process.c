@@ -7,6 +7,7 @@
 
 #include "machine.h"
 #include "instruction.h"
+#include "asm.h"
 
 int *load_reg(int flag)
 {
@@ -30,6 +31,7 @@ static int get_prog(ram_t *ram, int adress, char *path, process_t *process)
     int count = 0;
     read(fd, &header, sizeof(header_t));
     process->prog_size = header.prog_size;
+    invert_endianess(&(process->prog_size), sizeof(int));
     while (read(fd, tmp, 1)) count++;
     close(fd);
     fd = open(path, O_RDONLY);
@@ -91,15 +93,14 @@ void update_process(vm_t *vm, process_t *proc)
         proc->wait -= 1;
         return;
     }
-    // printf("ope %d (%s) from proc %d at adress %d of size (%d)\n", vm->ram->mem[proc->pc], op_tab[vm->ram->mem[proc->pc] - 1].mnemonique, proc->prog_nbr, proc->pc, proc->current_ope->size);
-    if (MNEMONIC[ope->code].func) {
+    if (ope && ope->code > 0 && ope->code <= 16
+    && MNEMONIC[ope->code].func) {
         MNEMONIC[(int) ope->code].func(vm, proc, ope);
         proc->pc = (proc->pc + ope->size) % MEM_SIZE;
         destroy_ope(proc->current_ope);
         proc->current_ope = get_ope(vm, proc->pc, proc);
         if (proc->current_ope)
             proc->wait = proc->current_ope->nbr_cycles;
-        // printf("next ope %d (%s) from proc %d at adress %d\n\n", vm->ram->mem[proc->pc], op_tab[vm->ram->mem[proc->pc] - 1].mnemonique, proc->prog_nbr, proc->pc);
         return;
     }
     proc->pc += 1;

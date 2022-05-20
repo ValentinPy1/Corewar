@@ -12,6 +12,9 @@ int get_index_value(vm_t *vm, int adress)
     short int chain = 0;
     int value = 0;
 
+    adress %= MEM_SIZE;
+    if (adress < 0)
+        adress = MEM_SIZE - adress;
     ((char *) &chain)[0] = BYTE(1);
     ((char *) &chain)[1] = BYTE(0);
     value = chain;
