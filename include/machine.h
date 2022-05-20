@@ -126,6 +126,7 @@ void load_ldi(vm_t *vm, process_t *process, ope_t *ope, int adress);
 void load_sti(vm_t *vm, process_t *process, ope_t *ope, int adress);
 void load_fork(vm_t *vm, process_t *process, ope_t *ope, int adress);
 int get_index_value(vm_t *vm, int adress);
+void copy_process_at(int adress, process_t *process, vm_t *vm);
 
 //OPERATIONS
 void live_func(vm_t *vm, process_t *process, ope_t *ope);
@@ -143,6 +144,6 @@ void ldi_func(vm_t *vm, process_t *process, ope_t *ope);
 void lld_func(vm_t *vm, process_t *process, ope_t *ope);
 void aff_func(vm_t *vm, process_t *p, ope_t *ope);
 void lldi_func(vm_t *vm, process_t *process, ope_t *ope);
-void lfork_fun(vm_t *vm, process_t *process, ope_t *ope);
+void lfork_func(vm_t *vm, process_t *process, ope_t *ope);
 
 #endif

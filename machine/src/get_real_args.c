@@ -30,7 +30,11 @@ void memcpy_size(void *dest, void *src, size_t size)
 
 void load_to_ptr(void *ptr, int adress, vm_t *vm, size_t size)
 {
-
+    if (size == IND_SIZE) {
+        *((int *) ptr) = 0;
+        *((int *) ptr) = get_index_value(vm, adress);
+        return;
+    }
     for (int i = 0; i < size; ++i)
         ((char *) ptr)[i] = (vm->ram->mem + adress)[i];
 }

@@ -34,6 +34,7 @@ SRC	= ../op.c \
 		src/instructions/lldi.c	\
 		src/instructions/sti.c \
 		src/instructions/fork.c \
+		src/instructions/lfork.c \
 		src/instructions/aff.c
 
 OBJ	=	$(SRC:.c=.o)
