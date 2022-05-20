@@ -8,7 +8,7 @@
 #include "machine.h"
 #include "asm.h"
 
-static void copy_process_at(int adress, process_t *process, vm_t *vm)
+void copy_process_at(int adress, process_t *process, vm_t *vm)
 {
     process_t *new = malloc(sizeof(process_t));
 

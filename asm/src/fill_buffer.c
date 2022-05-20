@@ -94,5 +94,6 @@ int fill_buffer(exec_t *ex, buffer_t *buffer, char **line, int op_index)
             exit(84);
         ++(*line);
     }
+    error_handling_args_type(buffer);
     return 0;
 }

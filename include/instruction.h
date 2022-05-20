@@ -24,9 +24,9 @@ static const instruct_t MNEMONIC[] = {
     {&sti_func},
     {&fork_func},
     {&lld_func},
-    {NULL},
-    {NULL},
-    {NULL}
+    {&lldi_func},
+    {&lfork_func},
+    {&aff_func}
 };
 
 #endif /* !INSTRUCTION_H_ */
