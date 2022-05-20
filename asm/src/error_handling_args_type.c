@@ -6,7 +6,19 @@
 */
 #include "asm_struct.h"
 #include "asm.h"
-#include "args_type.h"
+
+int type_test_live(buffer_t *buffer)
+{
+    int tmp;
+
+    for (int index = 0; index < buffer->param_nbr; index++) {
+        tmp = buffer->params[index].size;
+        tmp &= ~(op_tab[buffer->instruct_code - 1].type[index]);
+        if (tmp)
+            exit(84);
+    }
+    return (0);
+}
 
 int error_handling_args_type(buffer_t *buffer)
 {
