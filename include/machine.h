@@ -142,7 +142,7 @@ void load_fork(vm_t *vm, process_t *process, ope_t *ope, int adress);
 int get_index_value(vm_t *vm, int adress);
 void copy_process_at(int new_pc, process_t *process, vm_t *vm, int adress);
 int get_adress_with_space(vm_t *vm, int size);
-
+int load_arg(vm_t *vm, int adress, int i, ope_t *ope);
 //OPERATIONS
 void live_func(vm_t *vm, process_t *process, ope_t *ope);
 void ld_func(vm_t *vm, process_t *process, ope_t *ope);

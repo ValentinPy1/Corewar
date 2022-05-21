@@ -80,7 +80,7 @@ void write_header(header_t *header, exec_t *exec, int fd)
     int magic = COREWAR_EXEC_MAGIC;
 
     header->prog_size = my_strlen(exec->binary);
-    invert_endianess(header->prog_size);
+    invert_endianess(&header->prog_size, sizeof(int));
     invert_endianess(&magic, sizeof(int));
     header->magic = magic;
     write(fd, header, sizeof(header_t));

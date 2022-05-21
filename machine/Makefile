@@ -7,9 +7,11 @@
 
 SRC	= ../op.c \
 		src/process.c \
+		src/process2.c \
 		src/virtual_machine.c \
 		src/ram.c \
 		src/manage_ope.c \
+		src/manage_ope2.c \
 		src/tools.c \
 		src/get_option.c \
 		src/register_load.c \
@@ -20,6 +22,7 @@ SRC	= ../op.c \
 		../asm/src/get_op_index.c \
 		src/get_index_value.c \
 		src/special_loaders.c \
+		src/load_arg.c	\
 		src/instructions/add.c	\
 		src/instructions/and.c	\
 		src/instructions/ld.c	\

@@ -38,7 +38,6 @@ void display_memory(vm_t *vm)
     my_putstr("\n");
 }
 
-
 void dump_display_memory(vm_t *vm)
 {
     static int i = 0;
