@@ -6,6 +6,7 @@
 */
 
 #include "machine.h"
+#include "asm.h"
 
 static int get_prog(ram_t *ram, int adress, char *path, process_t *process)
 {
