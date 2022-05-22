@@ -23,7 +23,8 @@ SRC	= ../op.c \
 	src/write_exec_at.c \
 	src/write_header.c \
 	src/write_instruct.c \
-	src/error_handling_args_type.c
+	src/error_handling_args_type.c \
+	src/set_param_size.c \
 
 OBJ	=	$(SRC:.c=.o)
 

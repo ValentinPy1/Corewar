@@ -27,21 +27,20 @@ static int file_doesnt_exist(const char *filename)
     return 0;
 }
 
-static char *get_exec_name(char *filename)
+static char *get_exec_name(char *path)
 {
-    int len = my_strlen(filename);
+    int len = my_strlen(path);
     char *exec_name;
     int i = 0;
 
-    if (file_doesnt_exist(filename))
+    if (file_doesnt_exist(path))
         exit(84);
-    len += (len > 2 && filename[len - 2] == '.' && filename[len - 1] == 's') ?
-    2 : 4;
+    len += (len > 2 && path[len - 2] == '.' && path[len - 1] == 's') ? 2 : 4;
     exec_name = malloc(sizeof(char) * (len + 1));
     if (exec_name == NULL)
         return (NULL);
-    while (filename[i] && filename[i] != '.') {
-        exec_name[i] = filename[i];
+    while (path[i] && path[i] != '.') {
+        exec_name[i] = path[i];
         ++i;
     }
     exec_name[i++] = '.';

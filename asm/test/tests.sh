@@ -8,7 +8,7 @@ do
         continue
     fi
     echo "Testing $file"
-    ./asm test/$file > log_$file.txt
+    ../asm test/$file > log_$file.txt
     status=$?
     echo "|=> Exit status: $status"
     if [ $status -ne 0 ]

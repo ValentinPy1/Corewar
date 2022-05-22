@@ -49,25 +49,30 @@ int get_label_value(exec_t *ex, char *label, int delta_head)
     return ex->labels[i].adress;
 }
 
-void handle_param(char *param, char *p_sizes, int *p_values, exec_t *ex)
+static void get_param_size(char **param, char *p_sizes)
 {
-    char *label;
-
-    while (*param && *param == ' ')
-         ++param;
-    switch (param[0]) {
+    switch ((*param)[0]) {
         case 'r':
-            ++param;
+            ++*param;
             *p_sizes = T_REG;
             break;
         case DIRECT_CHAR:
-            ++param;
+            ++*param;
             *p_sizes = T_DIR;
             break;
         default:
             *p_sizes = T_IND;
             break;
     }
+}
+
+void handle_param(char *param, char *p_sizes, int *p_values, exec_t *ex)
+{
+    char *label;
+
+    while (*param && *param == ' ')
+         ++param;
+    get_param_size(&param, p_sizes);
     if (param[0] == LABEL_CHAR) {
         label = get_label_from_param(++param);
         p_values[0] = get_label_value(ex, label, *p_sizes); //p_size -> T_REG OU T_LAB?

@@ -48,6 +48,20 @@ void get_comment_and_name(header_t *header, char *line)
     }
 }
 
+static header_t *get_comment_and_name_for_header(header_t *header, char *line,
+size_t len, FILE *file)
+{
+    get_comment_and_name(header, line);
+    while (getline(&line, &len, file) != -1) {
+        if (line[0] != '#' && line[0] != '\n')
+            break;
+    }
+    header->magic = 0;
+    header->prog_size = 0;
+    get_comment_and_name(header, line);
+    return header;
+}
+
 header_t *get_header(FILE *file)
 {
     header_t *header = malloc(sizeof(header_t));
@@ -64,15 +78,7 @@ header_t *get_header(FILE *file)
         if (line[0] != '#' && line[0] != '\n')
             break;
     }
-    get_comment_and_name(header, line);
-    while (getline(&line, &len, file) != -1) {
-        if (line[0] != '#' && line[0] != '\n')
-            break;
-    }
-    header->magic = 0;
-    header->prog_size = 0;
-    get_comment_and_name(header, line);
-    return header;
+    return get_comment_and_name_for_header(header, line, len, file);
 }
 
 void write_header(header_t *header, exec_t *exec, int fd)

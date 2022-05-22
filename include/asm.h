@@ -60,4 +60,6 @@ void write_header(header_t *header, exec_t *exec, int fd);
 char get_type_code_from_size(int size);
 int error_handling_args_type(buffer_t *buffer);
 int type_test_live(buffer_t *buffer);
+void set_param_size(char **param, buffer_t *buffer, int i);
+
 #endif

@@ -35,6 +35,7 @@ static int get_prog(ram_t *ram, int adress, char *path, process_t *process)
 void load_prog(vm_t *vm, char *path, int adress, int prog_number)
 {
     process_t *proc = malloc(sizeof(process_t));
+
     adress += sizeof(header_t);
     get_prog(vm->ram, adress, path, proc);
     proc->name = path;
@@ -51,32 +52,3 @@ void load_prog(vm_t *vm, char *path, int adress, int prog_number)
     * sizeof(process_t *));
     vm->process[vm->proc_count - 1] = proc;
 }
-
-// static int get_prog(ram_t *ram, int adress, char *path, process_t *process)
-// {
-//     int fd = open(path, O_RDONLY);
-//     header_t header;
-
-//     if (fd < 0)
-//         return 84;
-//     char *prog = malloc(sizeof(char) * MEM_SIZE);
-//     char *tmp = malloc(sizeof(char) * MEM_SIZE);
-//     int count = 0;
-//     read(fd, &header, sizeof(header_t));
-//     process->prog_size = header.prog_size;
-//     invert_endianess(&(process->prog_size), sizeof(int));
-//     while (read(fd, tmp, 1)) count++;
-//     close(fd);
-//     fd = open(path, O_RDONLY);
-//     read(fd, tmp, sizeof(header_t));
-//     read(fd, prog, count);
-//     for (int i = 0; i < count; ++i) {
-//         ram->mem[(i + adress) % MEM_SIZE] = prog[i];
-//     }
-//     close(fd);
-//     for (int i = 0; i < count; ++i) {
-//         int a = 0;
-//         a = *((char *) ram->mem + adress + i);
-//     }
-//     return 0;
-// }

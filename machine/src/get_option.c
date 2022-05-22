@@ -73,9 +73,9 @@ int get_nbr_of_champ(char **av)
     int nbr = 0;
     for (int y = 0; av[y] != NULL; y++) {
         for (int x = 0; av[y][x] != 0; x++) {
-            if (av[y][x] == '.' && av[y][x + 1] == 'c'
-            && av[y][x + 2] == 'o' && av[y][x + 3] == 'r')
-                nbr++;
+            nbr = ((av[y][x] == '.' && av[y][x + 1] == 'c'
+            && av[y][x + 2] == 'o' && av[y][x + 3] == 'r')) ?
+                nbr + 1 : nbr;
         }
     }
     return nbr;

@@ -40,18 +40,7 @@ void get_param(exec_t *ex, buffer_t *buffer, char **line, int i)
         return;
     while (*param && *param == ' ')
         ++param;
-    switch (param[0]) {
-        case 'r':
-            ++param;
-            buffer->params[i].size = T_REG;
-            break;
-        case DIRECT_CHAR:
-            ++param;
-            buffer->params[i].size = T_DIR;
-            break;
-        default:
-            buffer->params[i].size = T_IND;
-    }
+    set_param_size(&param, buffer, i);
     if (is_param_label(ex, buffer, param, i))
         return;
     if (!is_number(param))
