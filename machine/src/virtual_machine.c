@@ -29,11 +29,19 @@ vm_t *setup_vm(char **av)
     vm->cycle_to_die = CYCLE_TO_DIE;
     vm->dump_cycle = get_dump(av);
     vm->live_count = 0;
+    vm->last_champ_live = 0;
     for (int i = 0; i < MAX_PLAYER_NBR; i++) {
         vm->players[i].last_live = 0;
         vm->players[i].is_alive = true;
     }
     return vm;
+}
+
+void victory_msg(vm_t *vm)
+{
+    my_putstr("The player ");
+    my_put_nbr(vm->last_champ_live);
+    my_putstr(" won !\n");
 }
 
 int launch_vm(int ac, char *av[])
@@ -55,5 +63,6 @@ int launch_vm(int ac, char *av[])
         }
         dump_display_memory(vm);
     }
+    victory_msg(vm);
     return 0;
 }

@@ -19,4 +19,5 @@ void live_func(vm_t *vm, process_t *process, ope_t *ope)
     process->last_live = vm->cycle;
     vm->players[(ope->real_args[0]) % MAX_PLAYER_NBR].last_live = vm->cycle;
     vm->live_count += 1;
+    vm->last_champ_live = ope->real_args[0];
 }

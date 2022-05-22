@@ -79,6 +79,7 @@ struct process_s {
 };
 
 typedef struct player_s {
+    char *name;
     int last_live;
     bool is_alive;
 } player_t;
@@ -91,6 +92,7 @@ typedef struct vm_s {
     int cycle_to_die;
     int live_count;
     int dump_cycle;
+    int last_champ_live;
     player_t players[MAX_PLAYER_NBR];
 } vm_t;
 
